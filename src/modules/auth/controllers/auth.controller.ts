@@ -1,6 +1,7 @@
 import { LoginByFingerprintDto } from '@app/auth/dto/login-by-fingerprint.dto';
 import { IsPublic } from '@common/decorators/is-public.decorator';
 import { Body, Controller, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { EmailVerificationDto } from '../dto/email-verivication.dto';
 import { LoginDto } from '../dto/login.dto';
 import { PhoneVerificationDto } from '../dto/phone-verification.dto';
@@ -13,6 +14,7 @@ import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { AuthService } from '../services/auth.service';
 
 @IsPublic()
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

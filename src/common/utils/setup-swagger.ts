@@ -1,5 +1,6 @@
 import { AuthModule, Authv2Module } from '@app/auth/auth.module';
 import { FileModule } from '@app/file/file.module';
+import { GameModule } from '@app/game/game.module';
 import { NotificationModule } from '@app/notification/notification.module';
 import { SmsTemplateModule } from '@app/sms-template/sms-template.module';
 import { SmsModule } from '@app/sms/sms.module';
@@ -27,6 +28,7 @@ export async function setUpSwagger(app: INestApplication) {
   const swaggerv1 = SwaggerModule.createDocument(app, v1config, {
     include: [
       AuthModule,
+      GameModule,
       FileModule,
       SmsModule,
       SmsTemplateModule,

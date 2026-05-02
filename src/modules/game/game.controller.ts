@@ -9,6 +9,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   FindMarketListingsDto,
   ListCardDto,
@@ -20,6 +21,7 @@ import {
 import { GameService } from './game.service';
 
 @IsPublic()
+@ApiTags('game')
 @Controller()
 export class GameController {
   constructor(private readonly gameService: GameService) {}
