@@ -8,6 +8,7 @@ import { Card } from './entities/card.entity';
 import { UserCard } from './entities/user-card.entity';
 import { CardsController } from './cards.controller';
 import { UserCardsController } from './user-cards.controller';
+import { UserSquadController } from './user-squad.controller';
 import { CardAvatarService } from './services/card-avatar.service';
 import { CardGenerationService } from './services/card-generation.service';
 import { PlayerRatingService } from './services/player-rating.service';
@@ -24,7 +25,7 @@ import { UserCardService } from './services/user-card.service';
       User,
     ]),
   ],
-  controllers: [CardsController, UserCardsController],
+  controllers: [CardsController, UserCardsController, UserSquadController],
   providers: [
     CardGenerationService,
     PlayerRatingService,
