@@ -186,16 +186,16 @@ export class UserService extends BaseService {
       return users;
     }
 
-    users = await paginate(
-      this.repository,
-      {
-        ...query.paginationOptions,
-        route: url,
-      },
-      {
-        where: query.data,
-      },
-    );
+      users = await paginate(
+        this.repository,
+        {
+          ...query.paginationOptions,
+          route: url,
+        },
+        {
+          where: query.data,
+        },
+      );
 
     //await this.attachAvatars(users.items);
 

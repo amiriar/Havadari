@@ -6,7 +6,7 @@ import { Column, Entity, Index } from 'typeorm';
 @Index(['playerName', 'rarity'])
 export class Card extends ApplicationBaseEntity {
   @Column({ type: 'varchar', length: 32, nullable: true })
-  sourceProvider: 'football-data' | 'api-football' | null;
+  sourceProvider: 'football-data' | 'api-football' | 'manual' | null;
 
   @Column({ type: 'varchar', length: 64, nullable: true })
   sourceProviderPlayerId: string | null;
@@ -58,5 +58,7 @@ export class Card extends ApplicationBaseEntity {
 
   @Column({ type: 'int' })
   baseValue: number;
-}
 
+  @Column({ type: 'varchar', length: 16, default: 'v1' })
+  ratingVersion: string;
+}

@@ -30,5 +30,11 @@ export class GetPlayersQueryDto {
   @Min(1)
   @Max(5000)
   limit?: number;
-}
 
+  @ApiPropertyOptional({ minimum: 1, default: 1 })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  page?: number;
+}

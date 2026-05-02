@@ -8,7 +8,7 @@ import { PlayerStatSnapshot } from './player-stat-snapshot.entity';
 @Index(['teamName'])
 export class Player extends ApplicationBaseEntity {
   @Column({ type: 'varchar', length: 32, nullable: true })
-  provider: 'football-data' | 'api-football' | null;
+  provider: 'football-data' | 'api-football' | 'manual' | null;
 
   @Column({ type: 'varchar', length: 64, nullable: true })
   providerPlayerId: string | null;

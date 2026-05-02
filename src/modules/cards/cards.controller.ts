@@ -1,6 +1,8 @@
 import { IsPublic } from '@common/decorators/is-public.decorator';
+import { Url } from '@common/decorators/url.decorator';
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { GetCardsQueryDto } from './dto/get-cards-query.dto';
 import { CardAvatarService } from './services/card-avatar.service';
 import { CardGenerationService } from './services/card-generation.service';
 
@@ -14,19 +16,21 @@ export class CardsController {
 
   @IsPublic()
   @Post('generate')
-  generate(@Query('season') season?: string) {
+  generate(@Query('season') season?: string, @Query('ratingVersion') ratingVersion?: string) {
     const parsedSeason = season ? Number(season) : 2026;
     return this.generationService.generateFromPlayers(
       Number.isFinite(parsedSeason) ? parsedSeason : 2026,
+      ratingVersion?.trim() || 'v1',
     );
   }
 
   @IsPublic()
   @Get()
-  list(@Query('limit') limit?: string) {
-    const parsedLimit = limit ? Number(limit) : 500;
+  list(@Query() query: GetCardsQueryDto, @Url() url: string) {
     return this.generationService.listCards(
-      Number.isFinite(parsedLimit) ? parsedLimit : 500,
+      query.page ?? 1,
+      query.limit ?? 100,
+      url,
     );
   }
 
@@ -43,4 +47,3 @@ export class CardsController {
     return this.avatarService.regenerate(cardId);
   }
 }
-

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { paginate } from 'nestjs-typeorm-paginate';
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
 import { Card } from '../entities/card.entity';
@@ -18,7 +19,7 @@ export class CardGenerationService {
     private readonly ratingService: PlayerRatingService,
   ) {}
 
-  async generateFromPlayers(season = 2026) {
+  async generateFromPlayers(season = 2026, ratingVersion = 'v1') {
     const players = await this.playerRepo.find();
     let inserted = 0;
     let updated = 0;
@@ -54,6 +55,7 @@ export class CardGenerationService {
           rarity,
           edition: 'BASE',
           baseValue,
+          ratingVersion,
           avatarStatus: 'PENDING',
           avatarUrl: null,
           avatarPrompt: null,
@@ -73,18 +75,26 @@ export class CardGenerationService {
         existing.defend = ratings.defend;
         existing.rarity = rarity;
         existing.baseValue = baseValue;
+        existing.ratingVersion = ratingVersion;
         await this.cardRepo.save(existing);
         updated += 1;
       }
     }
 
-    return { totalPlayers: players.length, inserted, updated };
+    return { totalPlayers: players.length, inserted, updated, ratingVersion };
   }
 
-  async listCards(limit = 500) {
-    return this.cardRepo.find({
-      order: { overallRating: 'DESC' },
-      take: Math.min(5000, limit),
-    });
+  async listCards(page = 1, limit = 100, url?: string) {
+    return paginate(
+      this.cardRepo,
+      {
+        page,
+        limit: Math.min(5000, limit),
+        route: url,
+      },
+      {
+        order: { overallRating: 'DESC' },
+      },
+    );
   }
 }
