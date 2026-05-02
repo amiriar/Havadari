@@ -2,7 +2,6 @@ import { FileModule } from '@app/file/file.module';
 import { SmsTemplateModule } from '@app/sms-template/sms-template.module';
 import { SmsTemplateParameterModule } from '@app/smsTemplateParameter/sms-template-parameter.module';
 import { NotificationModule } from '@app/notification/notification.module';
-import { GameModule } from '@app/game/game.module';
 import { ApplicationCacheInterceptor } from '@common/interceptos/application-cache.interceptor';
 import { DefaultResponseInterceptor } from '@common/interceptos/default-response.interceptor';
 import { DefaultExceptionFilter } from '@common/filters/default-exception.filter';
@@ -47,7 +46,6 @@ import { AppService } from './app.service';
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,
-    GameModule,
     ElasticSearchModule,
     ApplicationCacheModule,
   ],
