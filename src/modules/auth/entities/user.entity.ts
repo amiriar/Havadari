@@ -66,5 +66,11 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
   @Column({ type: 'int', default: 0 })
   customerClubScore: number;
 
+  @Column({ type: 'int', default: 1000 })
+  fgc: number;
+
+  @Column({ type: 'int', default: 100 })
+  gems: number;
+
   permissionsSet: string[];
 }

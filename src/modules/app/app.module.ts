@@ -28,6 +28,7 @@ import { AuthModule, Authv2Module } from '../auth/auth.module';
 import { SmsModule } from '../sms/sms.module';
 import { CardsModule } from '../cards/cards.module';
 import { PlayersModule } from '../players/players.module';
+import { ChestsModule } from '../chests/chests.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -47,6 +48,7 @@ import { AppService } from './app.service';
     SmsModule,
     PlayersModule,
     CardsModule,
+    ChestsModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,
