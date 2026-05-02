@@ -5,16 +5,23 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChestsController } from './chests.controller';
 import { ChestsService } from './chests.service';
+import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Card, UserCard, UserChestState, ChestOpenLog]),
+    TypeOrmModule.forFeature([
+      User,
+      Card,
+      UserCard,
+      UserChestState,
+      ChestOpenLog,
+      ChestDefinitionEntity,
+    ]),
   ],
   controllers: [ChestsController],
   providers: [ChestsService],
   exports: [ChestsService],
 })
 export class ChestsModule {}
-

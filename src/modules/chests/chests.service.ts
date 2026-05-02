@@ -4,74 +4,23 @@ import { UserCard } from '@app/cards/entities/user-card.entity';
 import {
   BadRequestException,
   Injectable,
+  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
+import {
+  CardRarity,
+  ChestDefinition,
+  ChestType,
+} from './constants/chest.types';
+import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
 
-type CardRarity = 'COMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'MYTHIC';
-type ChestType = 'common_chest' | 'rare_chest' | 'epic_chest' | 'legendary_chest';
-
-type ChestDefinition = {
-  type: ChestType;
-  cost: { fgc?: number; gems?: number };
-  cooldownSeconds: number;
-  drops: Array<
-    | { type: 'card'; rarity: CardRarity; probability: number }
-    | { type: 'fgc'; min: number; max: number; probability: number }
-    | { type: 'gems'; min: number; max: number; probability: number }
-  >;
-};
-
-const CHESTS: ChestDefinition[] = [
-  {
-    type: 'common_chest',
-    cost: { fgc: 300 },
-    cooldownSeconds: 0,
-    drops: [
-      { type: 'card', rarity: 'COMMON', probability: 0.75 },
-      { type: 'card', rarity: 'RARE', probability: 0.2 },
-      { type: 'fgc', min: 50, max: 200, probability: 0.05 },
-    ],
-  },
-  {
-    type: 'rare_chest',
-    cost: { fgc: 900, gems: 40 },
-    cooldownSeconds: 4 * 60 * 60,
-    drops: [
-      { type: 'card', rarity: 'RARE', probability: 0.55 },
-      { type: 'card', rarity: 'EPIC', probability: 0.35 },
-      { type: 'card', rarity: 'LEGENDARY', probability: 0.08 },
-      { type: 'gems', min: 10, max: 30, probability: 0.02 },
-    ],
-  },
-  {
-    type: 'epic_chest',
-    cost: { gems: 100 },
-    cooldownSeconds: 0,
-    drops: [
-      { type: 'card', rarity: 'EPIC', probability: 0.6 },
-      { type: 'card', rarity: 'LEGENDARY', probability: 0.3 },
-      { type: 'card', rarity: 'MYTHIC', probability: 0.08 },
-      { type: 'gems', min: 20, max: 50, probability: 0.02 },
-    ],
-  },
-  {
-    type: 'legendary_chest',
-    cost: { gems: 250 },
-    cooldownSeconds: 0,
-    drops: [
-      { type: 'card', rarity: 'LEGENDARY', probability: 0.85 },
-      { type: 'card', rarity: 'MYTHIC', probability: 0.15 },
-    ],
-  },
-];
-
 @Injectable()
-export class ChestsService {
+export class ChestsService implements OnModuleInit {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
@@ -83,10 +32,74 @@ export class ChestsService {
     private readonly stateRepo: Repository<UserChestState>,
     @InjectRepository(ChestOpenLog)
     private readonly logRepo: Repository<ChestOpenLog>,
+    @InjectRepository(ChestDefinitionEntity)
+    private readonly definitionRepo: Repository<ChestDefinitionEntity>,
   ) {}
 
-  listDefinitions() {
-    return CHESTS;
+  async onModuleInit() {
+    const existing = await this.definitionRepo.count();
+    if (existing > 0) return;
+    await this.definitionRepo.save(
+      this.definitionRepo.create([
+        {
+          type: 'common_chest',
+          isActive: true,
+          costFgc: 300,
+          costGems: 0,
+          cooldownSeconds: 0,
+          drops: [
+            { type: 'card', rarity: 'COMMON', probability: 0.75 },
+            { type: 'card', rarity: 'RARE', probability: 0.2 },
+            { type: 'fgc', min: 50, max: 200, probability: 0.05 },
+          ],
+        },
+        {
+          type: 'rare_chest',
+          isActive: true,
+          costFgc: 900,
+          costGems: 40,
+          cooldownSeconds: 4 * 60 * 60,
+          drops: [
+            { type: 'card', rarity: 'RARE', probability: 0.55 },
+            { type: 'card', rarity: 'EPIC', probability: 0.35 },
+            { type: 'card', rarity: 'LEGENDARY', probability: 0.08 },
+            { type: 'gems', min: 10, max: 30, probability: 0.02 },
+          ],
+        },
+        {
+          type: 'epic_chest',
+          isActive: true,
+          costFgc: 0,
+          costGems: 100,
+          cooldownSeconds: 0,
+          drops: [
+            { type: 'card', rarity: 'EPIC', probability: 0.6 },
+            { type: 'card', rarity: 'LEGENDARY', probability: 0.3 },
+            { type: 'card', rarity: 'MYTHIC', probability: 0.08 },
+            { type: 'gems', min: 20, max: 50, probability: 0.02 },
+          ],
+        },
+        {
+          type: 'legendary_chest',
+          isActive: true,
+          costFgc: 0,
+          costGems: 250,
+          cooldownSeconds: 0,
+          drops: [
+            { type: 'card', rarity: 'LEGENDARY', probability: 0.85 },
+            { type: 'card', rarity: 'MYTHIC', probability: 0.15 },
+          ],
+        },
+      ]),
+    );
+  }
+
+  async listDefinitions() {
+    const defs = await this.definitionRepo.find({
+      where: { isActive: true },
+      order: { type: 'ASC' },
+    });
+    return defs.map((d) => this.toDefinition(d));
   }
 
   async getState(user: User) {
@@ -108,7 +121,10 @@ export class ChestsService {
 
   async open(user: User, type: ChestType) {
     const authUser = await this.mustUser(user);
-    const def = CHESTS.find((x) => x.type === type);
+    const defEntity = await this.definitionRepo.findOne({
+      where: { type, isActive: true },
+    });
+    const def = defEntity ? this.toDefinition(defEntity) : null;
     if (!def) {
       throw new BadRequestException('Invalid chest type.');
     }
@@ -177,7 +193,9 @@ export class ChestsService {
     }
 
     if (def.type === 'rare_chest' && def.cooldownSeconds > 0) {
-      state.rareChestCooldownUntil = new Date(Date.now() + def.cooldownSeconds * 1000);
+      state.rareChestCooldownUntil = new Date(
+        Date.now() + def.cooldownSeconds * 1000,
+      );
     }
 
     state.totalOpensCounter += 1;
@@ -244,6 +262,18 @@ export class ChestsService {
     return def.drops[def.drops.length - 1];
   }
 
+  private toDefinition(entity: ChestDefinitionEntity): ChestDefinition {
+    return {
+      type: entity.type as ChestType,
+      cost: {
+        fgc: entity.costFgc || 0,
+        gems: entity.costGems || 0,
+      },
+      cooldownSeconds: entity.cooldownSeconds || 0,
+      drops: (entity.drops || []) as ChestDefinition['drops'],
+    };
+  }
+
   private async getRandomCardByRarity(userId: string, rarity: CardRarity) {
     const owned = await this.userCardRepo.find({
       where: { user: { id: userId } },
@@ -291,7 +321,9 @@ export class ChestsService {
   }
 
   private async getOrCreateState(user: User) {
-    const existing = await this.stateRepo.findOne({ where: { user: { id: user.id } } });
+    const existing = await this.stateRepo.findOne({
+      where: { user: { id: user.id } },
+    });
     if (existing) return existing;
     return this.stateRepo.save(
       this.stateRepo.create({
