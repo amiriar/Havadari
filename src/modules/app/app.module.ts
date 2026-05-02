@@ -26,6 +26,8 @@ import { AuthenticationMiddleWare } from 'src/common/middlewares/authentication.
 import { TypeormConfig } from 'src/config/typeorm.config';
 import { AuthModule, Authv2Module } from '../auth/auth.module';
 import { SmsModule } from '../sms/sms.module';
+import { CardsModule } from '../cards/cards.module';
+import { PlayersModule } from '../players/players.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -43,6 +45,8 @@ import { AppService } from './app.service';
     Authv2Module,
     FileModule,
     SmsModule,
+    PlayersModule,
+    CardsModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,

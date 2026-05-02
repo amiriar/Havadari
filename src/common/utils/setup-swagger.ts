@@ -5,6 +5,8 @@ import { SmsTemplateModule } from '@app/sms-template/sms-template.module';
 import { SmsModule } from '@app/sms/sms.module';
 import { SmsTemplateParameterModule } from '@app/smsTemplateParameter/sms-template-parameter.module';
 import { TemplateParameterModule } from '@app/templateParameter/template-parameter.module';
+import { CardsModule } from '@app/cards/cards.module';
+import { PlayersModule } from '@app/players/players.module';
 import { ElasticSearchModule } from '@common/modules/elastic-search/elastic-search.module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
@@ -33,6 +35,8 @@ export async function setUpSwagger(app: INestApplication) {
       TemplateParameterModule,
       SmsTemplateParameterModule,
       ElasticSearchModule,
+      PlayersModule,
+      CardsModule,
     ],
   });
 
