@@ -25,6 +25,11 @@ export const envValidationSchema = Joi.object({
   KAVENEGAR_OTP_TEMPLATE: Joi.string().required(),
   KAVENEGAR_SENDER: Joi.string().allow('').optional(),
   OTP_SECRET: Joi.string().required(),
+  FOOTBALL_DATA_API_KEY: Joi.string().optional(),
+  FOOTBALL_DATA_BASE_URL: Joi.string().uri().optional(),
+  API_FOOTBALL_API_KEY: Joi.string().optional(),
+  API_FOOTBALL_BASE_URL: Joi.string().uri().optional(),
+  API_FOOTBALL_WORLD_CUP_LEAGUE_ID: Joi.string().optional(),
 
   // Redis Configurations
   REDIS_ENABLED: Joi.string().valid('true', 'false').optional(),

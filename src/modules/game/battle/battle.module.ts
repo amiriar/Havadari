@@ -5,12 +5,14 @@ import { Battle } from '../entities/battle.entity';
 import { Card } from '../entities/card.entity';
 import { GameProfile } from '../entities/game-profile.entity';
 import { UserCard } from '../entities/user-card.entity';
+import { MatchModule } from '../match/match.module';
 import { GameBootstrapService } from '../services/game-bootstrap.service';
 import { BattleController } from './battle.controller';
 import { BattleService } from './battle.service';
 
 @Module({
   imports: [
+    MatchModule,
     TypeOrmModule.forFeature([
       Battle,
       BattleRound,

@@ -6,6 +6,7 @@ import { ChestsModule } from '@app/game/chests/chests.module';
 import { GameModule } from '@app/game/game.module';
 import { LeaderboardModule } from '@app/game/leaderboard/leaderboard.module';
 import { MarketModule } from '@app/game/market/market.module';
+import { MatchModule } from '@app/game/match/match.module';
 import { PredictionModule } from '@app/game/prediction/prediction.module';
 import { ProfileModule } from '@app/game/profile/profile.module';
 import { SquadModule } from '@app/game/squad/squad.module';
@@ -54,6 +55,7 @@ export async function setUpSwagger(app: INestApplication) {
       CardsModule,
       SquadModule,
       BattleModule,
+      MatchModule,
       MarketModule,
       ChestsModule,
       PredictionModule,

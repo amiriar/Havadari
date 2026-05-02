@@ -12,6 +12,7 @@ import { BattleRound } from '../entities/battle-round.entity';
 import { Battle } from '../entities/battle.entity';
 import { GameProfile } from '../entities/game-profile.entity';
 import { UserCard } from '../entities/user-card.entity';
+import { MatchService } from '../match/match.service';
 import { GameBootstrapService } from '../services/game-bootstrap.service';
 
 @Injectable()
@@ -26,14 +27,26 @@ export class BattleService {
     @InjectRepository(GameProfile)
     private readonly profileRepo: Repository<GameProfile>,
     private readonly bootstrap: GameBootstrapService,
+    private readonly matchService: MatchService,
   ) {}
 
   async findMatch(user: User) {
     await this.bootstrap.ensureProfile(user);
+    const upcoming = await this.matchService.findBestMatchForNow();
+
     return {
       matchId: randomUUID(),
       mode: 'ELO-based',
       region: 'IR',
+      worldCupMatch: upcoming
+        ? {
+            id: upcoming.id,
+            homeTeam: upcoming.homeTeam,
+            awayTeam: upcoming.awayTeam,
+            matchDateUtc: upcoming.matchDateUtc,
+            stage: upcoming.stage,
+          }
+        : null,
       status: 'found',
     };
   }
