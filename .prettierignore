@@ -1,0 +1,4 @@
+dist*
+node_modules*
+src/schema.gql
+mina-dent-users.html

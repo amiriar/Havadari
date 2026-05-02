@@ -1,0 +1,6 @@
+export const AUTHORIZED_ROLES = 'AUTHORIZED_ROLES';
+export const AUTHORIZED_PERMISSIONS = 'authorized_permissions';
+export const NO_CACHE_METADATA = 'NO_CACHE_METADATA';
+export const ONLINE_USERS = 'ONLINE_USERS';
+export const ONLINE_USERS_HASH = 'ONLINE_USERS_HASH';
+export const TARGET_ENTITY = 'TARGET_ENTITY';

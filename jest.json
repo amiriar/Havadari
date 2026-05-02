@@ -1,0 +1,30 @@
+{
+  "moduleFileExtensions": ["js", "ts", "json"],
+  "transform": {
+    "^.+\\.ts": "ts-jest"
+  },
+  "testRegex": "/src/.*\\.(test|spec).ts",
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ],
+  "coverageReporters": ["json", "lcov", "text"],
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  },
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1",
+    "^@common/(.*)$": "<rootDir>/src/common/$1",
+    "^@app/(.*)$": "<rootDir>/src/modules/$1",
+    "^@auth/(.*)$": "<rootDir>/src/common/auth/$1",
+    "^@config/(.*)$": "<rootDir>/src/common/config/$1",
+    "^@custom/(.*)$": ["<rootDir>/custom_modules/$1"]
+  },
+  "preset": "ts-jest"
+}

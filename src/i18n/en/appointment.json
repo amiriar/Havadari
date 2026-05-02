@@ -1,0 +1,10 @@
+{
+  "status": {
+    "WAITING": "waiting",
+    "ACCEPTED": "accepted",
+    "VISIT": "visit",
+    "CANCELED": "canceled",
+    "DELAYED": "delayed",
+    "EMEGENCY": "emergency"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "refund": {
+    "pre-invoice": "بازگشت وجه پرداخت شده بابت پیش فاکتور",
+    "invoice-item": "بازگشت وجه آیتم فاکتور پرداخت شده"
+  },
+  "payment": {
+    "invoice-item": "پرداخت آیتم فاکتور مربوط به طرح درمان {treatmentTitle}",
+    "invoice": "پرداخت یکجا فاکتور باشماره: {invoiceNumber}"
+  }
+}
