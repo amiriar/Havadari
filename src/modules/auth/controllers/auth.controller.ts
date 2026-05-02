@@ -1,4 +1,3 @@
-import { LoginByFingerprintDto } from '@app/auth/dto/login-by-fingerprint.dto';
 import { IsPublic } from '@common/decorators/is-public.decorator';
 import { Body, Controller, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';

@@ -32,5 +32,4 @@ export class AuthenticationMiddleWare implements NestMiddleware {
       return;
     }
   }
-
 }

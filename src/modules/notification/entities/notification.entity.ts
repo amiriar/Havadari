@@ -1,12 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
 import { ApplicationBaseEntity } from '@common/entities/application-base.entity';
 import { entityNames } from '@common/enums/entityNames.enum';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { NotificationType } from '../enums/notification-type.enum';
 
 @Entity(entityNames.NOTIFICATION)
@@ -41,5 +36,3 @@ export class NotificationEntity extends ApplicationBaseEntity {
   @Column({ type: 'varchar', length: 255, nullable: true })
   link?: string;
 }
-
-

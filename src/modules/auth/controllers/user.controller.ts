@@ -39,8 +39,6 @@ import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { FindUsersDto } from '../dto/find-users.dto';
 import { PaginatedFindAllUsersByRolenameResponse } from '../dto/paginated-find-all-users-by-role-name-response.dto';
 import { RegisterDto } from '../dto/register.dto';
-import { SaveFingerprintParamDto } from '../dto/save-fingerprint-param.dto';
-import { SaveFingerprintDto } from '../dto/save-fingerprint.dto';
 import { updateProfileDto } from '../dto/update-profile.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserPaginatedResopnse } from '../dto/user-paginated-response.dto';
@@ -217,6 +215,4 @@ export class UserController {
   ) {
     return await this.userService.verify(id, body);
   }
-
-
 }

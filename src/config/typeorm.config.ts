@@ -8,10 +8,9 @@ export class TypeormConfig implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   async createTypeOrmOptions(): Promise<TypeOrmModuleOptions> {
-    const migrations =
-      __filename.endsWith('.ts')
-        ? ['src/migrations/**/*.ts']
-        : ['dist/migrations/**/*.js'];
+    const migrations = __filename.endsWith('.ts')
+      ? ['src/migrations/**/*.ts']
+      : ['dist/migrations/**/*.js'];
 
     return {
       type: (this.configService.get<string>('DB_TYPE') || 'postgres') as any,

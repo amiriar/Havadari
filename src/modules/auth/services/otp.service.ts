@@ -40,7 +40,10 @@ export class OtpService {
   }
 
   private getOtpHash(otp: string): string {
-    const secret = this.configService.get<string>('OTP_SECRET', 'dev_otp_secret');
+    const secret = this.configService.get<string>(
+      'OTP_SECRET',
+      'dev_otp_secret',
+    );
     return createHmac('sha256', secret).update(otp).digest('hex');
   }
 
@@ -101,7 +104,10 @@ export class OtpService {
     return !!result;
   }
 
-  public async verify(providedOtp: string, recipient: string): Promise<boolean> {
+  public async verify(
+    providedOtp: string,
+    recipient: string,
+  ): Promise<boolean> {
     const otpKey = this.getOtpKey(recipient);
     const attemptsKey = this.getAttemptKey(recipient);
     const savedOtpHash = await this.redisClient.get(otpKey);

@@ -14,4 +14,3 @@ export class TemplateParameterEntity extends ApplicationBaseEntity {
   )
   templateParameters!: SmsTemplateParameterEntity[];
 }
-

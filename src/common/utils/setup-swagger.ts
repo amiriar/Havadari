@@ -1,6 +1,14 @@
 import { AuthModule, Authv2Module } from '@app/auth/auth.module';
 import { FileModule } from '@app/file/file.module';
+import { BattleModule } from '@app/game/battle/battle.module';
+import { CardsModule } from '@app/game/cards/cards.module';
+import { ChestsModule } from '@app/game/chests/chests.module';
 import { GameModule } from '@app/game/game.module';
+import { LeaderboardModule } from '@app/game/leaderboard/leaderboard.module';
+import { MarketModule } from '@app/game/market/market.module';
+import { PredictionModule } from '@app/game/prediction/prediction.module';
+import { ProfileModule } from '@app/game/profile/profile.module';
+import { SquadModule } from '@app/game/squad/squad.module';
 import { NotificationModule } from '@app/notification/notification.module';
 import { SmsTemplateModule } from '@app/sms-template/sms-template.module';
 import { SmsModule } from '@app/sms/sms.module';
@@ -42,6 +50,14 @@ export async function setUpSwagger(app: INestApplication) {
     include: [
       Authv2Module,
       NotificationModule,
+      ProfileModule,
+      CardsModule,
+      SquadModule,
+      BattleModule,
+      MarketModule,
+      ChestsModule,
+      PredictionModule,
+      LeaderboardModule,
     ],
   });
 

@@ -41,4 +41,3 @@ export class SmsEntity extends ApplicationBaseEntity {
   @Column({ nullable: true })
   providerMessageId?: string; // The ID of the message in the SMS provider's system
 }
-

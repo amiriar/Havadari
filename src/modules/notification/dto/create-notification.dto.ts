@@ -1,5 +1,11 @@
 import { NotificationType } from '@app/notification/enums/notification-type.enum';
-import { IsEnum, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsEnum,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateNotificationDto {
   @IsUUID()

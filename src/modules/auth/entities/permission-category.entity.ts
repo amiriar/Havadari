@@ -16,4 +16,3 @@ export class PermissionCategory extends ApplicationBaseEntity {
   @OneToMany(() => Permission, (permission: Permission) => permission.category)
   permissions: Array<Permission>;
 }
-

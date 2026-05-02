@@ -1,10 +1,8 @@
-import { LoginByFingerprintDto } from '@app/auth/dto/login-by-fingerprint.dto';
 import { notFoundTemplate } from '@common/messages/en/templates/errors/not-found.template';
 import { CACHED_ROLES, ONE_HOUR_IN_MS } from '@common/utils/constants.utils';
 import { getFlatPermissions } from '@common/utils/get-flat-permissions';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
-  ForbiddenException,
   HttpStatus,
   Inject,
   Injectable,

@@ -33,5 +33,3 @@ export class SmsTemplateParameterEntity extends ApplicationBaseEntity {
   @JoinColumn({ name: 'parameterId' })
   parameter!: TemplateParameterEntity;
 }
-
-

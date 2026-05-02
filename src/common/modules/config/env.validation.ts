@@ -2,9 +2,7 @@ import * as Joi from 'joi';
 
 export const envValidationSchema = Joi.object({
   // DB Configurations
-  DB_TYPE: Joi.string()
-    .valid('postgres')
-    .required(),
+  DB_TYPE: Joi.string().valid('postgres').required(),
   DB_CONNECTION_STRING: Joi.string().optional(),
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),

@@ -4,7 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { createClient } from 'redis';
 
 class InMemoryRedisClient {
-  private readonly store = new Map<string, { value: string; expiresAt?: number }>();
+  private readonly store = new Map<
+    string,
+    { value: string; expiresAt?: number }
+  >();
   private readonly counters = new Map<
     string,
     { value: number; expiresAt?: number }

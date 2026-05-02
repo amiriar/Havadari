@@ -12,10 +12,7 @@ import { ConfigService } from '@nestjs/config';
         const redisUrl = configService.get<string>('REDIS_URL');
 
         return {
-          stores:
-            redisEnabled && redisUrl
-              ? [createKeyv(redisUrl)]
-              : undefined,
+          stores: redisEnabled && redisUrl ? [createKeyv(redisUrl)] : undefined,
           ttl: configService.get<number>('CACHE_TTL', 30000),
         };
       },

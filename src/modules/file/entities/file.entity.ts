@@ -32,4 +32,3 @@ export class File extends ApplicationBaseEntity {
   @Column('uuid', { nullable: true })
   uploaderId: string;
 }
-

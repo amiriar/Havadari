@@ -5,7 +5,15 @@ import { Url } from '@common/decorators/url.decorator';
 import { User } from '@common/decorators/user.decorator';
 import { PaginationQuery } from '@common/dto/pagination-input-query';
 import { SetPaginationOptionsPipe } from '@common/pipes/set-pagination-options.pipe';
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { CreateBroadcastNotificationDto } from './dto/create-broadcast-notification.dto';
 import { CreateNotificationDto } from './dto/create-notification.dto';
@@ -17,13 +25,19 @@ export class NotificationController {
   constructor(private readonly service: NotificationService) {}
 
   @Post('admin')
-  @AuthorizeByRoles([ApplicationMainRoles.ADMIN, ApplicationMainRoles.SUPERADMIN])
+  @AuthorizeByRoles([
+    ApplicationMainRoles.ADMIN,
+    ApplicationMainRoles.SUPERADMIN,
+  ])
   create(@Body() dto: CreateNotificationDto) {
     return this.service.create(dto);
   }
 
   @Post('admin/broadcast')
-  @AuthorizeByRoles([ApplicationMainRoles.ADMIN, ApplicationMainRoles.SUPERADMIN])
+  @AuthorizeByRoles([
+    ApplicationMainRoles.ADMIN,
+    ApplicationMainRoles.SUPERADMIN,
+  ])
   createBroadcast(@Body() dto: CreateBroadcastNotificationDto) {
     return this.service.createBroadcast(dto);
   }

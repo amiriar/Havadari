@@ -84,20 +84,19 @@ export function localizeErrorMessage(message: string): string {
     'discount expired': 'errors.discount_expired',
     'failed to connect to zarinpal gateway':
       'errors.zarinpal_connection_failed',
-    'zarinpal merchant id is not configured':
-      'errors.zarinpal_not_configured',
+    'zarinpal merchant id is not configured': 'errors.zarinpal_not_configured',
     'order amount is zero and has been completed as paid':
       'errors.order_zero_paid',
     'payment authority is required for verification':
       'errors.order_authority_required_verify',
-    'only pending orders can be canceled':
-      'errors.order_only_pending_cancel',
+    'only pending orders can be canceled': 'errors.order_only_pending_cancel',
     'payment authority is required for inquiry':
       'errors.order_authority_required_inquiry',
     'order has expired, please create a new order': 'errors.order_expired',
     'something went wrong': 'errors.something_went_wrong',
     'Draft not found': 'errors.sms_draft_not_found',
-    'Template not found or returned empty text': 'errors.sms_template_not_found',
+    'Template not found or returned empty text':
+      'errors.sms_template_not_found',
     'Enter at least one shift': 'errors.shift_enter_at_least_one',
     'If you didnt provide templateId, you must provide text.':
       'errors.sms_template_or_text_required',
@@ -192,7 +191,11 @@ export function localizeErrorMessage(message: string): string {
   for (const pattern of validationPatterns) {
     const match = normalizedMessage.match(pattern.regex);
     if (match) {
-      return tError(pattern.key, { property: match[1] }, pattern.fallback(match));
+      return tError(
+        pattern.key,
+        { property: match[1] },
+        pattern.fallback(match),
+      );
     }
   }
 

@@ -20,4 +20,3 @@ export class Role extends ApplicationBaseEntity {
   @JoinTable()
   permissions: Permission[];
 }
-

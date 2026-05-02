@@ -5,6 +5,7 @@ This repository now includes a first implementation slice of the Havadari game d
 ## Implemented Backend Pieces
 
 - Auth OTP hardening:
+
   - Added `/api/auth/phone/send-otp`
   - Added `/api/auth/phone/verify`
   - Added `/api/auth/refresh` alias

@@ -3,10 +3,9 @@ dotenv.config();
 import { DataSource } from 'typeorm';
 
 const dbType = process.env.DB_TYPE || 'postgres';
-const migrations =
-  __filename.endsWith('.ts')
-    ? ['src/migrations/**/*.ts']
-    : ['dist/migrations/**/*.js'];
+const migrations = __filename.endsWith('.ts')
+  ? ['src/migrations/**/*.ts']
+  : ['dist/migrations/**/*.js'];
 
 const dataSourceOptions = {
   type: dbType,

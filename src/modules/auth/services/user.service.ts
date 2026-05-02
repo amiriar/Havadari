@@ -28,7 +28,6 @@ import { DeepPartial, In, Repository } from 'typeorm';
 import { UserControllerCode } from '../constants/controller-codes';
 import { FindUsersDto } from '../dto/find-users.dto';
 import { RegisterDto } from '../dto/register.dto';
-import { SaveFingerprintDto } from '../dto/save-fingerprint.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { VerifyUserDto } from '../dto/verify-user.dto';
 import { Role } from '../entities/role.entity';

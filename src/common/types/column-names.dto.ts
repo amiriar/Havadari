@@ -1,2 +1,1 @@
-export type AppointmentSearchables =
-  | 'guestPatientFullName';
+export type AppointmentSearchables = 'guestPatientFullName';

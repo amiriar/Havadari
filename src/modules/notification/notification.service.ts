@@ -111,7 +111,10 @@ export class NotificationService {
     return { updated: unread.length };
   }
 
-  private async findMineOrFail(id: string, user: User): Promise<NotificationEntity> {
+  private async findMineOrFail(
+    id: string,
+    user: User,
+  ): Promise<NotificationEntity> {
     const notification = await this.notificationRepo.findOne({
       where: [
         { id, userId: user.id },

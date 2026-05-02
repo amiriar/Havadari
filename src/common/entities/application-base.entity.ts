@@ -25,4 +25,3 @@ export class ApplicationBaseEntity {
   @Column('uuid', { nullable: true })
   creatorId: string;
 }
-

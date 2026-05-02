@@ -6,7 +6,10 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { localizeErrorMessage, tError } from '@common/messages/error-translator';
+import {
+  localizeErrorMessage,
+  tError,
+} from '@common/messages/error-translator';
 
 @Catch()
 export class DefaultExceptionFilter implements ExceptionFilter {

@@ -1,10 +1,6 @@
 import { PaginationDto } from '@common/dto';
 import { ApiHideProperty } from '@nestjs/swagger';
-import {
-  IsBooleanString,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBooleanString, IsOptional, IsString } from 'class-validator';
 
 export class FindUsersDto extends PaginationDto {
   @IsOptional()

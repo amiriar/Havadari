@@ -24,4 +24,3 @@ export class Permission extends ApplicationBaseEntity {
   @Column('uuid')
   categoryId: string;
 }
-

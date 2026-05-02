@@ -5,7 +5,6 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
@@ -69,4 +68,3 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
 
   permissionsSet: string[];
 }
-
