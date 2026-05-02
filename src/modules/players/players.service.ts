@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { CardGenerationService } from '@app/cards/services/card-generation.service';
+import { ProviderDiagnostic } from './constants/player-sync.types';
 import { ManualImportPlayersDto } from './dto/manual-import.dto';
 import { Player } from './entities/player.entity';
 import { PlayerStatSnapshot } from './entities/player-stat-snapshot.entity';
@@ -14,16 +15,6 @@ import {
   ProviderPlayer,
   ProviderPlayerStats,
 } from './providers/player-provider.interface';
-
-type ProviderDiagnostic = {
-  provider: string;
-  playersFetched: number;
-  statsFetched: number;
-  importedPlayers: number;
-  importedStats: number;
-  status: 'ok' | 'failed';
-  error?: string;
-};
 
 @Injectable()
 export class PlayersService {
