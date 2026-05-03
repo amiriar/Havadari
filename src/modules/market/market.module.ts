@@ -1,6 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { LeaderboardModule } from '@app/leaderboard/leaderboard.module';
+import { MissionsModule } from '@app/missions/missions.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketController } from './market.controller';
@@ -11,6 +12,7 @@ import { MarketTrade } from './entities/market-trade.entity';
 @Module({
   imports: [
     LeaderboardModule,
+    MissionsModule,
     TypeOrmModule.forFeature([User, UserCard, MarketListing, MarketTrade]),
   ],
   controllers: [MarketController],

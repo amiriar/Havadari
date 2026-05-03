@@ -2,6 +2,8 @@ import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import { RankPointsService } from '@app/leaderboard/rank-points.service';
+import { MissionsService } from '@app/missions/missions.service';
+import { MissionMetricEnum } from '@app/missions/constants/mission.enums';
 import {
   BadRequestException,
   Injectable,
@@ -30,6 +32,7 @@ export class MarketService {
     @InjectRepository(MarketTrade)
     private readonly tradeRepo: Repository<MarketTrade>,
     private readonly rankPointsService: RankPointsService,
+    private readonly missionsService: MissionsService,
   ) {}
 
   @Cron('0 */10 * * * *')
@@ -144,6 +147,8 @@ export class MarketService {
       listing.id,
       { marketAction: 'buy' },
     );
+    await this.missionsService.track(seller.id, MissionMetricEnum.SELL_CARDS, 1);
+    await this.missionsService.track(buyer.id, MissionMetricEnum.BUY_CARDS, 1);
 
     return {
       listingId: listing.id,

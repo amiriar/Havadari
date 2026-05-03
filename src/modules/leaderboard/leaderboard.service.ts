@@ -2,7 +2,6 @@ import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import {
   Injectable,
-  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';

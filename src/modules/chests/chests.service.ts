@@ -4,10 +4,11 @@ import { UserCard } from '@app/cards/entities/user-card.entity';
 import { UserCardAcquiredFromEnum } from '@app/cards/constants/card.enums';
 import { RankPointsService } from '@app/leaderboard/rank-points.service';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
+import { MissionsService } from '@app/missions/missions.service';
+import { MissionMetricEnum } from '@app/missions/constants/mission.enums';
 import {
   BadRequestException,
   Injectable,
-  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,7 +24,7 @@ import { ChestOpenLog } from './entities/chest-open-log.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
 
 @Injectable()
-export class ChestsService implements OnModuleInit {
+export class ChestsService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
@@ -38,77 +39,8 @@ export class ChestsService implements OnModuleInit {
     @InjectRepository(ChestDefinitionEntity)
     private readonly definitionRepo: Repository<ChestDefinitionEntity>,
     private readonly rankPointsService: RankPointsService,
+    private readonly missionsService: MissionsService,
   ) {}
-
-  async onModuleInit() {
-    const existing = await this.definitionRepo.count();
-    if (existing > 0) return;
-    await this.definitionRepo.save(
-      this.definitionRepo.create([
-        {
-          type: ChestTypeEnum.COMMON_CHEST,
-          isActive: true,
-          costFgc: 300,
-          costGems: 0,
-          cooldownSeconds: 0,
-          drops: [
-            { type: 'card', rarity: CardRarityEnum.COMMON, probability: 0.75 },
-            { type: 'card', rarity: CardRarityEnum.RARE, probability: 0.2 },
-            { type: 'fgc', min: 50, max: 200, probability: 0.05 },
-          ],
-        },
-        {
-          type: ChestTypeEnum.RARE_CHEST,
-          isActive: true,
-          costFgc: 900,
-          costGems: 40,
-          cooldownSeconds: 4 * 60 * 60,
-          drops: [
-            { type: 'card', rarity: CardRarityEnum.RARE, probability: 0.55 },
-            { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.35 },
-            {
-              type: 'card',
-              rarity: CardRarityEnum.LEGENDARY,
-              probability: 0.08,
-            },
-            { type: 'gems', min: 10, max: 30, probability: 0.02 },
-          ],
-        },
-        {
-          type: ChestTypeEnum.EPIC_CHEST,
-          isActive: true,
-          costFgc: 0,
-          costGems: 100,
-          cooldownSeconds: 0,
-          drops: [
-            { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.6 },
-            {
-              type: 'card',
-              rarity: CardRarityEnum.LEGENDARY,
-              probability: 0.3,
-            },
-            { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.08 },
-            { type: 'gems', min: 20, max: 50, probability: 0.02 },
-          ],
-        },
-        {
-          type: ChestTypeEnum.LEGENDARY_CHEST,
-          isActive: true,
-          costFgc: 0,
-          costGems: 250,
-          cooldownSeconds: 0,
-          drops: [
-            {
-              type: 'card',
-              rarity: CardRarityEnum.LEGENDARY,
-              probability: 0.85,
-            },
-            { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.15 },
-          ],
-        },
-      ]),
-    );
-  }
 
   async listDefinitions() {
     const defs = await this.definitionRepo.find({
@@ -241,6 +173,7 @@ export class ChestsService implements OnModuleInit {
       null,
       { chestType: type },
     );
+    await this.missionsService.track(authUser.id, MissionMetricEnum.OPEN_CHESTS, 1);
 
     return {
       chestType: type,
