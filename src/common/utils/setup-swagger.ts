@@ -15,7 +15,7 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
 export async function setUpSwagger(app: INestApplication) {
   const v1config = new DocumentBuilder()
-    .setTitle('Havadari reservation system api')
+    .setTitle('Havadari system api')
     .setVersion('1.0.0')
     .setDescription('Havadari API documentation')
     .setExternalDoc(
@@ -27,7 +27,7 @@ export async function setUpSwagger(app: INestApplication) {
     .build();
 
   const v2config = new DocumentBuilder()
-    .setTitle('Havadari reservation system api')
+    .setTitle('Havadari system api')
     .setVersion('2.0.0')
     .setDescription('Havadari API documentation v2')
     .setExternalDoc(
