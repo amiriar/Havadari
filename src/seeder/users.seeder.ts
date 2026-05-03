@@ -172,7 +172,9 @@ export async function seedUsers(dataSource: DataSource): Promise<void> {
   const repository: Repository<User> = dataSource.getRepository(User);
 
   await repository.upsert(users, {
-    conflictPaths: { userName: true, id: true },
+    // Must match an actual UNIQUE constraint/index in DB.
+    // `userName` is unique; `(userName,id)` is not a composite unique index.
+    conflictPaths: ['userName'],
   });
 
   console.log('Users seeded\n');
