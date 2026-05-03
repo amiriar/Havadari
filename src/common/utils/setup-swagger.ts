@@ -17,6 +17,8 @@ export async function setUpSwagger(app: INestApplication) {
   const v1config = new DocumentBuilder()
     .setTitle('spoticode reservation system api')
     .setVersion('1.0.0')
+    .setDescription('Havadari API documentation')
+    .setExternalDoc('View the raw OpenAPI Specification in JSON format', '/v1/swagger.json')
     .addBearerAuth()
     .addSecurityRequirements('bearer')
     .build();
@@ -24,6 +26,8 @@ export async function setUpSwagger(app: INestApplication) {
   const v2config = new DocumentBuilder()
     .setTitle('spoticode reservation system api')
     .setVersion('2.0.0')
+    .setDescription('Havadari API documentation v2')
+    .setExternalDoc('View the raw OpenAPI Specification in JSON format', '/v2/swagger.json')
     .addBearerAuth()
     .addSecurityRequirements('bearer')
     .build();
@@ -63,11 +67,15 @@ export async function setUpSwagger(app: INestApplication) {
     swaggerOptions: {
       persistAuthorization: true,
     },
+    customSiteTitle: 'Havadari API Docs',
+    jsonDocumentUrl: '/v1/swagger.json',
   });
 
   SwaggerModule.setup('v2/docs', app, swaggerv2, {
     swaggerOptions: {
       persistAuthorization: true,
     },
+    customSiteTitle: 'Havadari API Docs v2',
+    jsonDocumentUrl: '/v2/swagger.json',
   });
 }
