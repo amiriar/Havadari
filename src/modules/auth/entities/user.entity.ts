@@ -64,7 +64,7 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
   }
 
   @Column({ type: 'int', default: 0 })
-  customerClubScore: number;
+  rankPoints: number;
 
   @Column({ type: 'int', default: 1000 })
   fgc: number;

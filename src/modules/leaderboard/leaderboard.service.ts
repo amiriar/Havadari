@@ -10,7 +10,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import { LeaderboardTypeEnum } from './constants/leaderboard.enums';
+import { RankPointSourceEnum } from './constants/rank-point-source.enum';
 import { LeaderboardReward } from './entities/leaderboard-reward.entity';
+import { RankPointEvent } from './entities/rank-point-event.entity';
 
 @Injectable()
 export class LeaderboardService implements OnModuleInit {
@@ -21,6 +23,8 @@ export class LeaderboardService implements OnModuleInit {
     private readonly userCardRepo: Repository<UserCard>,
     @InjectRepository(LeaderboardReward)
     private readonly rewardRepo: Repository<LeaderboardReward>,
+    @InjectRepository(RankPointEvent)
+    private readonly rankEventRepo: Repository<RankPointEvent>,
   ) {}
 
   async onModuleInit() {
@@ -76,12 +80,30 @@ export class LeaderboardService implements OnModuleInit {
 
   @Cron('0 0 0 * * 1')
   async resetClassicWeekly() {
-    // Soft weekly reset for classic metric.
+    // Soft weekly reset for rank points with history logging.
     const users = await this.userRepo.find();
+    const events: RankPointEvent[] = [];
     for (const user of users) {
-      user.customerClubScore = Math.floor(user.customerClubScore * 0.9);
+      const before = user.rankPoints || 0;
+      const after = Math.floor(before * 0.9);
+      const delta = after - before;
+      user.rankPoints = after;
+      if (delta !== 0) {
+        events.push(
+          this.rankEventRepo.create({
+            user,
+            before,
+            after,
+            delta,
+            source: RankPointSourceEnum.SEASON_RESET,
+            refId: null,
+            meta: { schedule: 'weekly_classic_soft_reset' },
+          }),
+        );
+      }
     }
     await this.userRepo.save(users);
+    if (events.length) await this.rankEventRepo.save(events);
   }
 
   async getLeaderboard(
@@ -98,19 +120,19 @@ export class LeaderboardService implements OnModuleInit {
       .addSelect('u."userName"', 'userName')
       .addSelect('u."fullName"', 'fullName')
       .addSelect('u."avatar"', 'avatar')
-      .addSelect('u."customerClubScore"', 'clubScore')
+      .addSelect('u."rankPoints"', 'rankPoints')
       .groupBy('u.id');
 
     switch (type) {
       case LeaderboardTypeEnum.CLASSIC:
-        qb.addSelect('u."customerClubScore"', 'score').orderBy(
-          'u."customerClubScore"',
+        qb.addSelect('u."rankPoints"', 'score').orderBy(
+          'u."rankPoints"',
           'DESC',
         );
         break;
       case LeaderboardTypeEnum.CHAMPIONS:
-        qb.addSelect('u."customerClubScore"', 'score').orderBy(
-          'u."customerClubScore"',
+        qb.addSelect('u."rankPoints"', 'score').orderBy(
+          'u."rankPoints"',
           'DESC',
         );
         break;
@@ -120,7 +142,7 @@ export class LeaderboardService implements OnModuleInit {
       case LeaderboardTypeEnum.IRAN:
       default:
         qb.addSelect(
-          '(u."customerClubScore" + COALESCE(SUM(c."baseValue"),0)/100 + COUNT(uc.id)*5)',
+          '(u."rankPoints" + COALESCE(SUM(c."baseValue"),0)/100 + COUNT(uc.id)*5)',
           'score',
         ).orderBy('score', 'DESC');
         break;
@@ -139,7 +161,7 @@ export class LeaderboardService implements OnModuleInit {
       fullName: row.fullName,
       avatar: row.avatar,
       score: Number(row.score || 0),
-      clubScore: Number(row.clubScore || 0),
+      rankPoints: Number(row.rankPoints || 0),
     }));
 
     return {
