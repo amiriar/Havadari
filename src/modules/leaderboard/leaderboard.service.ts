@@ -15,7 +15,7 @@ import { LeaderboardReward } from './entities/leaderboard-reward.entity';
 import { RankPointsService } from './rank-points.service';
 
 @Injectable()
-export class LeaderboardService implements OnModuleInit {
+export class LeaderboardService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
@@ -25,57 +25,6 @@ export class LeaderboardService implements OnModuleInit {
     private readonly rewardRepo: Repository<LeaderboardReward>,
     private readonly rankPointsService: RankPointsService,
   ) {}
-
-  async onModuleInit() {
-    const existing = await this.rewardRepo.count();
-    if (existing > 0) return;
-    const defaults: Array<Partial<LeaderboardReward>> = [];
-    for (const type of Object.values(LeaderboardTypeEnum)) {
-      defaults.push(
-        {
-          type,
-          rankFrom: 1,
-          rankTo: 1,
-          rewardFgc: 20000,
-          rewardGems: 300,
-          rewardChest: 'mythic x2',
-        },
-        {
-          type,
-          rankFrom: 2,
-          rankTo: 3,
-          rewardFgc: 10000,
-          rewardGems: 150,
-          rewardChest: 'legendary x2',
-        },
-        {
-          type,
-          rankFrom: 4,
-          rankTo: 10,
-          rewardFgc: 5000,
-          rewardGems: 60,
-          rewardChest: 'epic',
-        },
-        {
-          type,
-          rankFrom: 11,
-          rankTo: 50,
-          rewardFgc: 2000,
-          rewardGems: 20,
-          rewardChest: 'rare',
-        },
-        {
-          type,
-          rankFrom: 51,
-          rankTo: 100,
-          rewardFgc: 500,
-          rewardGems: 5,
-          rewardChest: null,
-        },
-      );
-    }
-    await this.rewardRepo.save(this.rewardRepo.create(defaults));
-  }
 
   @Cron('0 0 0 * * 1')
   async resetClassicWeekly() {
@@ -102,55 +51,31 @@ export class LeaderboardService implements OnModuleInit {
     limit: number,
     url?: string,
   ) {
-    const qb = this.userRepo
-      .createQueryBuilder('u')
-      .leftJoin('user_cards', 'uc', 'uc."userId" = u.id')
-      .leftJoin('cards', 'c', 'c.id = uc."cardId"')
-      .select('u.id', 'userId')
-      .addSelect('u."userName"', 'userName')
-      .addSelect('u."fullName"', 'fullName')
-      .addSelect('u."avatar"', 'avatar')
-      .addSelect('u."rankPoints"', 'rankPoints')
-      .groupBy('u.id');
+    const order =
+      type === LeaderboardTypeEnum.PREDICTION
+        ? ({ createdAt: 'ASC' } as const)
+        : ({ rankPoints: 'DESC' } as const);
 
-    switch (type) {
-      case LeaderboardTypeEnum.CLASSIC:
-        qb.addSelect('u."rankPoints"', 'score').orderBy(
-          'u."rankPoints"',
-          'DESC',
-        );
-        break;
-      case LeaderboardTypeEnum.CHAMPIONS:
-        qb.addSelect('u."rankPoints"', 'score').orderBy(
-          'u."rankPoints"',
-          'DESC',
-        );
-        break;
-      case LeaderboardTypeEnum.PREDICTION:
-        qb.addSelect('0', 'score').orderBy('u."createdAt"', 'ASC');
-        break;
-      case LeaderboardTypeEnum.IRAN:
-      default:
-        qb.addSelect(
-          '(u."rankPoints" + COALESCE(SUM(c."baseValue"),0)/100 + COUNT(uc.id)*5)',
-          'score',
-        ).orderBy('score', 'DESC');
-        break;
-    }
+    const paged = await paginate(
+      this.userRepo,
+      {
+        page,
+        limit: Math.min(limit, 200),
+        route: url,
+      },
+      { order },
+    );
 
-    const paged = await paginate(qb, {
-      page,
-      limit: Math.min(limit, 200),
-      route: url,
-    });
-
-    const ranked = paged.items.map((row: any, idx: number) => ({
+    const ranked = paged.items.map((row: User, idx: number) => ({
       rank: (page - 1) * Math.min(limit, 200) + idx + 1,
-      userId: row.userId,
+      userId: row.id,
       userName: row.userName,
       fullName: row.fullName,
       avatar: row.avatar,
-      score: Number(row.score || 0),
+      score:
+        type === LeaderboardTypeEnum.PREDICTION
+          ? 0
+          : Number(row.rankPoints || 0),
       rankPoints: Number(row.rankPoints || 0),
     }));
 
