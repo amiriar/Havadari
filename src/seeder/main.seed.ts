@@ -12,6 +12,7 @@ import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@app/app/app.module';
 import { ApplicationI18nService } from '@common/modules/application-i18n/application-i18n.service';
+import { seedLeaderboardRewards } from './leaderboard-rewards.seeder';
 
 import { seedFiles } from './files.seeder';
 
@@ -56,6 +57,7 @@ async function runSeeder() {
   await seedUsers(dataSource);
   await seedUserRole(dataSource);
   await seedTemplateParameters(dataSource);
+  await seedLeaderboardRewards(dataSource);
   await seedFiles(dataSource);
   exit();
 }
