@@ -18,4 +18,3 @@ export class GetCardsQueryDto {
   @Min(1)
   page?: number;
 }
-

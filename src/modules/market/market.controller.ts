@@ -1,7 +1,15 @@
 import { User } from '@app/auth/entities/user.entity';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateListingDto } from './dto/create-listing.dto';
 import { GetMarketListingsQueryDto } from './dto/get-market-listings-query.dto';
@@ -49,4 +57,3 @@ export class MarketController {
     return this.marketService.cancel(user, listingId);
   }
 }
-

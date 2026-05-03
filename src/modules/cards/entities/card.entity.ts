@@ -48,7 +48,11 @@ export class Card extends ApplicationBaseEntity {
   @Column({ type: 'enum', enum: CardRarityEnum })
   rarity: CardRarityEnum;
 
-  @Column({ type: 'enum', enum: CardEditionEnum, default: CardEditionEnum.BASE })
+  @Column({
+    type: 'enum',
+    enum: CardEditionEnum,
+    default: CardEditionEnum.BASE,
+  })
   edition: CardEditionEnum;
 
   @Column({ type: 'text', nullable: true })

@@ -1,7 +1,10 @@
 import { ApplicationBaseEntity } from '@common/entities/application-base.entity';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { PlayerStatSnapshot } from './player-stat-snapshot.entity';
-import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+} from '../constants/player.enums';
 
 @Entity('players')
 @Index(['provider', 'providerPlayerId'], { unique: true })

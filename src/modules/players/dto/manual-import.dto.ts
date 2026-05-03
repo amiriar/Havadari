@@ -12,7 +12,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+} from '../constants/player.enums';
 
 class ManualPlayerStatDto {
   @ApiProperty()

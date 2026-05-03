@@ -18,4 +18,3 @@ export class GetUserCardsQueryDto {
   @Min(1)
   page?: number;
 }
-

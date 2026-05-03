@@ -7,4 +7,3 @@ export type ProviderDiagnostic = {
   status: 'ok' | 'failed';
   error?: string;
 };
-

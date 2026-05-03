@@ -26,4 +26,3 @@ export class MarketTrade extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   sellerReceive: number;
 }
-

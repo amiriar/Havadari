@@ -53,4 +53,3 @@ export class PlayerStatSnapshot extends ApplicationBaseEntity {
   @Column({ type: 'jsonb', nullable: true })
   rawPayload: Record<string, unknown> | null;
 }
-

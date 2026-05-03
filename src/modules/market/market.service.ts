@@ -98,7 +98,9 @@ export class MarketService {
       throw new BadRequestException('Not enough FGC.');
     }
 
-    const seller = await this.userRepo.findOne({ where: { id: listing.seller.id } });
+    const seller = await this.userRepo.findOne({
+      where: { id: listing.seller.id },
+    });
     if (!seller) throw new BadRequestException('Seller not found.');
 
     const platformFee = Math.floor(listing.price * 0.1);
@@ -189,7 +191,10 @@ export class MarketService {
 
   async expireOldListings() {
     const old = await this.listingRepo.find({
-      where: { status: ListingStatusEnum.ACTIVE, expiresAt: LessThan(new Date()) },
+      where: {
+        status: ListingStatusEnum.ACTIVE,
+        expiresAt: LessThan(new Date()),
+      },
       relations: { userCard: true },
       take: 1000,
     });

@@ -1,4 +1,7 @@
-import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+} from '../constants/player.enums';
 
 export interface ProviderPlayer {
   provider: PlayerProviderEnum;
@@ -33,8 +36,13 @@ export interface ProviderPlayerStats {
 }
 
 export interface PlayerProvider {
-  readonly name: PlayerProviderEnum.FOOTBALL_DATA | PlayerProviderEnum.API_FOOTBALL;
-  fetchPlayers(season: number, competitions?: string[]): Promise<ProviderPlayer[]>;
+  readonly name:
+    | PlayerProviderEnum.FOOTBALL_DATA
+    | PlayerProviderEnum.API_FOOTBALL;
+  fetchPlayers(
+    season: number,
+    competitions?: string[],
+  ): Promise<ProviderPlayer[]>;
   fetchPlayerStats(
     season: number,
     competitions?: string[],

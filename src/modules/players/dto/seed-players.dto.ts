@@ -11,4 +11,3 @@ export class SeedPlayersDto {
   @Max(2100)
   season?: number;
 }
-

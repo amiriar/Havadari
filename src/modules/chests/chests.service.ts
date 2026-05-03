@@ -63,7 +63,11 @@ export class ChestsService implements OnModuleInit {
           drops: [
             { type: 'card', rarity: CardRarityEnum.RARE, probability: 0.55 },
             { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.35 },
-            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.08 },
+            {
+              type: 'card',
+              rarity: CardRarityEnum.LEGENDARY,
+              probability: 0.08,
+            },
             { type: 'gems', min: 10, max: 30, probability: 0.02 },
           ],
         },
@@ -75,7 +79,11 @@ export class ChestsService implements OnModuleInit {
           cooldownSeconds: 0,
           drops: [
             { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.6 },
-            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.3 },
+            {
+              type: 'card',
+              rarity: CardRarityEnum.LEGENDARY,
+              probability: 0.3,
+            },
             { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.08 },
             { type: 'gems', min: 20, max: 50, probability: 0.02 },
           ],
@@ -87,7 +95,11 @@ export class ChestsService implements OnModuleInit {
           costGems: 250,
           cooldownSeconds: 0,
           drops: [
-            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.85 },
+            {
+              type: 'card',
+              rarity: CardRarityEnum.LEGENDARY,
+              probability: 0.85,
+            },
             { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.15 },
           ],
         },

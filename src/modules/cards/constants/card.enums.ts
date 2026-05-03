@@ -1,4 +1,7 @@
-import { PlayerPositionEnum, PlayerProviderEnum } from '@app/players/constants/player.enums';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+} from '@app/players/constants/player.enums';
 
 export enum CardRarityEnum {
   COMMON = 'COMMON',
@@ -31,4 +34,3 @@ export enum UserCardAcquiredFromEnum {
 }
 
 export { PlayerPositionEnum, PlayerProviderEnum };
-

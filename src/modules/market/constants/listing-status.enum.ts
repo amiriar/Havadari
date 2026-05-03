@@ -4,4 +4,3 @@ export enum ListingStatusEnum {
   CANCELLED = 'cancelled',
   EXPIRED = 'expired',
 }
-

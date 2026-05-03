@@ -16,4 +16,3 @@ export class SetActiveSquadDto {
   @IsUUID('4', { each: true })
   userCardIds: string[];
 }
-

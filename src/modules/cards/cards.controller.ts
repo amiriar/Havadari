@@ -16,7 +16,10 @@ export class CardsController {
 
   @IsPublic()
   @Post('generate')
-  generate(@Query('season') season?: string, @Query('ratingVersion') ratingVersion?: string) {
+  generate(
+    @Query('season') season?: string,
+    @Query('ratingVersion') ratingVersion?: string,
+  ) {
     const parsedSeason = season ? Number(season) : 2026;
     return this.generationService.generateFromPlayers(
       Number.isFinite(parsedSeason) ? parsedSeason : 2026,
@@ -38,7 +41,9 @@ export class CardsController {
   @Post('avatars/queue')
   queue(@Query('limit') limit?: string) {
     const parsedLimit = limit ? Number(limit) : 100;
-    return this.avatarService.queue(Number.isFinite(parsedLimit) ? parsedLimit : 100);
+    return this.avatarService.queue(
+      Number.isFinite(parsedLimit) ? parsedLimit : 100,
+    );
   }
 
   @IsPublic()

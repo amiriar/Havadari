@@ -102,15 +102,23 @@ export class UserCardService {
       );
     }
     if (mine.some((item) => item.isListed)) {
-      throw new BadRequestException('Listed cards cannot be put in active squad.');
+      throw new BadRequestException(
+        'Listed cards cannot be put in active squad.',
+      );
     }
     const enforcePositions = dto.enforcePositions ?? true;
     if (enforcePositions) {
       this.validatePositionRules(mine);
     }
 
-    await this.userCardRepo.update({ user: { id: user.id } }, { isInDeck: false });
-    await this.userCardRepo.update({ id: In(dto.userCardIds) }, { isInDeck: true });
+    await this.userCardRepo.update(
+      { user: { id: user.id } },
+      { isInDeck: false },
+    );
+    await this.userCardRepo.update(
+      { id: In(dto.userCardIds) },
+      { isInDeck: true },
+    );
 
     const updated = await this.userCardRepo.find({
       where: { user: { id: user.id }, isInDeck: true },
@@ -143,7 +151,9 @@ export class UserCardService {
     for (const entry of cards) {
       const pos = entry.card?.position;
       if (!pos || !Object.prototype.hasOwnProperty.call(counts, pos)) {
-        throw new BadRequestException('Every squad card must have a valid position.');
+        throw new BadRequestException(
+          'Every squad card must have a valid position.',
+        );
       }
       counts[pos] += 1;
     }
@@ -161,7 +171,10 @@ export class UserCardService {
     }
   }
 
-  private buildSquadFromCards(cards: Card[], enforcePositions: boolean): Card[] {
+  private buildSquadFromCards(
+    cards: Card[],
+    enforcePositions: boolean,
+  ): Card[] {
     if (!enforcePositions) {
       return cards.slice(0, 5);
     }

@@ -1,6 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+} from '../constants/player.enums';
 import {
   PlayerProvider,
   ProviderPlayer,
@@ -13,7 +16,10 @@ export class ApiFootballPlayerProvider implements PlayerProvider {
 
   constructor(private readonly config: ConfigService) {}
 
-  async fetchPlayers(season: number, competitions?: string[]): Promise<ProviderPlayer[]> {
+  async fetchPlayers(
+    season: number,
+    competitions?: string[],
+  ): Promise<ProviderPlayer[]> {
     const rows = await this.fetchRows(season, competitions);
     return rows.map((row) => {
       const player = row.player || {};
@@ -62,7 +68,10 @@ export class ApiFootballPlayerProvider implements PlayerProvider {
     });
   }
 
-  private async fetchRows(season: number, competitions?: string[]): Promise<any[]> {
+  private async fetchRows(
+    season: number,
+    competitions?: string[],
+  ): Promise<any[]> {
     const apiKey = this.config.get<string>('API_FOOTBALL_API_KEY');
     if (!apiKey) {
       throw new InternalServerErrorException('API_FOOTBALL_API_KEY is missing');
@@ -117,7 +126,8 @@ export class ApiFootballPlayerProvider implements PlayerProvider {
     if (value.includes('GOAL')) return PlayerPositionEnum.GK;
     if (value.includes('DEF')) return PlayerPositionEnum.DEF;
     if (value.includes('MID')) return PlayerPositionEnum.MID;
-    if (value.includes('ATT') || value.includes('FOR')) return PlayerPositionEnum.FW;
+    if (value.includes('ATT') || value.includes('FOR'))
+      return PlayerPositionEnum.FW;
     return null;
   }
 

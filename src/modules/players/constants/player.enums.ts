@@ -15,4 +15,3 @@ export enum PlayerSyncRunStatusEnum {
   SUCCESS = 'SUCCESS',
   FAILED = 'FAILED',
 }
-

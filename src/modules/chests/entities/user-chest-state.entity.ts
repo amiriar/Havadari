@@ -20,4 +20,3 @@ export class UserChestState extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   totalOpensCounter: number;
 }
-

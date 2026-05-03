@@ -22,10 +22,7 @@ export class PlayersController {
           .map((x) => x.trim())
           .filter(Boolean)
       : undefined;
-    return this.playersService.syncNow(
-      query.season ?? 2026,
-      competitionList,
-    );
+    return this.playersService.syncNow(query.season ?? 2026, competitionList);
   }
 
   @IsPublic()

@@ -15,19 +15,25 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
 export async function setUpSwagger(app: INestApplication) {
   const v1config = new DocumentBuilder()
-    .setTitle('spoticode reservation system api')
+    .setTitle('Havadari reservation system api')
     .setVersion('1.0.0')
     .setDescription('Havadari API documentation')
-    .setExternalDoc('View the raw OpenAPI Specification in JSON format', '/v1/swagger.json')
+    .setExternalDoc(
+      'View the raw OpenAPI Specification in JSON format',
+      '/v1/swagger.json',
+    )
     .addBearerAuth()
     .addSecurityRequirements('bearer')
     .build();
 
   const v2config = new DocumentBuilder()
-    .setTitle('spoticode reservation system api')
+    .setTitle('Havadari reservation system api')
     .setVersion('2.0.0')
     .setDescription('Havadari API documentation v2')
-    .setExternalDoc('View the raw OpenAPI Specification in JSON format', '/v2/swagger.json')
+    .setExternalDoc(
+      'View the raw OpenAPI Specification in JSON format',
+      '/v2/swagger.json',
+    )
     .addBearerAuth()
     .addSecurityRequirements('bearer')
     .build();

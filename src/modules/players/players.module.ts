@@ -23,4 +23,3 @@ import { FootballDataPlayerProvider } from './providers/football-data-player.pro
   exports: [PlayersService],
 })
 export class PlayersModule {}
-

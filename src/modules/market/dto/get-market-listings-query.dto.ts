@@ -1,7 +1,10 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
-import { CardRarityEnum, PlayerPositionEnum } from '@app/cards/constants/card.enums';
+import {
+  CardRarityEnum,
+  PlayerPositionEnum,
+} from '@app/cards/constants/card.enums';
 
 export class GetMarketListingsQueryDto {
   @ApiPropertyOptional({ minimum: 1, default: 1 })

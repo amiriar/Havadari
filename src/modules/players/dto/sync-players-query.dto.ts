@@ -25,4 +25,3 @@ export class SyncPlayersQueryDto {
   @IsString()
   competitions?: string;
 }
-

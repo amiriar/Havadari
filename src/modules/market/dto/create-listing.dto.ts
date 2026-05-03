@@ -12,7 +12,10 @@ export class CreateListingDto {
   @Min(1)
   price: number;
 
-  @ApiProperty({ enum: ListingDurationHoursEnum, default: ListingDurationHoursEnum.H24 })
+  @ApiProperty({
+    enum: ListingDurationHoursEnum,
+    default: ListingDurationHoursEnum.H24,
+  })
   @IsInt()
   @IsEnum(ListingDurationHoursEnum)
   durationHours: ListingDurationHoursEnum;

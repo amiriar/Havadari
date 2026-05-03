@@ -50,7 +50,10 @@ export class PlayersService {
     for (const provider of providers) {
       try {
         const players = await provider.fetchPlayers(season, competitions);
-        const importedPlayers = await this.upsertPlayers(provider.name, players);
+        const importedPlayers = await this.upsertPlayers(
+          provider.name,
+          players,
+        );
         const stats = await provider.fetchPlayerStats(season, competitions);
         const importedStats = await this.upsertStats(
           provider.name,
@@ -101,7 +104,8 @@ export class PlayersService {
       });
     }
 
-    const generatedCards = await this.cardGenerationService.generateFromPlayers(season);
+    const generatedCards =
+      await this.cardGenerationService.generateFromPlayers(season);
 
     const successRun = this.runRepo.create({
       season,
@@ -149,7 +153,8 @@ export class PlayersService {
         rawPayload: row as any,
       })),
     );
-    const generatedCards = await this.cardGenerationService.generateFromPlayers(season);
+    const generatedCards =
+      await this.cardGenerationService.generateFromPlayers(season);
 
     const run = this.runRepo.create({
       season,
@@ -257,12 +262,90 @@ export class PlayersService {
     ];
 
     const stats = [
-      { providerPlayerId: 'manual-messi', appearances: 28, minutes: 2200, goals: 20, assists: 12, shots: 90, passes: 1200, tackles: 12, interceptions: 6, dribbles: 80, yellowCards: 2, redCards: 0 },
-      { providerPlayerId: 'manual-mbappe', appearances: 30, minutes: 2500, goals: 25, assists: 8, shots: 110, passes: 900, tackles: 10, interceptions: 5, dribbles: 95, yellowCards: 3, redCards: 0 },
-      { providerPlayerId: 'manual-bellingham', appearances: 32, minutes: 2700, goals: 14, assists: 10, shots: 70, passes: 1700, tackles: 55, interceptions: 30, dribbles: 52, yellowCards: 6, redCards: 0 },
-      { providerPlayerId: 'manual-rodri', appearances: 33, minutes: 2850, goals: 7, assists: 9, shots: 40, passes: 2800, tackles: 75, interceptions: 42, dribbles: 30, yellowCards: 8, redCards: 1 },
-      { providerPlayerId: 'manual-ruben-dias', appearances: 31, minutes: 2750, goals: 4, assists: 2, shots: 18, passes: 2400, tackles: 90, interceptions: 58, dribbles: 18, yellowCards: 7, redCards: 0 },
-      { providerPlayerId: 'manual-donnarumma', appearances: 34, minutes: 3060, goals: 0, assists: 0, shots: 0, passes: 1150, tackles: 3, interceptions: 1, dribbles: 2, yellowCards: 1, redCards: 0 },
+      {
+        providerPlayerId: 'manual-messi',
+        appearances: 28,
+        minutes: 2200,
+        goals: 20,
+        assists: 12,
+        shots: 90,
+        passes: 1200,
+        tackles: 12,
+        interceptions: 6,
+        dribbles: 80,
+        yellowCards: 2,
+        redCards: 0,
+      },
+      {
+        providerPlayerId: 'manual-mbappe',
+        appearances: 30,
+        minutes: 2500,
+        goals: 25,
+        assists: 8,
+        shots: 110,
+        passes: 900,
+        tackles: 10,
+        interceptions: 5,
+        dribbles: 95,
+        yellowCards: 3,
+        redCards: 0,
+      },
+      {
+        providerPlayerId: 'manual-bellingham',
+        appearances: 32,
+        minutes: 2700,
+        goals: 14,
+        assists: 10,
+        shots: 70,
+        passes: 1700,
+        tackles: 55,
+        interceptions: 30,
+        dribbles: 52,
+        yellowCards: 6,
+        redCards: 0,
+      },
+      {
+        providerPlayerId: 'manual-rodri',
+        appearances: 33,
+        minutes: 2850,
+        goals: 7,
+        assists: 9,
+        shots: 40,
+        passes: 2800,
+        tackles: 75,
+        interceptions: 42,
+        dribbles: 30,
+        yellowCards: 8,
+        redCards: 1,
+      },
+      {
+        providerPlayerId: 'manual-ruben-dias',
+        appearances: 31,
+        minutes: 2750,
+        goals: 4,
+        assists: 2,
+        shots: 18,
+        passes: 2400,
+        tackles: 90,
+        interceptions: 58,
+        dribbles: 18,
+        yellowCards: 7,
+        redCards: 0,
+      },
+      {
+        providerPlayerId: 'manual-donnarumma',
+        appearances: 34,
+        minutes: 3060,
+        goals: 0,
+        assists: 0,
+        shots: 0,
+        passes: 1150,
+        tackles: 3,
+        interceptions: 1,
+        dribbles: 2,
+        yellowCards: 1,
+        redCards: 0,
+      },
     ].map((row) => ({
       ...row,
       season,
@@ -289,7 +372,8 @@ export class PlayersService {
     const where: any = {};
     if (filters?.team) where.teamName = ILike(`%${filters.team}%`);
     if (filters?.position) where.position = filters.position as any;
-    if (filters?.competitionCode) where.competitionCode = filters.competitionCode;
+    if (filters?.competitionCode)
+      where.competitionCode = filters.competitionCode;
     if (filters?.q) where.fullName = ILike(`%${filters.q}%`);
 
     return paginate(

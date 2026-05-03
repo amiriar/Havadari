@@ -20,4 +20,3 @@ export class UserSquadController {
     return this.userCardService.updateSquad(user, dto);
   }
 }
-

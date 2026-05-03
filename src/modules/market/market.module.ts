@@ -8,10 +8,11 @@ import { MarketListing } from './entities/market-listing.entity';
 import { MarketTrade } from './entities/market-trade.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserCard, MarketListing, MarketTrade])],
+  imports: [
+    TypeOrmModule.forFeature([User, UserCard, MarketListing, MarketTrade]),
+  ],
   controllers: [MarketController],
   providers: [MarketService],
   exports: [MarketService],
 })
 export class MarketModule {}
-

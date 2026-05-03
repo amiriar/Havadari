@@ -80,7 +80,8 @@ export class CardAvatarService {
         run.generatedCount += 1;
       } catch (error) {
         card.avatarStatus = AvatarStatusEnum.FAILED;
-        card.avatarError = error instanceof Error ? error.message : String(error);
+        card.avatarError =
+          error instanceof Error ? error.message : String(error);
         await this.cardRepo.save(card);
         run.failedCount += 1;
       }
@@ -110,7 +111,7 @@ export class CardAvatarService {
         ? 'dc2626'
         : card.rarity === CardRarityEnum.LEGENDARY
           ? 'ca8a04'
-        : card.rarity === CardRarityEnum.EPIC
+          : card.rarity === CardRarityEnum.EPIC
             ? '7c3aed'
             : card.rarity === CardRarityEnum.RARE
               ? '2563eb'
