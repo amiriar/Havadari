@@ -3,6 +3,7 @@ import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ChestTypeEnum } from './constants/chest.types';
 import { ChestsService } from './chests.service';
 
 @ApiTags('chests')
@@ -22,7 +23,7 @@ export class ChestsController {
 
   @Post('open/:type')
   open(@UserDecorator() user: User, @Param('type') type: string) {
-    return this.chestsService.open(user, type as any);
+    return this.chestsService.open(user, type as ChestTypeEnum);
   }
 
   @Get('logs')
@@ -42,4 +43,3 @@ export class ChestsController {
     );
   }
 }
-

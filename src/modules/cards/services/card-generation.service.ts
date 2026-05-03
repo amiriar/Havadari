@@ -5,6 +5,11 @@ import { paginate } from 'nestjs-typeorm-paginate';
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
 import { Card } from '../entities/card.entity';
+import {
+  AvatarStatusEnum,
+  CardEditionEnum,
+  PlayerPositionEnum,
+} from '../constants/card.enums';
 import { PlayerRatingService } from './player-rating.service';
 
 @Injectable()
@@ -45,7 +50,7 @@ export class CardGenerationService {
           sourceProviderPlayerId: player.providerPlayerId,
           playerName: player.fullName || 'Unknown',
           nationality: player.nationality || 'Unknown',
-          position: player.position || 'MID',
+          position: player.position || PlayerPositionEnum.MID,
           overallRating: ratings.overall,
           speed: ratings.speed,
           power: ratings.power,
@@ -53,10 +58,10 @@ export class CardGenerationService {
           attack: ratings.attack,
           defend: ratings.defend,
           rarity,
-          edition: 'BASE',
+          edition: CardEditionEnum.BASE,
           baseValue,
           ratingVersion,
-          avatarStatus: 'PENDING',
+          avatarStatus: AvatarStatusEnum.PENDING,
           avatarUrl: null,
           avatarPrompt: null,
           avatarError: null,

@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
 import {
   PlayerProvider,
   ProviderPlayer,
@@ -8,7 +9,7 @@ import {
 
 @Injectable()
 export class ApiFootballPlayerProvider implements PlayerProvider {
-  readonly name = 'api-football' as const;
+  readonly name = PlayerProviderEnum.API_FOOTBALL;
 
   constructor(private readonly config: ConfigService) {}
 
@@ -110,13 +111,13 @@ export class ApiFootballPlayerProvider implements PlayerProvider {
     return out;
   }
 
-  private mapPosition(raw: string | undefined): 'GK' | 'DEF' | 'MID' | 'FW' | null {
+  private mapPosition(raw: string | undefined): PlayerPositionEnum | null {
     if (!raw) return null;
     const value = raw.toUpperCase();
-    if (value.includes('GOAL')) return 'GK';
-    if (value.includes('DEF')) return 'DEF';
-    if (value.includes('MID')) return 'MID';
-    if (value.includes('ATT') || value.includes('FOR')) return 'FW';
+    if (value.includes('GOAL')) return PlayerPositionEnum.GK;
+    if (value.includes('DEF')) return PlayerPositionEnum.DEF;
+    if (value.includes('MID')) return PlayerPositionEnum.MID;
+    if (value.includes('ATT') || value.includes('FOR')) return PlayerPositionEnum.FW;
     return null;
   }
 
@@ -126,4 +127,3 @@ export class ApiFootballPlayerProvider implements PlayerProvider {
     return match ? Number(match[1]) : null;
   }
 }
-

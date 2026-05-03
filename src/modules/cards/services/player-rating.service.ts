@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
+import { CardRarityEnum } from '../constants/card.enums';
 
 export interface CardRatings {
   speed: number;
@@ -50,25 +51,25 @@ export class PlayerRatingService {
     };
   }
 
-  rarity(overall: number): 'COMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'MYTHIC' {
-    if (overall >= 98) return 'MYTHIC';
-    if (overall >= 94) return 'LEGENDARY';
-    if (overall >= 88) return 'EPIC';
-    if (overall >= 80) return 'RARE';
-    return 'COMMON';
+  rarity(overall: number): CardRarityEnum {
+    if (overall >= 98) return CardRarityEnum.MYTHIC;
+    if (overall >= 94) return CardRarityEnum.LEGENDARY;
+    if (overall >= 88) return CardRarityEnum.EPIC;
+    if (overall >= 80) return CardRarityEnum.RARE;
+    return CardRarityEnum.COMMON;
   }
 
-  baseValue(rarity: 'COMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'MYTHIC'): number {
+  baseValue(rarity: CardRarityEnum): number {
     switch (rarity) {
-      case 'COMMON':
+      case CardRarityEnum.COMMON:
         return 100;
-      case 'RARE':
+      case CardRarityEnum.RARE:
         return 500;
-      case 'EPIC':
+      case CardRarityEnum.EPIC:
         return 2000;
-      case 'LEGENDARY':
+      case CardRarityEnum.LEGENDARY:
         return 8000;
-      case 'MYTHIC':
+      case CardRarityEnum.MYTHIC:
         return 30000;
     }
   }
@@ -77,4 +78,3 @@ export class PlayerRatingService {
     return Math.max(1, Math.min(99, value));
   }
 }
-

@@ -1,5 +1,6 @@
 import { ApplicationBaseEntity } from '@common/entities/application-base.entity';
 import { Column, Entity } from 'typeorm';
+import { AvatarGenerationRunStatusEnum } from '../constants/card.enums';
 
 @Entity('avatar_generation_runs')
 export class AvatarGenerationRun extends ApplicationBaseEntity {
@@ -12,10 +13,13 @@ export class AvatarGenerationRun extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   failedCount: number;
 
-  @Column({ type: 'varchar', length: 16, default: 'SUCCESS' })
-  status: 'SUCCESS' | 'FAILED';
+  @Column({
+    type: 'enum',
+    enum: AvatarGenerationRunStatusEnum,
+    default: AvatarGenerationRunStatusEnum.SUCCESS,
+  })
+  status: AvatarGenerationRunStatusEnum;
 
   @Column({ type: 'text', nullable: true })
   message: string | null;
 }
-

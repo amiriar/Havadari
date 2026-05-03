@@ -1,11 +1,12 @@
 import { ApplicationBaseEntity } from '@common/entities/application-base.entity';
 import { Column, Entity, Index } from 'typeorm';
+import { ChestTypeEnum } from '../constants/chest.types';
 
 @Entity('chest_definitions')
 @Index(['type'], { unique: true })
 export class ChestDefinitionEntity extends ApplicationBaseEntity {
-  @Column({ type: 'varchar', length: 32 })
-  type: string;
+  @Column({ type: 'enum', enum: ChestTypeEnum })
+  type: ChestTypeEnum;
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
@@ -22,4 +23,3 @@ export class ChestDefinitionEntity extends ApplicationBaseEntity {
   @Column({ type: 'jsonb' })
   drops: Array<Record<string, unknown>>;
 }
-

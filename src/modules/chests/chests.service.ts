@@ -1,6 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
 import { Card } from '@app/cards/entities/card.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
+import { UserCardAcquiredFromEnum } from '@app/cards/constants/card.enums';
 import {
   BadRequestException,
   Injectable,
@@ -11,9 +12,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import {
-  CardRarity,
+  CardRarityEnum,
   ChestDefinition,
-  ChestType,
+  ChestTypeEnum,
 } from './constants/chest.types';
 import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
@@ -42,52 +43,52 @@ export class ChestsService implements OnModuleInit {
     await this.definitionRepo.save(
       this.definitionRepo.create([
         {
-          type: 'common_chest',
+          type: ChestTypeEnum.COMMON_CHEST,
           isActive: true,
           costFgc: 300,
           costGems: 0,
           cooldownSeconds: 0,
           drops: [
-            { type: 'card', rarity: 'COMMON', probability: 0.75 },
-            { type: 'card', rarity: 'RARE', probability: 0.2 },
+            { type: 'card', rarity: CardRarityEnum.COMMON, probability: 0.75 },
+            { type: 'card', rarity: CardRarityEnum.RARE, probability: 0.2 },
             { type: 'fgc', min: 50, max: 200, probability: 0.05 },
           ],
         },
         {
-          type: 'rare_chest',
+          type: ChestTypeEnum.RARE_CHEST,
           isActive: true,
           costFgc: 900,
           costGems: 40,
           cooldownSeconds: 4 * 60 * 60,
           drops: [
-            { type: 'card', rarity: 'RARE', probability: 0.55 },
-            { type: 'card', rarity: 'EPIC', probability: 0.35 },
-            { type: 'card', rarity: 'LEGENDARY', probability: 0.08 },
+            { type: 'card', rarity: CardRarityEnum.RARE, probability: 0.55 },
+            { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.35 },
+            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.08 },
             { type: 'gems', min: 10, max: 30, probability: 0.02 },
           ],
         },
         {
-          type: 'epic_chest',
+          type: ChestTypeEnum.EPIC_CHEST,
           isActive: true,
           costFgc: 0,
           costGems: 100,
           cooldownSeconds: 0,
           drops: [
-            { type: 'card', rarity: 'EPIC', probability: 0.6 },
-            { type: 'card', rarity: 'LEGENDARY', probability: 0.3 },
-            { type: 'card', rarity: 'MYTHIC', probability: 0.08 },
+            { type: 'card', rarity: CardRarityEnum.EPIC, probability: 0.6 },
+            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.3 },
+            { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.08 },
             { type: 'gems', min: 20, max: 50, probability: 0.02 },
           ],
         },
         {
-          type: 'legendary_chest',
+          type: ChestTypeEnum.LEGENDARY_CHEST,
           isActive: true,
           costFgc: 0,
           costGems: 250,
           cooldownSeconds: 0,
           drops: [
-            { type: 'card', rarity: 'LEGENDARY', probability: 0.85 },
-            { type: 'card', rarity: 'MYTHIC', probability: 0.15 },
+            { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.85 },
+            { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.15 },
           ],
         },
       ]),
@@ -119,7 +120,7 @@ export class ChestsService implements OnModuleInit {
     };
   }
 
-  async open(user: User, type: ChestType) {
+  async open(user: User, type: ChestTypeEnum) {
     const authUser = await this.mustUser(user);
     const defEntity = await this.definitionRepo.findOne({
       where: { type, isActive: true },
@@ -171,7 +172,7 @@ export class ChestsService implements OnModuleInit {
         user: authUser,
         card,
         level: 1,
-        acquiredFrom: 'chest',
+        acquiredFrom: UserCardAcquiredFromEnum.CHEST,
         isInDeck: false,
         isListed: false,
       });
@@ -192,7 +193,7 @@ export class ChestsService implements OnModuleInit {
       rewardPayload.gems = amount;
     }
 
-    if (def.type === 'rare_chest' && def.cooldownSeconds > 0) {
+    if (def.type === ChestTypeEnum.RARE_CHEST && def.cooldownSeconds > 0) {
       state.rareChestCooldownUntil = new Date(
         Date.now() + def.cooldownSeconds * 1000,
       );
@@ -234,23 +235,23 @@ export class ChestsService implements OnModuleInit {
   }
 
   private async rollReward(def: ChestDefinition, state: UserChestState) {
-    if (def.type === 'rare_chest') {
+    if (def.type === ChestTypeEnum.RARE_CHEST) {
       state.rareToEpicCounter += 1;
       if (state.rareToEpicCounter >= 20) {
         state.rareToEpicCounter = 0;
-        return { type: 'card' as const, rarity: 'EPIC' as CardRarity };
+        return { type: 'card' as const, rarity: CardRarityEnum.EPIC };
       }
     }
-    if (def.type === 'epic_chest') {
+    if (def.type === ChestTypeEnum.EPIC_CHEST) {
       state.epicToLegendaryCounter += 1;
       if (state.epicToLegendaryCounter >= 80) {
         state.epicToLegendaryCounter = 0;
-        return { type: 'card' as const, rarity: 'LEGENDARY' as CardRarity };
+        return { type: 'card' as const, rarity: CardRarityEnum.LEGENDARY };
       }
     }
     if (state.totalOpensCounter + 1 >= 200) {
       state.totalOpensCounter = 0;
-      return { type: 'card' as const, rarity: 'MYTHIC' as CardRarity };
+      return { type: 'card' as const, rarity: CardRarityEnum.MYTHIC };
     }
 
     const roll = Math.random();
@@ -264,7 +265,7 @@ export class ChestsService implements OnModuleInit {
 
   private toDefinition(entity: ChestDefinitionEntity): ChestDefinition {
     return {
-      type: entity.type as ChestType,
+      type: entity.type as ChestTypeEnum,
       cost: {
         fgc: entity.costFgc || 0,
         gems: entity.costGems || 0,
@@ -274,7 +275,7 @@ export class ChestsService implements OnModuleInit {
     };
   }
 
-  private async getRandomCardByRarity(userId: string, rarity: CardRarity) {
+  private async getRandomCardByRarity(userId: string, rarity: CardRarityEnum) {
     const owned = await this.userCardRepo.find({
       where: { user: { id: userId } },
       relations: { card: true },
@@ -307,7 +308,7 @@ export class ChestsService implements OnModuleInit {
   }
 
   private ensureCooldown(def: ChestDefinition, state: UserChestState) {
-    if (def.type !== 'rare_chest') return;
+    if (def.type !== ChestTypeEnum.RARE_CHEST) return;
     if (
       state.rareChestCooldownUntil &&
       state.rareChestCooldownUntil.getTime() > Date.now()

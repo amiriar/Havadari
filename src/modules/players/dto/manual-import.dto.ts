@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
-  IsIn,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsObject,
@@ -12,6 +12,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
 
 class ManualPlayerStatDto {
   @ApiProperty()
@@ -81,9 +82,9 @@ class ManualPlayerStatDto {
 }
 
 class ManualPlayerDto {
-  @ApiProperty({ enum: ['football-data', 'api-football', 'manual'] })
-  @IsIn(['football-data', 'api-football', 'manual'])
-  provider: 'football-data' | 'api-football' | 'manual';
+  @ApiProperty({ enum: PlayerProviderEnum })
+  @IsEnum(PlayerProviderEnum)
+  provider: PlayerProviderEnum;
 
   @ApiProperty()
   @IsString()
@@ -110,10 +111,10 @@ class ManualPlayerDto {
   @IsString()
   competitionCode?: string;
 
-  @ApiPropertyOptional({ enum: ['GK', 'DEF', 'MID', 'FW'] })
+  @ApiPropertyOptional({ enum: PlayerPositionEnum })
   @IsOptional()
-  @IsIn(['GK', 'DEF', 'MID', 'FW'])
-  position?: 'GK' | 'DEF' | 'MID' | 'FW';
+  @IsEnum(PlayerPositionEnum)
+  position?: PlayerPositionEnum;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -159,4 +160,3 @@ export class ManualImportPlayersDto {
   @IsInt()
   season?: number;
 }
-

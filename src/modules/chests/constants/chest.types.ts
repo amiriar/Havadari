@@ -1,17 +1,24 @@
-export type CardRarity = 'COMMON' | 'RARE' | 'EPIC' | 'LEGENDARY' | 'MYTHIC';
+export enum CardRarityEnum {
+  COMMON = 'COMMON',
+  RARE = 'RARE',
+  EPIC = 'EPIC',
+  LEGENDARY = 'LEGENDARY',
+  MYTHIC = 'MYTHIC',
+}
 
-export type ChestType =
-  | 'common_chest'
-  | 'rare_chest'
-  | 'epic_chest'
-  | 'legendary_chest';
+export enum ChestTypeEnum {
+  COMMON_CHEST = 'common_chest',
+  RARE_CHEST = 'rare_chest',
+  EPIC_CHEST = 'epic_chest',
+  LEGENDARY_CHEST = 'legendary_chest',
+}
 
 export type ChestDefinition = {
-  type: ChestType;
+  type: ChestTypeEnum;
   cost: { fgc?: number; gems?: number };
   cooldownSeconds: number;
   drops: Array<
-    | { type: 'card'; rarity: CardRarity; probability: number }
+    | { type: 'card'; rarity: CardRarityEnum; probability: number }
     | { type: 'fgc'; min: number; max: number; probability: number }
     | { type: 'gems'; min: number; max: number; probability: number }
   >;

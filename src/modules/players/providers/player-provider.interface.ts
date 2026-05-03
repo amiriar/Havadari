@@ -1,11 +1,13 @@
+import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
+
 export interface ProviderPlayer {
-  provider: 'football-data' | 'api-football';
+  provider: PlayerProviderEnum;
   providerPlayerId: string;
   fullName: string;
   nationality: string | null;
   teamName: string | null;
   competitionCode: string | null;
-  position: 'GK' | 'DEF' | 'MID' | 'FW' | null;
+  position: PlayerPositionEnum | null;
   birthDate: string | null;
   heightCm: number | null;
   weightKg: number | null;
@@ -31,11 +33,10 @@ export interface ProviderPlayerStats {
 }
 
 export interface PlayerProvider {
-  readonly name: 'football-data' | 'api-football';
+  readonly name: PlayerProviderEnum.FOOTBALL_DATA | PlayerProviderEnum.API_FOOTBALL;
   fetchPlayers(season: number, competitions?: string[]): Promise<ProviderPlayer[]>;
   fetchPlayerStats(
     season: number,
     competitions?: string[],
   ): Promise<ProviderPlayerStats[]>;
 }
-

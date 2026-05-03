@@ -8,6 +8,7 @@ import { TemplateParameterModule } from '@app/templateParameter/template-paramet
 import { CardsModule } from '@app/cards/cards.module';
 import { PlayersModule } from '@app/players/players.module';
 import { ChestsModule } from '@app/chests/chests.module';
+import { MarketModule } from '@app/market/market.module';
 import { ElasticSearchModule } from '@common/modules/elastic-search/elastic-search.module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
@@ -39,6 +40,7 @@ export async function setUpSwagger(app: INestApplication) {
       PlayersModule,
       CardsModule,
       ChestsModule,
+      MarketModule,
     ],
   });
 

@@ -29,6 +29,7 @@ import { SmsModule } from '../sms/sms.module';
 import { CardsModule } from '../cards/cards.module';
 import { PlayersModule } from '../players/players.module';
 import { ChestsModule } from '../chests/chests.module';
+import { MarketModule } from '../market/market.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -49,6 +50,7 @@ import { AppService } from './app.service';
     PlayersModule,
     CardsModule,
     ChestsModule,
+    MarketModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,

@@ -1,14 +1,15 @@
 import { ApplicationBaseEntity } from '@common/entities/application-base.entity';
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { PlayerStatSnapshot } from './player-stat-snapshot.entity';
+import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
 
 @Entity('players')
 @Index(['provider', 'providerPlayerId'], { unique: true })
 @Index(['fullName'])
 @Index(['teamName'])
 export class Player extends ApplicationBaseEntity {
-  @Column({ type: 'varchar', length: 32, nullable: true })
-  provider: 'football-data' | 'api-football' | 'manual' | null;
+  @Column({ type: 'enum', enum: PlayerProviderEnum, nullable: true })
+  provider: PlayerProviderEnum | null;
 
   @Column({ type: 'varchar', length: 64, nullable: true })
   providerPlayerId: string | null;
@@ -25,8 +26,8 @@ export class Player extends ApplicationBaseEntity {
   @Column({ type: 'varchar', length: 16, nullable: true })
   competitionCode: string | null;
 
-  @Column({ type: 'varchar', length: 4, nullable: true })
-  position: 'GK' | 'DEF' | 'MID' | 'FW' | null;
+  @Column({ type: 'enum', enum: PlayerPositionEnum, nullable: true })
+  position: PlayerPositionEnum | null;
 
   @Column({ type: 'date', nullable: true })
   birthDate: string | null;

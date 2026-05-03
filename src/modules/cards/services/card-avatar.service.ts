@@ -2,6 +2,11 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
+import {
+  AvatarGenerationRunStatusEnum,
+  AvatarStatusEnum,
+  CardRarityEnum,
+} from '../constants/card.enums';
 import { AvatarGenerationRun } from '../entities/avatar-generation-run.entity';
 import { Card } from '../entities/card.entity';
 
@@ -28,7 +33,7 @@ export class CardAvatarService {
       take: Math.min(limit, 1000),
     });
     for (const card of cards) {
-      card.avatarStatus = 'PENDING';
+      card.avatarStatus = AvatarStatusEnum.PENDING;
       if (!card.avatarPrompt) card.avatarPrompt = this.buildPrompt(card);
       await this.cardRepo.save(card);
     }
@@ -38,7 +43,7 @@ export class CardAvatarService {
   async regenerate(cardId: string) {
     const card = await this.cardRepo.findOne({ where: { id: cardId } });
     if (!card) throw new NotFoundException('card not found');
-    card.avatarStatus = 'PENDING';
+    card.avatarStatus = AvatarStatusEnum.PENDING;
     card.avatarError = null;
     card.avatarPrompt = this.buildPrompt(card);
     await this.cardRepo.save(card);
@@ -47,7 +52,7 @@ export class CardAvatarService {
 
   async processQueue(limit = 25) {
     const pending = await this.cardRepo.find({
-      where: { avatarStatus: 'PENDING' },
+      where: { avatarStatus: AvatarStatusEnum.PENDING },
       order: { updatedAt: 'ASC' },
       take: Math.min(200, limit),
     });
@@ -57,7 +62,7 @@ export class CardAvatarService {
       requestedCount: pending.length,
       generatedCount: 0,
       failedCount: 0,
-      status: 'SUCCESS',
+      status: AvatarGenerationRunStatusEnum.SUCCESS,
       message: null,
     });
     await this.runRepo.save(run);
@@ -69,12 +74,12 @@ export class CardAvatarService {
         const generatedUrl = this.buildPlaceholderAvatarUrl(card);
         card.avatarPrompt = prompt;
         card.avatarUrl = generatedUrl;
-        card.avatarStatus = 'GENERATED';
+        card.avatarStatus = AvatarStatusEnum.GENERATED;
         card.avatarError = null;
         await this.cardRepo.save(card);
         run.generatedCount += 1;
       } catch (error) {
-        card.avatarStatus = 'FAILED';
+        card.avatarStatus = AvatarStatusEnum.FAILED;
         card.avatarError = error instanceof Error ? error.message : String(error);
         await this.cardRepo.save(card);
         run.failedCount += 1;
@@ -82,7 +87,7 @@ export class CardAvatarService {
     }
 
     if (run.failedCount > 0) {
-      run.status = 'FAILED';
+      run.status = AvatarGenerationRunStatusEnum.FAILED;
       run.message = `${run.failedCount} avatar generations failed`;
       this.logger.warn(run.message);
     }
@@ -101,17 +106,16 @@ export class CardAvatarService {
 
   private buildPlaceholderAvatarUrl(card: Card) {
     const bg =
-      card.rarity === 'MYTHIC'
+      card.rarity === CardRarityEnum.MYTHIC
         ? 'dc2626'
-        : card.rarity === 'LEGENDARY'
+        : card.rarity === CardRarityEnum.LEGENDARY
           ? 'ca8a04'
-          : card.rarity === 'EPIC'
+        : card.rarity === CardRarityEnum.EPIC
             ? '7c3aed'
-            : card.rarity === 'RARE'
+            : card.rarity === CardRarityEnum.RARE
               ? '2563eb'
               : '6b7280';
     const name = encodeURIComponent(card.playerName);
     return `https://ui-avatars.com/api/?name=${name}&background=${bg}&color=fff&size=512&bold=true`;
   }
 }
-

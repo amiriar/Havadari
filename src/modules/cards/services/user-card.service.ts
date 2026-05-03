@@ -11,6 +11,7 @@ import { paginate } from 'nestjs-typeorm-paginate';
 import { SetActiveSquadDto } from '../dto/set-active-squad.dto';
 import { UpdateUserSquadDto } from '../dto/update-user-squad.dto';
 import { UserCard } from '../entities/user-card.entity';
+import { UserCardAcquiredFromEnum } from '../constants/card.enums';
 
 @Injectable()
 export class UserCardService {
@@ -51,7 +52,7 @@ export class UserCardService {
         user,
         card,
         level: 1,
-        acquiredFrom: 'starter',
+        acquiredFrom: UserCardAcquiredFromEnum.STARTER,
         isInDeck: starterSquadCardIds.includes(card.id),
         isListed: false,
       }),

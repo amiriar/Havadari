@@ -1,6 +1,7 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { PlayerPositionEnum } from '../constants/player.enums';
 
 export class GetPlayersQueryDto {
   @ApiPropertyOptional()
@@ -8,10 +9,10 @@ export class GetPlayersQueryDto {
   @IsString()
   team?: string;
 
-  @ApiPropertyOptional({ enum: ['GK', 'DEF', 'MID', 'FW'] })
+  @ApiPropertyOptional({ enum: PlayerPositionEnum })
   @IsOptional()
-  @IsIn(['GK', 'DEF', 'MID', 'FW'])
-  position?: 'GK' | 'DEF' | 'MID' | 'FW';
+  @IsEnum(PlayerPositionEnum)
+  position?: PlayerPositionEnum;
 
   @ApiPropertyOptional()
   @IsOptional()

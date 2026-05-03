@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { PlayerPositionEnum, PlayerProviderEnum } from '../constants/player.enums';
 import {
   PlayerProvider,
   ProviderPlayer,
@@ -8,7 +9,7 @@ import {
 
 @Injectable()
 export class FootballDataPlayerProvider implements PlayerProvider {
-  readonly name = 'football-data' as const;
+  readonly name = PlayerProviderEnum.FOOTBALL_DATA;
 
   constructor(private readonly config: ConfigService) {}
 
@@ -71,14 +72,13 @@ export class FootballDataPlayerProvider implements PlayerProvider {
     return [];
   }
 
-  private mapPosition(raw: string | undefined): 'GK' | 'DEF' | 'MID' | 'FW' | null {
+  private mapPosition(raw: string | undefined): PlayerPositionEnum | null {
     if (!raw) return null;
     const value = raw.toLowerCase();
-    if (value.includes('keeper')) return 'GK';
-    if (value.includes('defen')) return 'DEF';
-    if (value.includes('mid')) return 'MID';
-    if (value.includes('forw') || value.includes('attac')) return 'FW';
+    if (value.includes('keeper')) return PlayerPositionEnum.GK;
+    if (value.includes('defen')) return PlayerPositionEnum.DEF;
+    if (value.includes('mid')) return PlayerPositionEnum.MID;
+    if (value.includes('forw') || value.includes('attac')) return PlayerPositionEnum.FW;
     return null;
   }
 }
-

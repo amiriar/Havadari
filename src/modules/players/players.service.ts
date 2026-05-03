@@ -4,6 +4,11 @@ import { ILike, Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { CardGenerationService } from '@app/cards/services/card-generation.service';
 import { ProviderDiagnostic } from './constants/player-sync.types';
+import {
+  PlayerPositionEnum,
+  PlayerProviderEnum,
+  PlayerSyncRunStatusEnum,
+} from './constants/player.enums';
 import { ManualImportPlayersDto } from './dto/manual-import.dto';
 import { Player } from './entities/player.entity';
 import { PlayerStatSnapshot } from './entities/player-stat-snapshot.entity';
@@ -81,7 +86,7 @@ export class PlayersService {
     if (totalImportedPlayers === 0) {
       const failedRun = this.runRepo.create({
         season,
-        status: 'FAILED',
+        status: PlayerSyncRunStatusEnum.FAILED,
         importedPlayers: 0,
         importedStats: 0,
         diagnostics,
@@ -100,7 +105,7 @@ export class PlayersService {
 
     const successRun = this.runRepo.create({
       season,
-      status: 'SUCCESS',
+      status: PlayerSyncRunStatusEnum.SUCCESS,
       importedPlayers: totalImportedPlayers,
       importedStats: totalImportedStats,
       diagnostics,
@@ -119,9 +124,12 @@ export class PlayersService {
 
   async importManual(dto: ManualImportPlayersDto) {
     const season = dto.season ?? 2026;
-    const importedPlayers = await this.upsertPlayers('manual', dto.players as any);
+    const importedPlayers = await this.upsertPlayers(
+      PlayerProviderEnum.MANUAL,
+      dto.players as any,
+    );
     const importedStats = await this.upsertStats(
-      'manual',
+      PlayerProviderEnum.MANUAL,
       season,
       (dto.stats || []).map((row) => ({
         providerPlayerId: row.providerPlayerId,
@@ -145,12 +153,12 @@ export class PlayersService {
 
     const run = this.runRepo.create({
       season,
-      status: 'SUCCESS',
+      status: PlayerSyncRunStatusEnum.SUCCESS,
       importedPlayers,
       importedStats,
       diagnostics: [
         {
-          provider: 'manual',
+          provider: PlayerProviderEnum.MANUAL,
           playersFetched: dto.players.length,
           statsFetched: dto.stats?.length || 0,
           importedPlayers,
@@ -169,78 +177,78 @@ export class PlayersService {
     const now = new Date().toISOString();
     const players = [
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-messi',
         fullName: 'Lionel Messi',
         nationality: 'Argentina',
         teamName: 'Inter Miami',
         competitionCode: 'MANUAL',
-        position: 'FW',
+        position: PlayerPositionEnum.FW,
         birthDate: '1987-06-24',
         heightCm: 170,
         weightKg: 72,
         rawPayload: { seededAt: now },
       },
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-mbappe',
         fullName: 'Kylian Mbappe',
         nationality: 'France',
         teamName: 'Real Madrid',
         competitionCode: 'MANUAL',
-        position: 'FW',
+        position: PlayerPositionEnum.FW,
         birthDate: '1998-12-20',
         heightCm: 178,
         weightKg: 75,
         rawPayload: { seededAt: now },
       },
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-bellingham',
         fullName: 'Jude Bellingham',
         nationality: 'England',
         teamName: 'Real Madrid',
         competitionCode: 'MANUAL',
-        position: 'MID',
+        position: PlayerPositionEnum.MID,
         birthDate: '2003-06-29',
         heightCm: 186,
         weightKg: 75,
         rawPayload: { seededAt: now },
       },
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-rodri',
         fullName: 'Rodri',
         nationality: 'Spain',
         teamName: 'Manchester City',
         competitionCode: 'MANUAL',
-        position: 'MID',
+        position: PlayerPositionEnum.MID,
         birthDate: '1996-06-22',
         heightCm: 191,
         weightKg: 82,
         rawPayload: { seededAt: now },
       },
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-ruben-dias',
         fullName: 'Ruben Dias',
         nationality: 'Portugal',
         teamName: 'Manchester City',
         competitionCode: 'MANUAL',
-        position: 'DEF',
+        position: PlayerPositionEnum.DEF,
         birthDate: '1997-05-14',
         heightCm: 186,
         weightKg: 83,
         rawPayload: { seededAt: now },
       },
       {
-        provider: 'manual',
+        provider: PlayerProviderEnum.MANUAL,
         providerPlayerId: 'manual-donnarumma',
         fullName: 'Gianluigi Donnarumma',
         nationality: 'Italy',
         teamName: 'PSG',
         competitionCode: 'MANUAL',
-        position: 'GK',
+        position: PlayerPositionEnum.GK,
         birthDate: '1999-02-25',
         heightCm: 196,
         weightKg: 90,
