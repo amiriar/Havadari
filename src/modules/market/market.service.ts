@@ -1,5 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
+import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
+import { RankPointsService } from '@app/leaderboard/rank-points.service';
 import {
   BadRequestException,
   Injectable,
@@ -27,6 +29,7 @@ export class MarketService {
     private readonly listingRepo: Repository<MarketListing>,
     @InjectRepository(MarketTrade)
     private readonly tradeRepo: Repository<MarketTrade>,
+    private readonly rankPointsService: RankPointsService,
   ) {}
 
   @Cron('0 */10 * * * *')
@@ -126,6 +129,20 @@ export class MarketService {
         platformFee,
         sellerReceive,
       }),
+    );
+    await this.rankPointsService.apply(
+      seller.id,
+      4,
+      RankPointSourceEnum.REWARD,
+      listing.id,
+      { marketAction: 'sell' },
+    );
+    await this.rankPointsService.apply(
+      buyer.id,
+      2,
+      RankPointSourceEnum.REWARD,
+      listing.id,
+      { marketAction: 'buy' },
     );
 
     return {

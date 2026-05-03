@@ -1,16 +1,22 @@
 import { User } from '@app/auth/entities/user.entity';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
+import { AuthorizeByPermissions } from '@common/decorators/authorize-by-permissions.decorator';
+import { READ_USER } from '@common/constants/permissions_name/user';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { LeaderboardTypeEnum } from './constants/leaderboard.enums';
 import { GetLeaderboardQueryDto } from './dto/get-leaderboard-query.dto';
 import { LeaderboardService } from './leaderboard.service';
+import { RankPointsService } from './rank-points.service';
 
 @ApiTags('leaderboard')
 @Controller('leaderboard')
 export class LeaderboardController {
-  constructor(private readonly leaderboardService: LeaderboardService) {}
+  constructor(
+    private readonly leaderboardService: LeaderboardService,
+    private readonly rankPointsService: RankPointsService,
+  ) {}
 
   @Get()
   list(@Query() query: GetLeaderboardQueryDto, @Url() url: string) {
@@ -30,6 +36,41 @@ export class LeaderboardController {
     return this.leaderboardService.getMyRank(
       user,
       type ?? LeaderboardTypeEnum.CLASSIC,
+    );
+  }
+
+  @Get('points-history')
+  @AuthorizeByPermissions([READ_USER])
+  pointsHistory(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('userId') userId?: string,
+    @Url() url?: string,
+  ) {
+    const parsedPage = page ? Number(page) : 1;
+    const parsedLimit = limit ? Number(limit) : 20;
+    return this.rankPointsService.history(
+      userId,
+      Number.isFinite(parsedPage) ? parsedPage : 1,
+      Number.isFinite(parsedLimit) ? parsedLimit : 20,
+      url,
+    );
+  }
+
+  @Get('my-points-history')
+  myPointsHistory(
+    @UserDecorator() user: User,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Url() url?: string,
+  ) {
+    const parsedPage = page ? Number(page) : 1;
+    const parsedLimit = limit ? Number(limit) : 20;
+    return this.rankPointsService.history(
+      user.id,
+      Number.isFinite(parsedPage) ? parsedPage : 1,
+      Number.isFinite(parsedLimit) ? parsedLimit : 20,
+      url,
     );
   }
 }

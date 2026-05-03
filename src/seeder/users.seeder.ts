@@ -15,6 +15,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'superadmin@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 1200,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4001',
@@ -28,6 +29,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'doctor@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 600,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4002',
@@ -41,6 +43,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'admin@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 800,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe5001',
@@ -54,6 +57,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'secretary@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 400,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4003',
@@ -67,6 +71,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'warehouse_manager@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 400,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4004',
@@ -80,6 +85,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'patient@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 300,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4005',
@@ -93,6 +99,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'receptionist@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 350,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4006',
@@ -106,6 +113,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'assistant@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 350,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4007',
@@ -119,6 +127,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'supervisor@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 500,
     roles: [
       {
         id: '367cda99-e893-406f-a5b1-0591ddfe4008',
@@ -132,6 +141,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'scan_operator@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 450,
     roles: [
       {
         id: 'f3d03537-1df0-46d9-b1e5-7c464fec1def',
@@ -145,6 +155,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'lab_order_manager@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 450,
     roles: [
       {
         id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
@@ -158,6 +169,7 @@ const users: Array<DeepPartial<User>> = [
     email: 'bank_represent@email.com',
     isEmailVerified: true,
     isPhoneVerified: true,
+    rankPoints: 450,
     roles: [
       {
         id: 'a2ddb07e-cacf-4ddf-8dc7-f0668f03577c',

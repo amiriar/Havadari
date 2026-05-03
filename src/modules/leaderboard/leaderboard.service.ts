@@ -12,7 +12,7 @@ import { Repository } from 'typeorm';
 import { LeaderboardTypeEnum } from './constants/leaderboard.enums';
 import { RankPointSourceEnum } from './constants/rank-point-source.enum';
 import { LeaderboardReward } from './entities/leaderboard-reward.entity';
-import { RankPointEvent } from './entities/rank-point-event.entity';
+import { RankPointsService } from './rank-points.service';
 
 @Injectable()
 export class LeaderboardService implements OnModuleInit {
@@ -23,8 +23,7 @@ export class LeaderboardService implements OnModuleInit {
     private readonly userCardRepo: Repository<UserCard>,
     @InjectRepository(LeaderboardReward)
     private readonly rewardRepo: Repository<LeaderboardReward>,
-    @InjectRepository(RankPointEvent)
-    private readonly rankEventRepo: Repository<RankPointEvent>,
+    private readonly rankPointsService: RankPointsService,
   ) {}
 
   async onModuleInit() {
@@ -82,28 +81,19 @@ export class LeaderboardService implements OnModuleInit {
   async resetClassicWeekly() {
     // Soft weekly reset for rank points with history logging.
     const users = await this.userRepo.find();
-    const events: RankPointEvent[] = [];
     for (const user of users) {
       const before = user.rankPoints || 0;
       const after = Math.floor(before * 0.9);
-      const delta = after - before;
-      user.rankPoints = after;
-      if (delta !== 0) {
-        events.push(
-          this.rankEventRepo.create({
-            user,
-            before,
-            after,
-            delta,
-            source: RankPointSourceEnum.SEASON_RESET,
-            refId: null,
-            meta: { schedule: 'weekly_classic_soft_reset' },
-          }),
+      if (after !== before) {
+        await this.rankPointsService.apply(
+          user.id,
+          after - before,
+          RankPointSourceEnum.SEASON_RESET,
+          null,
+          { schedule: 'weekly_classic_soft_reset' },
         );
       }
     }
-    await this.userRepo.save(users);
-    if (events.length) await this.rankEventRepo.save(events);
   }
 
   async getLeaderboard(

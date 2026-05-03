@@ -2,6 +2,8 @@ import { User } from '@app/auth/entities/user.entity';
 import { Card } from '@app/cards/entities/card.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { UserCardAcquiredFromEnum } from '@app/cards/constants/card.enums';
+import { RankPointsService } from '@app/leaderboard/rank-points.service';
+import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import {
   BadRequestException,
   Injectable,
@@ -35,6 +37,7 @@ export class ChestsService implements OnModuleInit {
     private readonly logRepo: Repository<ChestOpenLog>,
     @InjectRepository(ChestDefinitionEntity)
     private readonly definitionRepo: Repository<ChestDefinitionEntity>,
+    private readonly rankPointsService: RankPointsService,
   ) {}
 
   async onModuleInit() {
@@ -222,6 +225,21 @@ export class ChestsService implements OnModuleInit {
         spentFgc: def.cost.fgc || 0,
         spentGems: def.cost.gems || 0,
       }),
+    );
+    const rankDelta =
+      type === ChestTypeEnum.LEGENDARY_CHEST
+        ? 8
+        : type === ChestTypeEnum.EPIC_CHEST
+          ? 5
+          : type === ChestTypeEnum.RARE_CHEST
+            ? 3
+            : 1;
+    await this.rankPointsService.apply(
+      authUser.id,
+      rankDelta,
+      RankPointSourceEnum.REWARD,
+      null,
+      { chestType: type },
     );
 
     return {

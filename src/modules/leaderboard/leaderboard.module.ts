@@ -6,6 +6,7 @@ import { LeaderboardController } from './leaderboard.controller';
 import { LeaderboardReward } from './entities/leaderboard-reward.entity';
 import { RankPointEvent } from './entities/rank-point-event.entity';
 import { LeaderboardService } from './leaderboard.service';
+import { RankPointsService } from './rank-points.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { LeaderboardService } from './leaderboard.service';
     ]),
   ],
   controllers: [LeaderboardController],
-  providers: [LeaderboardService],
-  exports: [LeaderboardService],
+  providers: [LeaderboardService, RankPointsService],
+  exports: [LeaderboardService, RankPointsService],
 })
 export class LeaderboardModule {}
