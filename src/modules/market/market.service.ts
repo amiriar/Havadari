@@ -2,6 +2,7 @@ import { User } from '@app/auth/entities/user.entity';
 import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
 import { AchievementsService } from '@app/achievements/achievements.service';
 import { UserCard } from '@app/cards/entities/user-card.entity';
+import { UserCardAcquiredFromEnum } from '@app/cards/constants/card.enums';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import { RankPointsService } from '@app/leaderboard/rank-points.service';
 import { MissionsService } from '@app/missions/missions.service';
@@ -135,6 +136,7 @@ export class MarketService {
 
     listing.status = ListingStatusEnum.SOLD;
     listing.userCard.user = buyer;
+    listing.userCard.acquiredFrom = UserCardAcquiredFromEnum.MARKET;
     listing.userCard.isListed = false;
     listing.userCard.isInDeck = false;
 
@@ -405,6 +407,7 @@ export class MarketService {
       freshListing.status = ListingStatusEnum.SOLD;
       freshListing.price = finalPrice;
       freshListing.userCard.user = buyer;
+      freshListing.userCard.acquiredFrom = UserCardAcquiredFromEnum.MARKET;
       freshListing.userCard.isListed = false;
       freshListing.userCard.isInDeck = false;
 
