@@ -1,6 +1,6 @@
-import { User } from '@app/auth/entities/user.entity';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
 import { NoCache } from '@common/decorators/no-cache';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User } from '@common/decorators/user.decorator';
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AchievementsService } from './achievements.service';
@@ -12,16 +12,16 @@ export class AchievementsController {
 
   @Get()
   @NoCache()
-  list(@UserDecorator() user: User) {
-    return this.achievementsService.list(user);
+  list(@User() user: CurrentUser) {
+    return this.achievementsService.list(user.id);
   }
 
   @Post('claim/:achievementId')
   @NoCache()
   claim(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('achievementId') achievementId: string,
   ) {
-    return this.achievementsService.claim(user, achievementId);
+    return this.achievementsService.claim(user.id, achievementId);
   }
 }

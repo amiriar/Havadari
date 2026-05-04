@@ -222,12 +222,12 @@ export class UserController {
 
   @Get('profile/daily-login/status')
   async dailyLoginStatus(@User() user: CurrentUser) {
-    return this.dailyLoginService.status(user);
+    return this.dailyLoginService.status(user.id);
   }
 
   @Post('profile/daily-login/claim')
   async claimDailyLogin(@User() user: CurrentUser) {
-    return this.dailyLoginService.claim(user);
+    return this.dailyLoginService.claim(user.id);
   }
 
   @Get('profile/daily-login/history')
@@ -240,7 +240,7 @@ export class UserController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.dailyLoginService.history(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,

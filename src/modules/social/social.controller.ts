@@ -1,6 +1,6 @@
-import { User } from '@app/auth/entities/user.entity';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
 import { NoCache } from '@common/decorators/no-cache';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import {
   Body,
@@ -23,40 +23,40 @@ export class SocialController {
 
   @Post('friends/request')
   sendFriendRequest(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Body() dto: SendFriendRequestDto,
   ) {
-    return this.socialService.sendFriendRequest(user, dto);
+    return this.socialService.sendFriendRequest(user.id, dto);
   }
 
   @Post('friends/accept/:requestId')
   acceptFriendRequest(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('requestId') requestId: string,
   ) {
-    return this.socialService.acceptFriendRequest(user, requestId);
+    return this.socialService.acceptFriendRequest(user.id, requestId);
   }
 
   @Post('friends/reject/:requestId')
   rejectFriendRequest(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('requestId') requestId: string,
   ) {
-    return this.socialService.rejectFriendRequest(user, requestId);
+    return this.socialService.rejectFriendRequest(user.id, requestId);
   }
 
   @Delete('friends/:friendUserId')
   removeFriend(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('friendUserId') friendUserId: string,
   ) {
-    return this.socialService.removeFriend(user, friendUserId);
+    return this.socialService.removeFriend(user.id, friendUserId);
   }
 
   @Get('friends')
   @NoCache()
   listFriends(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,
@@ -64,7 +64,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.listFriends(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
@@ -74,7 +74,7 @@ export class SocialController {
   @Get('friends/requests/incoming')
   @NoCache()
   incomingRequests(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,
@@ -82,7 +82,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.listIncomingRequests(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
@@ -90,20 +90,20 @@ export class SocialController {
   }
 
   @Post('gifts/send')
-  sendGift(@UserDecorator() user: User, @Body() dto: SendGiftDto) {
-    return this.socialService.sendGift(user, dto);
+  sendGift(@User() user: CurrentUser, @Body() dto: SendGiftDto) {
+    return this.socialService.sendGift(user.id, dto);
   }
 
   @Post('gifts/claim/:giftId')
   @NoCache()
-  claimGift(@UserDecorator() user: User, @Param('giftId') giftId: string) {
-    return this.socialService.claimGift(user, giftId);
+  claimGift(@User() user: CurrentUser, @Param('giftId') giftId: string) {
+    return this.socialService.claimGift(user.id, giftId);
   }
 
   @Get('gifts/inbox')
   @NoCache()
   myGifts(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,
@@ -111,7 +111,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.myGifts(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,

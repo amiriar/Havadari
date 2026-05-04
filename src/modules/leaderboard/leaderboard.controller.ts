@@ -1,5 +1,5 @@
-import { User } from '@app/auth/entities/user.entity';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
+import { User } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import { AuthorizeByPermissions } from '@common/decorators/authorize-by-permissions.decorator';
 import { NoCache } from '@common/decorators/no-cache';
@@ -32,12 +32,9 @@ export class LeaderboardController {
 
   @Get('me')
   @NoCache()
-  myRank(
-    @UserDecorator() user: User,
-    @Query('type') type?: LeaderboardTypeEnum,
-  ) {
+  myRank(@User() user: CurrentUser, @Query('type') type?: LeaderboardTypeEnum) {
     return this.leaderboardService.getMyRank(
-      user,
+      user.id,
       type ?? LeaderboardTypeEnum.CLASSIC,
     );
   }
@@ -64,7 +61,7 @@ export class LeaderboardController {
   @Get('my-points-history')
   @NoCache()
   myPointsHistory(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,

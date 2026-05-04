@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
 import { AchievementsService } from '@app/achievements/achievements.service';
 import { Card } from '@app/cards/entities/card.entity';
@@ -58,8 +58,8 @@ export class ChestsService {
     return defs.map((d) => this.toDefinition(d));
   }
 
-  async getState(user: User) {
-    const authUser = await this.mustUser(user);
+  async getState(userId: string) {
+    const authUser = await this.getUserByIdOrFail(userId);
     const state = await this.getOrCreateState(authUser);
     const inventoryRows = await this.inventoryRepo.find({
       where: { user: { id: authUser.id } },
@@ -87,8 +87,8 @@ export class ChestsService {
     };
   }
 
-  async open(user: User, type: ChestTypeEnum) {
-    const authUser = await this.mustUser(user);
+  async open(userId: string, type: ChestTypeEnum) {
+    const authUser = await this.getUserByIdOrFail(userId);
     const defEntity = await this.definitionRepo.findOne({
       where: { type, isActive: true },
     });
@@ -255,8 +255,8 @@ export class ChestsService {
     };
   }
 
-  async logs(user: User, page = 1, limit = 20, url?: string) {
-    const authUser = await this.mustUser(user);
+  async logs(userId: string, page = 1, limit = 20, url?: string) {
+    const authUser = await this.getUserByIdOrFail(userId);
     return paginate(
       this.logRepo,
       { page, limit: Math.min(limit, 200), route: url },
@@ -350,9 +350,9 @@ export class ChestsService {
     );
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

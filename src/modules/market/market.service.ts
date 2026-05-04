@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
 import { AchievementsService } from '@app/achievements/achievements.service';
 import { UserCard } from '@app/cards/entities/user-card.entity';
@@ -51,8 +51,8 @@ export class MarketService {
     await this.expireOldListings();
   }
 
-  async list(user: User, dto: CreateListingDto) {
-    const seller = await this.mustUser(user);
+  async list(userId: string, dto: CreateListingDto) {
+    const seller = await this.getUserByIdOrFail(userId);
     const owned = await this.userCardRepo.findOne({
       where: { id: dto.userCardId, user: { id: seller.id } },
       relations: { card: true },
@@ -100,8 +100,8 @@ export class MarketService {
     return listing;
   }
 
-  async buy(user: User, listingId: string) {
-    const buyer = await this.mustUser(user);
+  async buy(userId: string, listingId: string) {
+    const buyer = await this.getUserByIdOrFail(userId);
     const listing = await this.listingRepo.findOne({
       where: { id: listingId },
       relations: { seller: true, userCard: { user: true, card: true } },
@@ -197,8 +197,8 @@ export class MarketService {
     };
   }
 
-  async listAuction(user: User, dto: CreateAuctionListingDto) {
-    const seller = await this.mustUser(user);
+  async listAuction(userId: string, dto: CreateAuctionListingDto) {
+    const seller = await this.getUserByIdOrFail(userId);
     const owned = await this.userCardRepo.findOne({
       where: { id: dto.userCardId, user: { id: seller.id } },
       relations: { card: true },
@@ -245,8 +245,8 @@ export class MarketService {
     return listing;
   }
 
-  async bidAuction(user: User, listingId: string, amount: number) {
-    const bidder = await this.mustUser(user);
+  async bidAuction(userId: string, listingId: string, amount: number) {
+    const bidder = await this.getUserByIdOrFail(userId);
     if (!Number.isFinite(amount) || amount <= 0) {
       throw new BadRequestException('Invalid bid amount.');
     }
@@ -337,8 +337,8 @@ export class MarketService {
     });
   }
 
-  async myListings(user: User, page = 1, limit = 20, url?: string) {
-    const me = await this.mustUser(user);
+  async myListings(userId: string, page = 1, limit = 20, url?: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const qb = this.listingRepo
       .createQueryBuilder('listing')
       .leftJoinAndSelect('listing.seller', 'seller')
@@ -350,8 +350,8 @@ export class MarketService {
     return paginate(qb, { page, limit, route: url });
   }
 
-  async cancel(user: User, listingId: string) {
-    const me = await this.mustUser(user);
+  async cancel(userId: string, listingId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const listing = await this.listingRepo.findOne({
       where: { id: listingId, seller: { id: me.id } },
       relations: { userCard: true },
@@ -450,9 +450,9 @@ export class MarketService {
     await this.listingRepo.save(listing);
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

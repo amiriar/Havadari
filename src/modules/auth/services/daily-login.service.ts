@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
 import { AchievementsService } from '@app/achievements/achievements.service';
 import { ProgressionService } from '@app/progression/progression.service';
@@ -27,8 +27,8 @@ export class DailyLoginService {
     private readonly achievementsService: AchievementsService,
   ) {}
 
-  async status(user: User) {
-    const me = await this.mustUser(user);
+  async status(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const todayDate = this.toUtcDateOnly(new Date());
     const todayClaim = await this.claimRepo.findOne({
       where: { user: { id: me.id }, claimDate: todayDate },
@@ -51,8 +51,8 @@ export class DailyLoginService {
     };
   }
 
-  async claim(user: User) {
-    const me = await this.mustUser(user);
+  async claim(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const result = await this.claimDailyReward(me.id);
     await this.progressionService.addExp(me.id, 20);
     await this.achievementsService.track(
@@ -63,8 +63,8 @@ export class DailyLoginService {
     return result;
   }
 
-  async history(user: User, page = 1, limit = 20, url?: string) {
-    const me = await this.mustUser(user);
+  async history(userId: string, page = 1, limit = 20, url?: string) {
+    const me = await this.getUserByIdOrFail(userId);
     return paginate(
       this.claimRepo,
       { page, limit: Math.min(limit, 200), route: url },
@@ -167,9 +167,9 @@ export class DailyLoginService {
     return this.rewardConfigRepo.count();
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

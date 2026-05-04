@@ -1,9 +1,9 @@
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
+import { User } from '@common/decorators/user.decorator';
 import { NoCache } from '@common/decorators/no-cache';
 import { Url } from '@common/decorators/url.decorator';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from '@app/auth/entities/user.entity';
 import { GetUserCardsQueryDto } from './dto/get-user-cards-query.dto';
 import { MergeUserCardsDto } from './dto/merge-user-cards.dto';
 import { UserCardService } from './services/user-card.service';
@@ -15,13 +15,10 @@ export class UserCardsController {
 
   @Post('starter-pack')
   @NoCache()
-  grantStarterPack(
-    @UserDecorator() user: User,
-    @Query('count') count?: string,
-  ) {
+  grantStarterPack(@User() user: CurrentUser, @Query('count') count?: string) {
     const parsed = count ? Number(count) : 5;
     return this.userCardService.grantStarterPack(
-      user,
+      user.id,
       Number.isFinite(parsed) ? parsed : 5,
     );
   }
@@ -29,12 +26,12 @@ export class UserCardsController {
   @Get()
   @NoCache()
   listMine(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query() query: GetUserCardsQueryDto,
     @Url() url: string,
   ) {
     return this.userCardService.listMine(
-      user,
+      user.id,
       query.page ?? 1,
       query.limit ?? 50,
       url,
@@ -43,16 +40,13 @@ export class UserCardsController {
 
   @Post('upgrade/:userCardId')
   @NoCache()
-  upgrade(
-    @UserDecorator() user: User,
-    @Param('userCardId') userCardId: string,
-  ) {
-    return this.userCardService.upgrade(user, userCardId);
+  upgrade(@User() user: CurrentUser, @Param('userCardId') userCardId: string) {
+    return this.userCardService.upgrade(user.id, userCardId);
   }
 
   @Post('merge')
   @NoCache()
-  merge(@UserDecorator() user: User, @Body() dto: MergeUserCardsDto) {
-    return this.userCardService.mergeDuplicatesToFgc(user, dto.userCardIds);
+  merge(@User() user: CurrentUser, @Body() dto: MergeUserCardsDto) {
+    return this.userCardService.mergeDuplicatesToFgc(user.id, dto.userCardIds);
   }
 }

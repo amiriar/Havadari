@@ -106,7 +106,7 @@ export class AuthService {
     //cache loggedin user
     await this.cacheManager.set(user.id, user, ONE_HOUR_IN_MS);
 
-    await this.userCardService.ensureStarterPack(user);
+    await this.userCardService.ensureStarterPack(user.id);
 
     //sign token
     return await this.jwtService.signToken(user.id);
@@ -168,7 +168,7 @@ export class AuthService {
     }
 
     await this.repository.update({ id: user.id }, { isEmailVerified: true });
-    await this.userCardService.ensureStarterPack(user);
+    await this.userCardService.ensureStarterPack(user.id);
 
     //sign token
     return await this.jwtService.signToken(user.id);
@@ -205,7 +205,7 @@ export class AuthService {
     }
 
     await this.repository.update({ id: user.id }, { isPhoneVerified: true });
-    await this.userCardService.ensureStarterPack(user);
+    await this.userCardService.ensureStarterPack(user.id);
 
     //sign token
     return await this.jwtService.signToken(user.id);

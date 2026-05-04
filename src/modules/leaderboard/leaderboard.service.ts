@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
@@ -88,8 +88,8 @@ export class LeaderboardService {
     };
   }
 
-  async getMyRank(user: User, type: LeaderboardTypeEnum) {
-    const me = await this.mustUser(user);
+  async getMyRank(userId: string, type: LeaderboardTypeEnum) {
+    const me = await this.getUserByIdOrFail(userId);
     const top = await this.getLeaderboard(type, 1, 10000);
     const row = top.items.find((x: any) => x.userId === me.id);
     return (
@@ -117,9 +117,9 @@ export class LeaderboardService {
     }));
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

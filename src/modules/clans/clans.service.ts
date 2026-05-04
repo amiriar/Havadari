@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import {
   BadRequestException,
   ForbiddenException,
@@ -30,8 +30,8 @@ export class ClansService {
     private readonly messageRepo: Repository<ClanMessageEntity>,
   ) {}
 
-  async create(user: User, dto: CreateClanDto) {
-    const me = await this.mustUser(user);
+  async create(userId: string, dto: CreateClanDto) {
+    const me = await this.getUserByIdOrFail(userId);
     const current = await this.memberRepo.findOne({
       where: { user: { id: me.id } },
     });
@@ -57,8 +57,8 @@ export class ClansService {
     return { clanId: clan.id, name: clan.name, inviteCode: clan.inviteCode };
   }
 
-  async join(user: User, dto: JoinClanDto) {
-    const me = await this.mustUser(user);
+  async join(userId: string, dto: JoinClanDto) {
+    const me = await this.getUserByIdOrFail(userId);
     const current = await this.memberRepo.findOne({
       where: { user: { id: me.id } },
     });
@@ -87,8 +87,8 @@ export class ClansService {
     return { joined: true, clanId: clan.id };
   }
 
-  async leave(user: User) {
-    const me = await this.mustUser(user);
+  async leave(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const member = await this.memberRepo.findOne({
       where: { user: { id: me.id } },
       relations: { clan: true },
@@ -117,8 +117,8 @@ export class ClansService {
     return { left: true };
   }
 
-  async kick(user: User, clanId: string, memberUserId: string) {
-    const me = await this.mustUser(user);
+  async kick(userId: string, clanId: string, memberUserId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const actor = await this.memberRepo.findOne({
       where: { user: { id: me.id }, clan: { id: clanId } },
     });
@@ -141,8 +141,8 @@ export class ClansService {
     return { kicked: true, memberUserId };
   }
 
-  async myClan(user: User) {
-    const me = await this.mustUser(user);
+  async myClan(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const member = await this.memberRepo.findOne({
       where: { user: { id: me.id } },
       relations: { clan: true },
@@ -164,13 +164,13 @@ export class ClansService {
   }
 
   async members(
-    user: User,
+    userId: string,
     clanId: string,
     page = 1,
     limit = 20,
     url?: string,
   ) {
-    const me = await this.mustUser(user);
+    const me = await this.getUserByIdOrFail(userId);
     const myMembership = await this.memberRepo.findOne({
       where: { user: { id: me.id }, clan: { id: clanId } },
     });
@@ -187,8 +187,8 @@ export class ClansService {
     );
   }
 
-  async sendMessage(user: User, clanId: string, dto: SendClanMessageDto) {
-    const me = await this.mustUser(user);
+  async sendMessage(userId: string, clanId: string, dto: SendClanMessageDto) {
+    const me = await this.getUserByIdOrFail(userId);
     const member = await this.memberRepo.findOne({
       where: { user: { id: me.id }, clan: { id: clanId } },
       relations: { clan: true },
@@ -208,13 +208,13 @@ export class ClansService {
   }
 
   async messages(
-    user: User,
+    userId: string,
     clanId: string,
     page = 1,
     limit = 50,
     url?: string,
   ) {
-    const me = await this.mustUser(user);
+    const me = await this.getUserByIdOrFail(userId);
     const member = await this.memberRepo.findOne({
       where: { user: { id: me.id }, clan: { id: clanId } },
     });
@@ -241,9 +241,9 @@ export class ClansService {
     return code;
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

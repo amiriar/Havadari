@@ -1,5 +1,5 @@
-import { User } from '@app/auth/entities/user.entity';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
+import { User } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import {
   Body,
@@ -24,30 +24,27 @@ export class MarketController {
   constructor(private readonly marketService: MarketService) {}
 
   @Post('list')
-  list(@UserDecorator() user: User, @Body() dto: CreateListingDto) {
-    return this.marketService.list(user, dto);
+  list(@User() user: CurrentUser, @Body() dto: CreateListingDto) {
+    return this.marketService.list(user.id, dto);
   }
 
   @Post('buy/:listingId')
-  buy(@UserDecorator() user: User, @Param('listingId') listingId: string) {
-    return this.marketService.buy(user, listingId);
+  buy(@User() user: CurrentUser, @Param('listingId') listingId: string) {
+    return this.marketService.buy(user.id, listingId);
   }
 
   @Post('auction/list')
-  listAuction(
-    @UserDecorator() user: User,
-    @Body() dto: CreateAuctionListingDto,
-  ) {
-    return this.marketService.listAuction(user, dto);
+  listAuction(@User() user: CurrentUser, @Body() dto: CreateAuctionListingDto) {
+    return this.marketService.listAuction(user.id, dto);
   }
 
   @Post('auction/bid/:listingId')
   bidAuction(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('listingId') listingId: string,
     @Body('amount') amount: number,
   ) {
-    return this.marketService.bidAuction(user, listingId, Number(amount));
+    return this.marketService.bidAuction(user.id, listingId, Number(amount));
   }
 
   @Get('listings')
@@ -69,7 +66,7 @@ export class MarketController {
   @Get('my-listings')
   @NoCache()
   myListings(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,
@@ -77,7 +74,7 @@ export class MarketController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.marketService.myListings(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
@@ -85,7 +82,7 @@ export class MarketController {
   }
 
   @Delete('listing/:listingId')
-  cancel(@UserDecorator() user: User, @Param('listingId') listingId: string) {
-    return this.marketService.cancel(user, listingId);
+  cancel(@User() user: CurrentUser, @Param('listingId') listingId: string) {
+    return this.marketService.cancel(user.id, listingId);
   }
 }

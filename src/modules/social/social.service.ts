@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import {
   BadRequestException,
   Injectable,
@@ -42,8 +42,8 @@ export class SocialService {
     private readonly giftRepo: Repository<GiftEntity>,
   ) {}
 
-  async sendFriendRequest(user: User, dto: SendFriendRequestDto) {
-    const me = await this.mustUser(user);
+  async sendFriendRequest(userId: string, dto: SendFriendRequestDto) {
+    const me = await this.getUserByIdOrFail(userId);
     const target = await this.resolveTarget(dto);
     if (!target) throw new NotFoundException('Target user not found.');
     if (target.id === me.id)
@@ -70,7 +70,7 @@ export class SocialService {
       },
     });
     if (reversePending) {
-      return this.acceptFriendRequest(me, reversePending.id);
+      return this.acceptFriendRequest(me.id, reversePending.id);
     }
 
     const mineCount = await this.friendsCount(me.id);
@@ -89,8 +89,8 @@ export class SocialService {
     return { sent: true, requestId: request.id };
   }
 
-  async acceptFriendRequest(user: User, requestId: string) {
-    const me = await this.mustUser(user);
+  async acceptFriendRequest(userId: string, requestId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const request = await this.requestRepo.findOne({
       where: { id: requestId, toUser: { id: me.id } },
       relations: { fromUser: true, toUser: true },
@@ -122,8 +122,8 @@ export class SocialService {
     return { accepted: true, requestId };
   }
 
-  async rejectFriendRequest(user: User, requestId: string) {
-    const me = await this.mustUser(user);
+  async rejectFriendRequest(userId: string, requestId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const request = await this.requestRepo.findOne({
       where: { id: requestId, toUser: { id: me.id } },
     });
@@ -135,8 +135,8 @@ export class SocialService {
     return { rejected: true, requestId };
   }
 
-  async removeFriend(user: User, friendUserId: string) {
-    const me = await this.mustUser(user);
+  async removeFriend(userId: string, friendUserId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const [a, b] = this.normalizedPair(me.id, friendUserId);
     const friendship = await this.friendshipRepo.findOne({
       where: { userA: { id: a }, userB: { id: b } },
@@ -146,8 +146,8 @@ export class SocialService {
     return { removed: true, friendUserId };
   }
 
-  async listFriends(user: User, page = 1, limit = 20, url?: string) {
-    const me = await this.mustUser(user);
+  async listFriends(userId: string, page = 1, limit = 20, url?: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const qb = this.friendshipRepo
       .createQueryBuilder('friendship')
       .leftJoinAndSelect('friendship.userA', 'userA')
@@ -175,8 +175,13 @@ export class SocialService {
     };
   }
 
-  async listIncomingRequests(user: User, page = 1, limit = 20, url?: string) {
-    const me = await this.mustUser(user);
+  async listIncomingRequests(
+    userId: string,
+    page = 1,
+    limit = 20,
+    url?: string,
+  ) {
+    const me = await this.getUserByIdOrFail(userId);
     return paginate(
       this.requestRepo,
       { page, limit: Math.min(limit, 200), route: url },
@@ -191,8 +196,8 @@ export class SocialService {
     );
   }
 
-  async sendGift(user: User, dto: SendGiftDto) {
-    const me = await this.mustUser(user);
+  async sendGift(userId: string, dto: SendGiftDto) {
+    const me = await this.getUserByIdOrFail(userId);
     if (dto.toUserId === me.id)
       throw new BadRequestException('Cannot gift yourself.');
     const target = await this.userRepo.findOne({ where: { id: dto.toUserId } });
@@ -242,8 +247,8 @@ export class SocialService {
     return { sent: true, giftId: gift.id };
   }
 
-  async claimGift(user: User, giftId: string) {
-    const me = await this.mustUser(user);
+  async claimGift(userId: string, giftId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     return this.dataSource.transaction(async (manager) => {
       const gift = await manager
         .getRepository(GiftEntity)
@@ -304,8 +309,8 @@ export class SocialService {
     });
   }
 
-  async myGifts(user: User, page = 1, limit = 20, url?: string) {
-    const me = await this.mustUser(user);
+  async myGifts(userId: string, page = 1, limit = 20, url?: string) {
+    const me = await this.getUserByIdOrFail(userId);
     return paginate(
       this.giftRepo,
       { page, limit: Math.min(limit, 200), route: url },
@@ -355,9 +360,9 @@ export class SocialService {
     );
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

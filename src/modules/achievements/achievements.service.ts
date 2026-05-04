@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
@@ -26,8 +26,8 @@ export class AchievementsService {
     private readonly progressionService: ProgressionService,
   ) {}
 
-  async list(user: User) {
-    const me = await this.mustUser(user);
+  async list(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const defs = await this.definitionRepo.find({
       where: { isActive: true },
       order: { createdAt: 'ASC' },
@@ -107,8 +107,8 @@ export class AchievementsService {
     return { tracked };
   }
 
-  async claim(user: User, achievementId: string) {
-    const me = await this.mustUser(user);
+  async claim(userId: string, achievementId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const def = await this.definitionRepo.findOne({
       where: { id: achievementId, isActive: true },
     });
@@ -166,9 +166,9 @@ export class AchievementsService {
     };
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }

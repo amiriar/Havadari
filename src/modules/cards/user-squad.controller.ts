@@ -1,5 +1,5 @@
-import { User } from '@app/auth/entities/user.entity';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
+import { User } from '@common/decorators/user.decorator';
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateUserSquadDto } from './dto/update-user-squad.dto';
@@ -11,12 +11,12 @@ export class UserSquadController {
   constructor(private readonly userCardService: UserCardService) {}
 
   @Get()
-  getSquad(@UserDecorator() user: User) {
-    return this.userCardService.getActiveSquad(user);
+  getSquad(@User() user: CurrentUser) {
+    return this.userCardService.getActiveSquad(user.id);
   }
 
   @Put()
-  updateSquad(@UserDecorator() user: User, @Body() dto: UpdateUserSquadDto) {
-    return this.userCardService.updateSquad(user, dto);
+  updateSquad(@User() user: CurrentUser, @Body() dto: UpdateUserSquadDto) {
+    return this.userCardService.updateSquad(user.id, dto);
   }
 }

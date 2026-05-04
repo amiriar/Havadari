@@ -1,6 +1,6 @@
-import { User } from '@app/auth/entities/user.entity';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
 import { NoCache } from '@common/decorators/no-cache';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import {
   Body,
@@ -23,39 +23,39 @@ export class ClansController {
   constructor(private readonly clansService: ClansService) {}
 
   @Post()
-  create(@UserDecorator() user: User, @Body() dto: CreateClanDto) {
-    return this.clansService.create(user, dto);
+  create(@User() user: CurrentUser, @Body() dto: CreateClanDto) {
+    return this.clansService.create(user.id, dto);
   }
 
   @Post('join')
-  join(@UserDecorator() user: User, @Body() dto: JoinClanDto) {
-    return this.clansService.join(user, dto);
+  join(@User() user: CurrentUser, @Body() dto: JoinClanDto) {
+    return this.clansService.join(user.id, dto);
   }
 
   @Post('leave')
-  leave(@UserDecorator() user: User) {
-    return this.clansService.leave(user);
+  leave(@User() user: CurrentUser) {
+    return this.clansService.leave(user.id);
   }
 
   @Delete(':clanId/members/:memberUserId')
   kick(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('clanId') clanId: string,
     @Param('memberUserId') memberUserId: string,
   ) {
-    return this.clansService.kick(user, clanId, memberUserId);
+    return this.clansService.kick(user.id, clanId, memberUserId);
   }
 
   @Get('me')
   @NoCache()
-  myClan(@UserDecorator() user: User) {
-    return this.clansService.myClan(user);
+  myClan(@User() user: CurrentUser) {
+    return this.clansService.myClan(user.id);
   }
 
   @Get(':clanId/members')
   @NoCache()
   members(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('clanId') clanId: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
@@ -64,7 +64,7 @@ export class ClansController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.clansService.members(
-      user,
+      user.id,
       clanId,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
@@ -75,7 +75,7 @@ export class ClansController {
   @Get(':clanId/chat')
   @NoCache()
   messages(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('clanId') clanId: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
@@ -84,7 +84,7 @@ export class ClansController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 50;
     return this.clansService.messages(
-      user,
+      user.id,
       clanId,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 50,
@@ -94,10 +94,10 @@ export class ClansController {
 
   @Post(':clanId/chat')
   sendMessage(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Param('clanId') clanId: string,
     @Body() dto: SendClanMessageDto,
   ) {
-    return this.clansService.sendMessage(user, clanId, dto);
+    return this.clansService.sendMessage(user.id, clanId, dto);
   }
 }

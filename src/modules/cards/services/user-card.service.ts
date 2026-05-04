@@ -36,10 +36,10 @@ export class UserCardService {
     private readonly achievementsService: AchievementsService,
   ) {}
 
-  async grantStarterPack(user: User, count = 5) {
-    this.assertUser(user);
+  async grantStarterPack(userId: string, count = 5) {
+    this.assertUserId(userId);
     const existingCount = await this.userCardRepo.count({
-      where: { user: { id: user.id } },
+      where: { user: { id: userId } },
     });
     if (existingCount > 0) {
       throw new BadRequestException(
@@ -63,7 +63,7 @@ export class UserCardService {
     );
     const inserts = selected.map((card, index) =>
       this.userCardRepo.create({
-        user,
+        user: { id: userId } as User,
         card,
         level: 1,
         acquiredFrom: UserCardAcquiredFromEnum.STARTER,
@@ -73,7 +73,7 @@ export class UserCardService {
     );
     await this.userCardRepo.save(inserts);
     await this.achievementsService.track(
-      user.id,
+      userId,
       AchievementMetricEnum.COLLECT_CARDS,
       inserts.length,
     );
@@ -85,10 +85,10 @@ export class UserCardService {
     };
   }
 
-  async ensureStarterPack(user: User, count = 5) {
-    this.assertUser(user);
+  async ensureStarterPack(userId: string, count = 5) {
+    this.assertUserId(userId);
     const existingCount = await this.userCardRepo.count({
-      where: { user: { id: user.id } },
+      where: { user: { id: userId } },
     });
     if (existingCount > 0) {
       return { granted: false, reason: 'already_has_cards' };
@@ -99,12 +99,12 @@ export class UserCardService {
       return { granted: false, reason: 'catalog_not_ready' };
     }
 
-    await this.grantStarterPack(user, count);
+    await this.grantStarterPack(userId, count);
     return { granted: true };
   }
 
-  async listMine(user: User, page = 1, limit = 50, url?: string) {
-    this.assertUser(user);
+  async listMine(userId: string, page = 1, limit = 50, url?: string) {
+    this.assertUserId(userId);
     return paginate(
       this.userCardRepo,
       {
@@ -113,24 +113,24 @@ export class UserCardService {
         route: url,
       },
       {
-        where: { user: { id: user.id } },
+        where: { user: { id: userId } },
         relations: { card: true },
         order: { createdAt: 'ASC' },
       },
     );
   }
 
-  async setActiveSquad(user: User, dto: SetActiveSquadDto) {
-    return this.updateSquad(user, {
+  async setActiveSquad(userId: string, dto: SetActiveSquadDto) {
+    return this.updateSquad(userId, {
       userCardIds: dto.userCardIds,
       enforcePositions: true,
     });
   }
 
-  async updateSquad(user: User, dto: UpdateUserSquadDto) {
-    this.assertUser(user);
+  async updateSquad(userId: string, dto: UpdateUserSquadDto) {
+    this.assertUserId(userId);
     const mine = await this.userCardRepo.find({
-      where: { id: In(dto.userCardIds), user: { id: user.id } },
+      where: { id: In(dto.userCardIds), user: { id: userId } },
       relations: { card: true },
     });
     if (mine.length !== dto.userCardIds.length) {
@@ -149,7 +149,7 @@ export class UserCardService {
     }
 
     await this.userCardRepo.update(
-      { user: { id: user.id } },
+      { user: { id: userId } },
       { isInDeck: false },
     );
     await this.userCardRepo.update(
@@ -158,29 +158,29 @@ export class UserCardService {
     );
 
     const updated = await this.userCardRepo.find({
-      where: { user: { id: user.id }, isInDeck: true },
+      where: { user: { id: userId }, isInDeck: true },
       relations: { card: true },
       order: { createdAt: 'ASC' },
     });
     return { squadSize: updated.length, squad: updated };
   }
 
-  async getActiveSquad(user: User) {
-    this.assertUser(user);
+  async getActiveSquad(userId: string) {
+    this.assertUserId(userId);
     return this.userCardRepo.find({
-      where: { user: { id: user.id }, isInDeck: true },
+      where: { user: { id: userId }, isInDeck: true },
       relations: { card: true },
       order: { createdAt: 'ASC' },
     });
   }
 
-  async upgrade(user: User, userCardId: string) {
-    this.assertUser(user);
+  async upgrade(userId: string, userCardId: string) {
+    this.assertUserId(userId);
     return this.dataSource.transaction(async (manager) => {
       const userRepo = manager.getRepository(User);
       const userCardRepo = manager.getRepository(UserCard);
 
-      const me = await userRepo.findOne({ where: { id: user.id } });
+      const me = await userRepo.findOne({ where: { id: userId } });
       if (!me) throw new UnauthorizedException('User not found.');
 
       const target = await userCardRepo.findOne({
@@ -246,13 +246,13 @@ export class UserCardService {
     });
   }
 
-  async mergeDuplicatesToFgc(user: User, userCardIds: string[]) {
-    this.assertUser(user);
+  async mergeDuplicatesToFgc(userId: string, userCardIds: string[]) {
+    this.assertUserId(userId);
     return this.dataSource.transaction(async (manager) => {
       const userRepo = manager.getRepository(User);
       const userCardRepo = manager.getRepository(UserCard);
 
-      const me = await userRepo.findOne({ where: { id: user.id } });
+      const me = await userRepo.findOne({ where: { id: userId } });
       if (!me) throw new UnauthorizedException('User not found.');
 
       const cards = await userCardRepo.find({
@@ -300,8 +300,8 @@ export class UserCardService {
     });
   }
 
-  private assertUser(user?: User) {
-    if (!user?.id) {
+  private assertUserId(userId?: string) {
+    if (!userId) {
       throw new UnauthorizedException('Authentication required.');
     }
   }

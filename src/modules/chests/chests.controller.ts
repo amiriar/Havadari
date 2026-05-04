@@ -1,6 +1,6 @@
-import { User } from '@app/auth/entities/user.entity';
+import { User as CurrentUser } from '@app/auth/entities/user.entity';
 import { NoCache } from '@common/decorators/no-cache';
-import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { User } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -19,20 +19,20 @@ export class ChestsController {
 
   @Get('state')
   @NoCache()
-  state(@UserDecorator() user: User) {
-    return this.chestsService.getState(user);
+  state(@User() user: CurrentUser) {
+    return this.chestsService.getState(user.id);
   }
 
   @Post('open/:type')
   @NoCache()
-  open(@UserDecorator() user: User, @Param('type') type: string) {
-    return this.chestsService.open(user, type as ChestTypeEnum);
+  open(@User() user: CurrentUser, @Param('type') type: string) {
+    return this.chestsService.open(user.id, type as ChestTypeEnum);
   }
 
   @Get('logs')
   @NoCache()
   logs(
-    @UserDecorator() user: User,
+    @User() user: CurrentUser,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Url() url?: string,
@@ -40,7 +40,7 @@ export class ChestsController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.chestsService.logs(
-      user,
+      user.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,

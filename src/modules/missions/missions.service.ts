@@ -1,4 +1,4 @@
-import { User } from '@app/auth/entities/user.entity';
+﻿import { User } from '@app/auth/entities/user.entity';
 import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
 import { AchievementsService } from '@app/achievements/achievements.service';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
@@ -55,8 +55,8 @@ export class MissionsService {
       .execute();
   }
 
-  async list(user: User) {
-    const me = await this.mustUser(user);
+  async list(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const defs = await this.missionRepo.find({
       where: { isActive: true },
       order: { type: 'ASC', createdAt: 'ASC' },
@@ -148,8 +148,8 @@ export class MissionsService {
     return { tracked };
   }
 
-  async claim(user: User, missionId: string) {
-    const me = await this.mustUser(user);
+  async claim(userId: string, missionId: string) {
+    const me = await this.getUserByIdOrFail(userId);
     const mission = await this.missionRepo.findOne({
       where: { id: missionId, isActive: true },
     });
@@ -252,9 +252,9 @@ export class MissionsService {
     return `weekly:${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
   }
 
-  private async mustUser(user?: User) {
-    if (!user?.id) throw new UnauthorizedException('Authentication required.');
-    const found = await this.userRepo.findOne({ where: { id: user.id } });
+  private async getUserByIdOrFail(userId?: string) {
+    if (!userId) throw new UnauthorizedException('Authentication required.');
+    const found = await this.userRepo.findOne({ where: { id: userId } });
     if (!found) throw new UnauthorizedException('User not found.');
     return found;
   }
