@@ -33,6 +33,7 @@ import { MarketModule } from '../market/market.module';
 import { LeaderboardModule } from '../leaderboard/leaderboard.module';
 import { MissionsModule } from '../missions/missions.module';
 import { AchievementsModule } from '../achievements/achievements.module';
+import { SocialModule } from '../social/social.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -57,6 +58,7 @@ import { AppService } from './app.service';
     LeaderboardModule,
     MissionsModule,
     AchievementsModule,
+    SocialModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,
