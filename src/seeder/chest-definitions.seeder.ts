@@ -58,6 +58,28 @@ export async function seedChestDefinitions(dataSource: DataSource) {
         { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.15 },
       ],
     },
+    {
+      type: ChestTypeEnum.MYTHIC_CHEST,
+      isActive: true,
+      costFgc: 0,
+      costGems: 600,
+      cooldownSeconds: 0,
+      drops: [
+        { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 1 },
+      ],
+    },
+    {
+      type: ChestTypeEnum.SPONSOR_CHEST,
+      isActive: true,
+      costFgc: 0,
+      costGems: 0,
+      cooldownSeconds: 0,
+      drops: [
+        { type: 'card', rarity: CardRarityEnum.COMMON, probability: 0.8 },
+        { type: 'fgc', min: 100, max: 300, probability: 0.15 },
+        { type: 'gems', min: 5, max: 15, probability: 0.05 },
+      ],
+    },
   ];
 
   await repo.upsert(rows, ['type']);

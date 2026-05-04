@@ -74,6 +74,9 @@ export class Card extends ApplicationBaseEntity {
   @Column({ type: 'int' })
   baseValue: number;
 
+  @Column({ type: 'int', default: 0 })
+  weeklyPerformanceScore: number;
+
   @Column({ type: 'varchar', length: 16, default: 'v1' })
   ratingVersion: string;
 }

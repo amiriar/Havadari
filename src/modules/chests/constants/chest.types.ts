@@ -11,6 +11,8 @@ export enum ChestTypeEnum {
   RARE_CHEST = 'rare_chest',
   EPIC_CHEST = 'epic_chest',
   LEGENDARY_CHEST = 'legendary_chest',
+  MYTHIC_CHEST = 'mythic_chest',
+  SPONSOR_CHEST = 'sponsor_chest',
 }
 
 export type ChestDefinition = {

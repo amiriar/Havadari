@@ -19,6 +19,7 @@ import { GetMarketListingsQueryDto } from './dto/get-market-listings-query.dto';
 import { ListingStatusEnum } from './constants/listing-status.enum';
 import { MarketListing } from './entities/market-listing.entity';
 import { MarketTrade } from './entities/market-trade.entity';
+import { CardValueService } from './services/card-value.service';
 
 @Injectable()
 export class MarketService {
@@ -31,6 +32,7 @@ export class MarketService {
     private readonly listingRepo: Repository<MarketListing>,
     @InjectRepository(MarketTrade)
     private readonly tradeRepo: Repository<MarketTrade>,
+    private readonly cardValueService: CardValueService,
     private readonly rankPointsService: RankPointsService,
     private readonly missionsService: MissionsService,
   ) {}
@@ -54,8 +56,9 @@ export class MarketService {
       throw new BadRequestException('Card is already listed.');
     }
 
-    const minPrice = Math.floor(owned.card.baseValue * 0.5);
-    const maxPrice = Math.floor(owned.card.baseValue * 5);
+    const dynamicCardValue = await this.cardValueService.calculate(owned.card);
+    const minPrice = Math.floor(dynamicCardValue * 0.5);
+    const maxPrice = Math.floor(dynamicCardValue * 5);
     if (dto.price < minPrice || dto.price > maxPrice) {
       throw new BadRequestException(
         `Price must be between ${minPrice} and ${maxPrice}.`,

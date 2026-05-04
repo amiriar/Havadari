@@ -106,7 +106,7 @@ export class ChestsService {
           spent: def.cost,
           refunded: def.cost,
           rewards: null,
-          reason: `No new ${reward.rarity} card left for this user. Chest cost refunded.`,
+          reason: `No ${reward.rarity} card found in catalog. Chest cost refunded.`,
           balances: { fgc: authUser.fgc, gems: authUser.gems },
           pity: {
             rareToEpicCounter: state.rareToEpicCounter,
@@ -159,13 +159,17 @@ export class ChestsService {
       }),
     );
     const rankDelta =
-      type === ChestTypeEnum.LEGENDARY_CHEST
-        ? 8
-        : type === ChestTypeEnum.EPIC_CHEST
-          ? 5
-          : type === ChestTypeEnum.RARE_CHEST
-            ? 3
-            : 1;
+      type === ChestTypeEnum.MYTHIC_CHEST
+        ? 12
+        : type === ChestTypeEnum.LEGENDARY_CHEST
+          ? 8
+          : type === ChestTypeEnum.EPIC_CHEST
+            ? 5
+            : type === ChestTypeEnum.RARE_CHEST
+              ? 3
+              : type === ChestTypeEnum.SPONSOR_CHEST
+                ? 1
+                : 1;
     await this.rankPointsService.apply(
       authUser.id,
       rankDelta,
@@ -242,25 +246,8 @@ export class ChestsService {
     };
   }
 
-  private async getRandomCardByRarity(userId: string, rarity: CardRarityEnum) {
-    const owned = await this.userCardRepo.find({
-      where: { user: { id: userId } },
-      relations: { card: true },
-      select: { id: true, card: { id: true } },
-      take: 20000,
-    });
-    const ownedCardIds = owned
-      .map((it) => it.card?.id)
-      .filter((id): id is string => Boolean(id));
-
-    const cards = ownedCardIds.length
-      ? await this.cardRepo
-          .createQueryBuilder('card')
-          .where('card.rarity = :rarity', { rarity })
-          .andWhere('card.id NOT IN (:...ownedCardIds)', { ownedCardIds })
-          .take(500)
-          .getMany()
-      : await this.cardRepo.find({ where: { rarity }, take: 500 });
+  private async getRandomCardByRarity(_userId: string, rarity: CardRarityEnum) {
+    const cards = await this.cardRepo.find({ where: { rarity }, take: 500 });
     if (!cards.length) return null;
     return cards[Math.floor(Math.random() * cards.length)];
   }

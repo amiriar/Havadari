@@ -96,6 +96,24 @@ export class PlayerRatingService {
     }
   }
 
+  weeklyPerformanceScore(stats: PlayerStatSnapshot | null): number {
+    if (!stats) return 0;
+    const goals = stats.goals || 0;
+    const assists = stats.assists || 0;
+    const tackles = stats.tackles || 0;
+    const interceptions = stats.interceptions || 0;
+    const dribbles = stats.dribbles || 0;
+    const minutes = stats.minutes || 0;
+    const score =
+      goals * 8 +
+      assists * 6 +
+      tackles * 2 +
+      interceptions * 2 +
+      dribbles +
+      Math.floor(minutes / 90);
+    return Math.max(0, Math.min(100, score));
+  }
+
   private clamp(value: number): number {
     return Math.max(1, Math.min(99, value));
   }

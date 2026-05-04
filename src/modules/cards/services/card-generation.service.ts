@@ -36,6 +36,8 @@ export class CardGenerationService {
       const ratings = this.ratingService.calculate(player, stats);
       const rarity = this.ratingService.rarity(ratings.overall);
       const baseValue = this.ratingService.baseValue(rarity);
+      const weeklyPerformanceScore =
+        this.ratingService.weeklyPerformanceScore(stats);
 
       const existing = await this.cardRepo.findOne({
         where: {
@@ -60,6 +62,7 @@ export class CardGenerationService {
           rarity,
           edition: CardEditionEnum.BASE,
           baseValue,
+          weeklyPerformanceScore,
           ratingVersion,
           avatarStatus: AvatarStatusEnum.PENDING,
           avatarUrl: null,
@@ -80,6 +83,7 @@ export class CardGenerationService {
         existing.defend = ratings.defend;
         existing.rarity = rarity;
         existing.baseValue = baseValue;
+        existing.weeklyPerformanceScore = weeklyPerformanceScore;
         existing.ratingVersion = ratingVersion;
         await this.cardRepo.save(existing);
         updated += 1;
