@@ -6,20 +6,29 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { SetActiveSquadDto } from '../dto/set-active-squad.dto';
 import { UpdateUserSquadDto } from '../dto/update-user-squad.dto';
 import { UserCard } from '../entities/user-card.entity';
 import { UserCardAcquiredFromEnum } from '../constants/card.enums';
+import {
+  MAX_CARD_LEVEL,
+  UPGRADE_BASE_COST_BY_LEVEL,
+  UPGRADE_DUPLICATE_REQUIREMENTS,
+  UPGRADE_RARITY_MULTIPLIER,
+} from '../constants/upgrade.constants';
 
 @Injectable()
 export class UserCardService {
   constructor(
+    private readonly dataSource: DataSource,
     @InjectRepository(UserCard)
     private readonly userCardRepo: Repository<UserCard>,
     @InjectRepository(Card)
     private readonly cardRepo: Repository<Card>,
+    @InjectRepository(User)
+    private readonly userRepo: Repository<User>,
   ) {}
 
   async grantStarterPack(user: User, count = 5) {
@@ -152,6 +161,129 @@ export class UserCardService {
       where: { user: { id: user.id }, isInDeck: true },
       relations: { card: true },
       order: { createdAt: 'ASC' },
+    });
+  }
+
+  async upgrade(user: User, userCardId: string) {
+    this.assertUser(user);
+    return this.dataSource.transaction(async (manager) => {
+      const userRepo = manager.getRepository(User);
+      const userCardRepo = manager.getRepository(UserCard);
+
+      const me = await userRepo.findOne({ where: { id: user.id } });
+      if (!me) throw new UnauthorizedException('User not found.');
+
+      const target = await userCardRepo.findOne({
+        where: { id: userCardId, user: { id: me.id } },
+        relations: { card: true },
+      });
+      if (!target) throw new BadRequestException('User card not found.');
+      if (target.isListed) {
+        throw new BadRequestException('Listed cards cannot be upgraded.');
+      }
+      if (target.level >= MAX_CARD_LEVEL) {
+        throw new BadRequestException('Card is already at max level.');
+      }
+
+      const nextLevel = target.level + 1;
+      const baseCost = UPGRADE_BASE_COST_BY_LEVEL[target.level];
+      const rarityMultiplier = UPGRADE_RARITY_MULTIPLIER[target.card.rarity];
+      const cost = Math.floor(baseCost * rarityMultiplier);
+      if (me.fgc < cost) {
+        throw new BadRequestException('Not enough FGC for upgrade.');
+      }
+
+      const duplicateRequired = UPGRADE_DUPLICATE_REQUIREMENTS[nextLevel] || 0;
+      let consumedDuplicateIds: string[] = [];
+
+      if (duplicateRequired > 0) {
+        const duplicates = await userCardRepo.find({
+          where: {
+            user: { id: me.id },
+            card: { id: target.card.id },
+            isListed: false,
+            isInDeck: false,
+          },
+          order: { createdAt: 'ASC' },
+        });
+        const candidates = duplicates
+          .filter((d) => d.id !== target.id)
+          .slice(0, duplicateRequired);
+        if (candidates.length < duplicateRequired) {
+          throw new BadRequestException(
+            `Upgrade to level ${nextLevel} requires ${duplicateRequired} duplicate cards.`,
+          );
+        }
+        consumedDuplicateIds = candidates.map((d) => d.id);
+        await userCardRepo.delete(consumedDuplicateIds);
+      }
+
+      target.level = nextLevel;
+      me.fgc -= cost;
+      await userCardRepo.save(target);
+      await userRepo.save(me);
+
+      return {
+        upgraded: true,
+        userCardId: target.id,
+        newLevel: target.level,
+        spentFgc: cost,
+        consumedDuplicates: consumedDuplicateIds,
+        balance: { fgc: me.fgc, gems: me.gems },
+      };
+    });
+  }
+
+  async mergeDuplicatesToFgc(user: User, userCardIds: string[]) {
+    this.assertUser(user);
+    return this.dataSource.transaction(async (manager) => {
+      const userRepo = manager.getRepository(User);
+      const userCardRepo = manager.getRepository(UserCard);
+
+      const me = await userRepo.findOne({ where: { id: user.id } });
+      if (!me) throw new UnauthorizedException('User not found.');
+
+      const cards = await userCardRepo.find({
+        where: { id: In(userCardIds), user: { id: me.id } },
+        relations: { card: true },
+      });
+      if (cards.length !== userCardIds.length) {
+        throw new BadRequestException(
+          'Some cards are missing or do not belong to this user.',
+        );
+      }
+      if (cards.some((c) => c.isListed || c.isInDeck)) {
+        throw new BadRequestException(
+          'Listed or in-deck cards cannot be merged.',
+        );
+      }
+
+      const grouped = new Map<string, number>();
+      for (const item of cards) {
+        const key = item.card.id;
+        grouped.set(key, (grouped.get(key) || 0) + 1);
+      }
+      if ([...grouped.values()].some((count) => count < 2)) {
+        throw new BadRequestException(
+          'Merge requires duplicate cards (at least 2 copies of same card).',
+        );
+      }
+
+      const gainedFgc = cards.reduce((sum, item) => {
+        const baseValue = Number(item.card.baseValue || 0);
+        return sum + Math.floor(baseValue * 0.4);
+      }, 0);
+
+      await userCardRepo.delete(cards.map((c) => c.id));
+      me.fgc += gainedFgc;
+      await userRepo.save(me);
+
+      return {
+        merged: true,
+        consumed: cards.length,
+        gainedFgc,
+        balance: { fgc: me.fgc, gems: me.gems },
+      };
     });
   }
 

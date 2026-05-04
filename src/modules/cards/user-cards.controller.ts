@@ -1,9 +1,10 @@
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
-import { Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@app/auth/entities/user.entity';
 import { GetUserCardsQueryDto } from './dto/get-user-cards-query.dto';
+import { MergeUserCardsDto } from './dto/merge-user-cards.dto';
 import { UserCardService } from './services/user-card.service';
 
 @ApiTags('user-cards')
@@ -35,5 +36,21 @@ export class UserCardsController {
       query.limit ?? 50,
       url,
     );
+  }
+
+  @Post('upgrade/:userCardId')
+  upgrade(
+    @UserDecorator() user: User,
+    @Param('userCardId') userCardId: string,
+  ) {
+    return this.userCardService.upgrade(user, userCardId);
+  }
+
+  @Post('merge')
+  merge(
+    @UserDecorator() user: User,
+    @Body() dto: MergeUserCardsDto,
+  ) {
+    return this.userCardService.mergeDuplicatesToFgc(user, dto.userCardIds);
   }
 }
