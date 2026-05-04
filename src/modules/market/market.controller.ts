@@ -11,6 +11,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ListingTypeEnum } from './constants/market.types';
+import { CreateAuctionListingDto } from './dto/create-auction-listing.dto';
 import { CreateListingDto } from './dto/create-listing.dto';
 import { GetMarketListingsQueryDto } from './dto/get-market-listings-query.dto';
 import { MarketService } from './market.service';
@@ -30,9 +32,34 @@ export class MarketController {
     return this.marketService.buy(user, listingId);
   }
 
+  @Post('auction/list')
+  listAuction(@UserDecorator() user: User, @Body() dto: CreateAuctionListingDto) {
+    return this.marketService.listAuction(user, dto);
+  }
+
+  @Post('auction/bid/:listingId')
+  bidAuction(
+    @UserDecorator() user: User,
+    @Param('listingId') listingId: string,
+    @Body('amount') amount: number,
+  ) {
+    return this.marketService.bidAuction(user, listingId, Number(amount));
+  }
+
   @Get('listings')
   listings(@Query() query: GetMarketListingsQueryDto, @Url() url: string) {
     return this.marketService.listings(query, url);
+  }
+
+  @Get('auction/listings')
+  auctionListings(
+    @Query() query: GetMarketListingsQueryDto,
+    @Url() url: string,
+  ) {
+    return this.marketService.listings(
+      { ...query, type: ListingTypeEnum.AUCTION },
+      url,
+    );
   }
 
   @Get('my-listings')

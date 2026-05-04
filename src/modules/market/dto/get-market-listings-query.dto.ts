@@ -5,6 +5,7 @@ import {
   CardRarityEnum,
   PlayerPositionEnum,
 } from '@app/cards/constants/card.enums';
+import { ListingTypeEnum } from '../constants/market.types';
 
 export class GetMarketListingsQueryDto {
   @ApiPropertyOptional({ minimum: 1, default: 1 })
@@ -31,4 +32,9 @@ export class GetMarketListingsQueryDto {
   @IsOptional()
   @IsEnum(PlayerPositionEnum)
   position?: PlayerPositionEnum;
+
+  @ApiPropertyOptional({ enum: ListingTypeEnum })
+  @IsOptional()
+  @IsEnum(ListingTypeEnum)
+  type?: ListingTypeEnum;
 }
