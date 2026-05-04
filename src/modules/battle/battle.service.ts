@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
+import { Cron } from '@nestjs/schedule';
 import { In, Repository } from 'typeorm';
 import {
   BattleModeEnum,
@@ -24,6 +25,13 @@ import { FindMatchDto } from './dto/find-match.dto';
 import { StartBattleDto } from './dto/start-battle.dto';
 import { BattleRound } from './entities/battle-round.entity';
 import { Battle } from './entities/battle.entity';
+import { RankedSeason } from './entities/ranked-season.entity';
+import { RankedSeasonSnapshot } from './entities/ranked-season-snapshot.entity';
+import {
+  RANKED_SOFT_RESET_KEEP_RATIO,
+  RANKED_TIERS,
+  RankedTierConfig,
+} from './constants/ranked.constants';
 
 type PendingMatch = {
   userId: string;
@@ -49,8 +57,123 @@ export class BattleService {
     private readonly battleRepo: Repository<Battle>,
     @InjectRepository(BattleRound)
     private readonly roundRepo: Repository<BattleRound>,
+    @InjectRepository(RankedSeason)
+    private readonly rankedSeasonRepo: Repository<RankedSeason>,
+    @InjectRepository(RankedSeasonSnapshot)
+    private readonly rankedSnapshotRepo: Repository<RankedSeasonSnapshot>,
     private readonly progressionService: ProgressionService,
   ) {}
+
+  @Cron('0 0 0 1 * *')
+  async resetRankedSeasonMonthly() {
+    const season = await this.getOrCreateActiveSeason();
+    if (!season) return { reset: false };
+
+    const users = await this.userRepo.find();
+    for (const user of users) {
+      const before = Number(user.rankPoints || 0);
+      const after = Math.floor(before * RANKED_SOFT_RESET_KEEP_RATIO);
+      const tier = this.resolveTier(before);
+      await this.rankedSnapshotRepo.save(
+        this.rankedSnapshotRepo.create({
+          season,
+          user,
+          rankPointsBeforeReset: before,
+          rankPointsAfterReset: after,
+          tierKey: tier.key,
+          rewardSnapshot: tier.rewards,
+          rewardClaimedAt: null,
+        }),
+      );
+      user.rankPoints = after;
+      await this.userRepo.save(user);
+    }
+
+    season.isActive = false;
+    season.rewardsDistributedAt = new Date();
+    await this.rankedSeasonRepo.save(season);
+    await this.getOrCreateActiveSeason();
+    return { reset: true };
+  }
+
+  async distributeSeasonRewards(seasonKey?: string) {
+    const season = seasonKey
+      ? await this.rankedSeasonRepo.findOne({ where: { seasonKey } })
+      : await this.rankedSeasonRepo.findOne({
+          where: { isActive: false },
+          order: { endsAt: 'DESC' },
+        });
+    if (!season) throw new NotFoundException('Closed ranked season not found.');
+    if (season.isActive) {
+      throw new BadRequestException(
+        'Cannot distribute rewards for active season.',
+      );
+    }
+    if (season.rewardsDistributedAt) {
+      return {
+        seasonKey: season.seasonKey,
+        distributed: false,
+        reason: 'already_distributed',
+      };
+    }
+    season.rewardsDistributedAt = new Date();
+    await this.rankedSeasonRepo.save(season);
+    const eligible = await this.rankedSnapshotRepo.count({
+      where: { season: { id: season.id } },
+    });
+    return {
+      seasonKey: season.seasonKey,
+      distributed: true,
+      eligibleSnapshots: eligible,
+    };
+  }
+
+  async claimSeasonReward(userId: string, seasonKey?: string) {
+    const me = await this.getUserByIdOrFail(userId);
+    const season = seasonKey
+      ? await this.rankedSeasonRepo.findOne({ where: { seasonKey } })
+      : await this.rankedSeasonRepo.findOne({
+          where: { isActive: false },
+          order: { endsAt: 'DESC' },
+        });
+    if (!season) throw new NotFoundException('Closed ranked season not found.');
+    if (season.isActive)
+      throw new BadRequestException('Season is still active.');
+    if (!season.rewardsDistributedAt) {
+      throw new BadRequestException('Season rewards are not distributed yet.');
+    }
+
+    const snapshot = await this.rankedSnapshotRepo.findOne({
+      where: { season: { id: season.id }, user: { id: me.id } },
+    });
+    if (!snapshot)
+      throw new NotFoundException('No season reward snapshot found for user.');
+    if (snapshot.rewardClaimedAt) {
+      throw new BadRequestException('Season reward already claimed.');
+    }
+
+    const reward = (snapshot.rewardSnapshot || {}) as Record<string, unknown>;
+    const fgc = Number(reward.fgc || 0);
+    const gems = Number(reward.gems || 0);
+    const chest = (reward.chest as string | undefined) || null;
+
+    me.fgc = Number(me.fgc || 0) + Math.max(0, Math.floor(fgc));
+    me.gems = Number(me.gems || 0) + Math.max(0, Math.floor(gems));
+    await this.userRepo.save(me);
+
+    snapshot.rewardClaimedAt = new Date();
+    await this.rankedSnapshotRepo.save(snapshot);
+
+    return {
+      seasonKey: season.seasonKey,
+      claimed: true,
+      reward: { fgc, gems, chest },
+      balances: { fgc: me.fgc, gems: me.gems },
+      note: chest
+        ? 'Chest reward is pending chest-inventory integration.'
+        : null,
+    };
+  }
 
   async findMatch(userId: string, dto: FindMatchDto) {
     await this.getUserByIdOrFail(userId);
@@ -129,7 +252,9 @@ export class BattleService {
     const player1 = await this.getUserByIdOrFail(userId);
     const mode = dto.mode ?? BattleModeEnum.CLASSIC;
     if (![BattleModeEnum.CLASSIC, BattleModeEnum.RANKED].includes(mode)) {
-      throw new BadRequestException('Only classic and ranked modes are enabled right now.');
+      throw new BadRequestException(
+        'Only classic and ranked modes are enabled right now.',
+      );
     }
 
     const opponentType = dto.opponentType ?? BattleOpponentTypeEnum.BOT;
@@ -171,7 +296,9 @@ export class BattleService {
       if (mode === BattleModeEnum.RANKED) {
         this.validateRankedSquad(player2Squad);
         if (Number(player2.fgc || 0) < entryFee) {
-          throw new BadRequestException('Opponent has not enough FGC for ranked entry fee.');
+          throw new BadRequestException(
+            'Opponent has not enough FGC for ranked entry fee.',
+          );
         }
         player2.fgc = Number(player2.fgc || 0) - entryFee;
         await this.userRepo.save(player2);
@@ -338,6 +465,37 @@ export class BattleService {
         player2RoundWins: battle.player2RoundWins,
       },
       rewards: battle.rewards,
+      ranked:
+        battle.mode === BattleModeEnum.RANKED
+          ? {
+              player1RankPoints: (
+                await this.getUserByIdOrFail(battle.player1.id)
+              ).rankPoints,
+              player1Tier: this.resolveTier(
+                (await this.getUserByIdOrFail(battle.player1.id)).rankPoints ||
+                  0,
+              ),
+            }
+          : null,
+    };
+  }
+
+  async rankedSeasonMeta(userId: string) {
+    const me = await this.getUserByIdOrFail(userId);
+    const season = await this.getOrCreateActiveSeason();
+    const tier = this.resolveTier(Number(me.rankPoints || 0));
+    return {
+      season: {
+        key: season.seasonKey,
+        startedAt: season.startedAt,
+        endsAt: season.endsAt,
+        isActive: season.isActive,
+        rewardsDistributedAt: season.rewardsDistributedAt,
+      },
+      rankPoints: Number(me.rankPoints || 0),
+      softResetKeepRatio: RANKED_SOFT_RESET_KEEP_RATIO,
+      tier,
+      tiers: RANKED_TIERS,
     };
   }
 
@@ -378,6 +536,13 @@ export class BattleService {
   ): 'win' | 'lose' | 'draw' {
     if (winner === BattleWinnerEnum.DRAW) return 'draw';
     return winner === forPlayer ? 'win' : 'lose';
+  }
+
+  private resolveTier(points: number): RankedTierConfig {
+    const found = RANKED_TIERS.find(
+      (x) => points >= x.min && (x.max === null || points <= x.max),
+    );
+    return found || RANKED_TIERS[0];
   }
 
   private resolveWinner(battle: Battle) {
@@ -462,7 +627,9 @@ export class BattleService {
       squad.reduce((acc, item) => acc + Number(item.overallRating || 0), 0) /
       Math.max(1, squad.length);
     if (avg < 80) {
-      throw new BadRequestException('Ranked requires minimum squad average rating of 80.');
+      throw new BadRequestException(
+        'Ranked requires minimum squad average rating of 80.',
+      );
     }
   }
 
@@ -564,6 +731,44 @@ export class BattleService {
 
   private makeToken() {
     return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  private async getOrCreateActiveSeason() {
+    const active = await this.rankedSeasonRepo.findOne({
+      where: { isActive: true },
+      order: { createdAt: 'DESC' },
+    });
+    if (active) return active;
+
+    const now = new Date();
+    const start = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0),
+    );
+    const end = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0),
+    );
+    const seasonKey = `${start.getUTCFullYear()}-${String(start.getUTCMonth() + 1).padStart(2, '0')}`;
+
+    const existing = await this.rankedSeasonRepo.findOne({
+      where: { seasonKey },
+    });
+    if (existing) {
+      if (!existing.isActive) {
+        existing.isActive = true;
+        await this.rankedSeasonRepo.save(existing);
+      }
+      return existing;
+    }
+
+    return this.rankedSeasonRepo.save(
+      this.rankedSeasonRepo.create({
+        seasonKey,
+        startedAt: start,
+        endsAt: end,
+        isActive: true,
+        rewardsDistributedAt: null,
+      }),
+    );
   }
 
   private async getUserByIdOrFail(userId?: string) {

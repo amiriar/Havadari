@@ -9,6 +9,7 @@ import { BattleHistoryQueryDto } from './dto/battle-history-query.dto';
 import { EndBattleDto } from './dto/end-battle.dto';
 import { FindMatchDto } from './dto/find-match.dto';
 import { PlayRoundDto } from './dto/play-round.dto';
+import { RankedSeasonRewardDto } from './dto/ranked-season-reward.dto';
 import { StartBattleDto } from './dto/start-battle.dto';
 
 @ApiTags('battle')
@@ -54,5 +55,29 @@ export class BattleController {
     @Url() url?: string,
   ) {
     return this.battleService.history(user.id, query, url);
+  }
+
+  @Get('ranked/season')
+  @NoCache()
+  @ApiOperation({ summary: 'Get ranked season meta and tier info' })
+  rankedSeason(@User() user: CurrentUser) {
+    return this.battleService.rankedSeasonMeta(user.id);
+  }
+
+  @Post('ranked/distribute-season-rewards')
+  @NoCache()
+  @ApiOperation({ summary: 'Mark closed ranked season rewards as distributed' })
+  distributeSeasonRewards(@Body() dto: RankedSeasonRewardDto) {
+    return this.battleService.distributeSeasonRewards(dto.seasonKey);
+  }
+
+  @Post('ranked/claim-season-reward')
+  @NoCache()
+  @ApiOperation({ summary: 'Claim my ranked season-end reward' })
+  claimSeasonReward(
+    @User() user: CurrentUser,
+    @Body() dto: RankedSeasonRewardDto,
+  ) {
+    return this.battleService.claimSeasonReward(user.id, dto.seasonKey);
   }
 }

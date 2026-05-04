@@ -8,10 +8,20 @@ import { BattleController } from './battle.controller';
 import { BattleService } from './battle.service';
 import { BattleRound } from './entities/battle-round.entity';
 import { Battle } from './entities/battle.entity';
+import { RankedSeason } from './entities/ranked-season.entity';
+import { RankedSeasonSnapshot } from './entities/ranked-season-snapshot.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Card, UserCard, Battle, BattleRound]),
+    TypeOrmModule.forFeature([
+      User,
+      Card,
+      UserCard,
+      Battle,
+      BattleRound,
+      RankedSeason,
+      RankedSeasonSnapshot,
+    ]),
     ProgressionModule,
   ],
   controllers: [BattleController],
