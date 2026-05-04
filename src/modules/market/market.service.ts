@@ -337,15 +337,15 @@ export class MarketService {
 
   async myListings(user: User, page = 1, limit = 20, url?: string) {
     const me = await this.mustUser(user);
-    return paginate(
-      this.listingRepo,
-      { page, limit, route: url },
-      {
-        where: { seller: { id: me.id } },
-        relations: { userCard: { card: true } },
-        order: { createdAt: 'DESC' },
-      },
-    );
+    const qb = this.listingRepo
+      .createQueryBuilder('listing')
+      .leftJoinAndSelect('listing.seller', 'seller')
+      .leftJoinAndSelect('listing.userCard', 'userCard')
+      .leftJoinAndSelect('userCard.card', 'card')
+      .where('seller.id = :userId', { userId: me.id })
+      .orderBy('listing.createdAt', 'DESC');
+
+    return paginate(qb, { page, limit, route: url });
   }
 
   async cancel(user: User, listingId: string) {

@@ -16,6 +16,7 @@ import { CreateAuctionListingDto } from './dto/create-auction-listing.dto';
 import { CreateListingDto } from './dto/create-listing.dto';
 import { GetMarketListingsQueryDto } from './dto/get-market-listings-query.dto';
 import { MarketService } from './market.service';
+import { NoCache } from '@common/decorators/no-cache';
 
 @ApiTags('market')
 @Controller('market')
@@ -66,6 +67,7 @@ export class MarketController {
   }
 
   @Get('my-listings')
+  @NoCache()
   myListings(
     @UserDecorator() user: User,
     @Query('page') page?: string,
