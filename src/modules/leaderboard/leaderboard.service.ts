@@ -1,9 +1,6 @@
 import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
-import {
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';

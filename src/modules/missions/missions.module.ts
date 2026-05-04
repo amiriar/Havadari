@@ -23,4 +23,3 @@ import { MissionsService } from './missions.service';
   exports: [MissionsService],
 })
 export class MissionsModule {}
-

@@ -35,4 +35,3 @@ export class MissionDefinition extends ApplicationBaseEntity {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 }
-

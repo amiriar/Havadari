@@ -1,4 +1,7 @@
-import { ChestTypeEnum, CardRarityEnum } from '@app/chests/constants/chest.types';
+import {
+  ChestTypeEnum,
+  CardRarityEnum,
+} from '@app/chests/constants/chest.types';
 import { ChestDefinitionEntity } from '@app/chests/entities/chest-definition.entity';
 import { DataSource } from 'typeorm';
 
@@ -60,4 +63,3 @@ export async function seedChestDefinitions(dataSource: DataSource) {
   await repo.upsert(rows, ['type']);
   console.log('Chest definitions seeded');
 }
-

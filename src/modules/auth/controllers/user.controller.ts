@@ -53,9 +53,13 @@ import { LoadRolesPipe } from '../pipes/load-roles.pipe';
 import { SearchQueryPipe } from '../pipes/search-query.pipe';
 import { SetGuestRolePipe } from '../pipes/set-guest-role.pipe';
 import { UserService } from '../services/user.service';
+import { DailyLoginService } from '../services/daily-login.service';
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly dailyLoginService: DailyLoginService,
+  ) {}
 
   @Get()
   @ApiResponse({ type: UserPaginatedResopnse })
@@ -214,5 +218,32 @@ export class UserController {
     body: VerifyUserDto,
   ) {
     return await this.userService.verify(id, body);
+  }
+
+  @Get('profile/daily-login/status')
+  async dailyLoginStatus(@User() user: CurrentUser) {
+    return this.dailyLoginService.status(user);
+  }
+
+  @Post('profile/daily-login/claim')
+  async claimDailyLogin(@User() user: CurrentUser) {
+    return this.dailyLoginService.claim(user);
+  }
+
+  @Get('profile/daily-login/history')
+  async dailyLoginHistory(
+    @User() user: CurrentUser,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Url() url?: string,
+  ) {
+    const parsedPage = page ? Number(page) : 1;
+    const parsedLimit = limit ? Number(limit) : 20;
+    return this.dailyLoginService.history(
+      user,
+      Number.isFinite(parsedPage) ? parsedPage : 1,
+      Number.isFinite(parsedLimit) ? parsedLimit : 20,
+      url,
+    );
   }
 }

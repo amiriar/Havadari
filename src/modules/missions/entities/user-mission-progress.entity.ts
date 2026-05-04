@@ -29,4 +29,3 @@ export class UserMissionProgress extends ApplicationBaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   claimedAt: Date | null;
 }
-

@@ -147,7 +147,11 @@ export class MarketService {
       listing.id,
       { marketAction: 'buy' },
     );
-    await this.missionsService.track(seller.id, MissionMetricEnum.SELL_CARDS, 1);
+    await this.missionsService.track(
+      seller.id,
+      MissionMetricEnum.SELL_CARDS,
+      1,
+    );
     await this.missionsService.track(buyer.id, MissionMetricEnum.BUY_CARDS, 1);
 
     return {

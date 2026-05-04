@@ -6,4 +6,3 @@ export enum RankPointSourceEnum {
   PENALTY = 'penalty',
   SEED = 'seed',
 }
-

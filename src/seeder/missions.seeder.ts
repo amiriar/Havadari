@@ -1,4 +1,7 @@
-import { MissionMetricEnum, MissionTypeEnum } from '@app/missions/constants/mission.enums';
+import {
+  MissionMetricEnum,
+  MissionTypeEnum,
+} from '@app/missions/constants/mission.enums';
 import { MissionDefinition } from '@app/missions/entities/mission-definition.entity';
 import { DataSource } from 'typeorm';
 
@@ -83,4 +86,3 @@ export async function seedMissionDefinitions(dataSource: DataSource) {
   await repo.upsert(rows, ['code']);
   console.log('Mission definitions seeded');
 }
-

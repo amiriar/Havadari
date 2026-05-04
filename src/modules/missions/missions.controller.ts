@@ -29,4 +29,3 @@ export class MissionsController {
     return this.missionsService.track(userId, metric, value ?? 1);
   }
 }
-

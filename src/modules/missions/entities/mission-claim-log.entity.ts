@@ -25,4 +25,3 @@ export class MissionClaimLog extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   rewardRankPoints: number;
 }
-

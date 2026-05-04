@@ -173,7 +173,11 @@ export class ChestsService {
       null,
       { chestType: type },
     );
-    await this.missionsService.track(authUser.id, MissionMetricEnum.OPEN_CHESTS, 1);
+    await this.missionsService.track(
+      authUser.id,
+      MissionMetricEnum.OPEN_CHESTS,
+      1,
+    );
 
     return {
       chestType: type,

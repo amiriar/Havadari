@@ -8,4 +8,3 @@ export enum MissionMetricEnum {
   SELL_CARDS = 'sell_cards',
   BUY_CARDS = 'buy_cards',
 }
-

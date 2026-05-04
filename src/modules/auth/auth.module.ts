@@ -19,13 +19,23 @@ import { Permission } from './entities/permission.entity';
 import { PermissionCategoryService } from './services/permission-category.service';
 import { PermissionCategoryController } from './controllers/permission-categoriey.conroller';
 import { Role } from './entities/role.entity';
+import { DailyLoginClaim } from './entities/daily-login-claim.entity';
+import { DailyLoginRewardConfig } from './entities/daily-login-reward-config.entity';
 import { RoleController } from './controllers/role.controller';
 import { RoleService } from './services/role.service';
+import { DailyLoginService } from './services/daily-login.service';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Permission, PermissionCategory, Role]),
+    TypeOrmModule.forFeature([
+      User,
+      Permission,
+      PermissionCategory,
+      Role,
+      DailyLoginClaim,
+      DailyLoginRewardConfig,
+    ]),
     CardsModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -58,6 +68,7 @@ import { RoleService } from './services/role.service';
     PermissionService,
     PermissionCategoryService,
     RoleService,
+    DailyLoginService,
   ],
   exports: [
     JwtService,

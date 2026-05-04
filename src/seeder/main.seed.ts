@@ -15,6 +15,7 @@ import { ApplicationI18nService } from '@common/modules/application-i18n/applica
 import { seedLeaderboardRewards } from './leaderboard-rewards.seeder';
 import { seedChestDefinitions } from './chest-definitions.seeder';
 import { seedMissionDefinitions } from './missions.seeder';
+import { seedDailyLoginRewardConfig } from './daily-login-reward-config.seeder';
 
 import { seedFiles } from './files.seeder';
 
@@ -62,6 +63,7 @@ async function runSeeder() {
   await seedLeaderboardRewards(dataSource);
   await seedChestDefinitions(dataSource);
   await seedMissionDefinitions(dataSource);
+  await seedDailyLoginRewardConfig(dataSource);
   await seedFiles(dataSource);
   exit();
 }

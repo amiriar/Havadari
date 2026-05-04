@@ -111,7 +111,11 @@ export class MissionsService {
     for (const mission of defs) {
       const periodKey = this.getPeriodKey(mission.type);
       let progress = await this.progressRepo.findOne({
-        where: { user: { id: user.id }, mission: { id: mission.id }, periodKey },
+        where: {
+          user: { id: user.id },
+          mission: { id: mission.id },
+          periodKey,
+        },
       });
       if (!progress) {
         progress = this.progressRepo.create({
@@ -141,7 +145,9 @@ export class MissionsService {
 
   async claim(user: User, missionId: string) {
     const me = await this.mustUser(user);
-    const mission = await this.missionRepo.findOne({ where: { id: missionId, isActive: true } });
+    const mission = await this.missionRepo.findOne({
+      where: { id: missionId, isActive: true },
+    });
     if (!mission) throw new BadRequestException('Mission not found.');
 
     const periodKey = this.getPeriodKey(mission.type);
@@ -197,7 +203,9 @@ export class MissionsService {
   }
 
   private getPeriodKey(type: MissionTypeEnum) {
-    return type === MissionTypeEnum.DAILY ? this.getDailyKey() : this.getWeeklyKey();
+    return type === MissionTypeEnum.DAILY
+      ? this.getDailyKey()
+      : this.getWeeklyKey();
   }
 
   private getDailyKey() {
@@ -212,7 +220,8 @@ export class MissionsService {
     const d = new Date();
     const firstDay = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     const dayMs = 24 * 60 * 60 * 1000;
-    const dayOfYear = Math.floor((d.getTime() - firstDay.getTime()) / dayMs) + 1;
+    const dayOfYear =
+      Math.floor((d.getTime() - firstDay.getTime()) / dayMs) + 1;
     const week = Math.ceil(dayOfYear / 7);
     return `weekly:${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
   }

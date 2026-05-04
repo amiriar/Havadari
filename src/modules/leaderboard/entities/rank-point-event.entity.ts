@@ -28,4 +28,3 @@ export class RankPointEvent extends ApplicationBaseEntity {
   @Column({ type: 'jsonb', nullable: true })
   meta: Record<string, unknown> | null;
 }
-

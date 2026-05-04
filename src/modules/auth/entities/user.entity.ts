@@ -72,5 +72,11 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
   @Column({ type: 'int', default: 100 })
   gems: number;
 
+  @Column({ type: 'int', default: 0 })
+  loginStreak: number;
+
+  @Column({ type: 'date', nullable: true })
+  lastLoginDate: string | null;
+
   permissionsSet: string[];
 }
