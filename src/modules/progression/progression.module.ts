@@ -9,4 +9,3 @@ import { ProgressionService } from './progression.service';
   exports: [ProgressionService],
 })
 export class ProgressionModule {}
-

@@ -17,4 +17,3 @@ export class UserChestInventory extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   quantity: number;
 }
-

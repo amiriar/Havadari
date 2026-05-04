@@ -13,4 +13,3 @@ export class FriendshipEntity extends ApplicationBaseEntity {
   @JoinColumn()
   userB: User;
 }
-

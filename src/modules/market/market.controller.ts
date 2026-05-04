@@ -33,7 +33,10 @@ export class MarketController {
   }
 
   @Post('auction/list')
-  listAuction(@UserDecorator() user: User, @Body() dto: CreateAuctionListingDto) {
+  listAuction(
+    @UserDecorator() user: User,
+    @Body() dto: CreateAuctionListingDto,
+  ) {
     return this.marketService.listAuction(user, dto);
   }
 

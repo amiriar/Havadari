@@ -64,9 +64,7 @@ export async function seedChestDefinitions(dataSource: DataSource) {
       costFgc: 0,
       costGems: 600,
       cooldownSeconds: 0,
-      drops: [
-        { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 1 },
-      ],
+      drops: [{ type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 1 }],
     },
     {
       type: ChestTypeEnum.SPONSOR_CHEST,

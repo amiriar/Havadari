@@ -14,6 +14,7 @@ import { MissionsModule } from '@app/missions/missions.module';
 import { ElasticSearchModule } from '@common/modules/elastic-search/elastic-search.module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
+import { ClansModule } from '@app/clans/clans.module';
 
 export async function setUpSwagger(app: INestApplication) {
   const v1config = new DocumentBuilder()
@@ -55,6 +56,7 @@ export async function setUpSwagger(app: INestApplication) {
       MarketModule,
       LeaderboardModule,
       MissionsModule,
+      ClansModule,
     ],
   });
 

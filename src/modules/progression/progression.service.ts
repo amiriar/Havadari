@@ -46,4 +46,3 @@ export class ProgressionService {
     return Math.max(100, level * 500);
   }
 }
-

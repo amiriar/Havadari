@@ -34,6 +34,7 @@ import { LeaderboardModule } from '../leaderboard/leaderboard.module';
 import { MissionsModule } from '../missions/missions.module';
 import { AchievementsModule } from '../achievements/achievements.module';
 import { SocialModule } from '../social/social.module';
+import { ClansModule } from '../clans/clans.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -59,6 +60,7 @@ import { AppService } from './app.service';
     MissionsModule,
     AchievementsModule,
     SocialModule,
+    ClansModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,

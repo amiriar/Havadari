@@ -294,7 +294,9 @@ export class MarketService {
 
       const msLeft = listing.expiresAt.getTime() - Date.now();
       if (msLeft <= 5 * 60 * 1000) {
-        listing.expiresAt = new Date(listing.expiresAt.getTime() + 5 * 60 * 1000);
+        listing.expiresAt = new Date(
+          listing.expiresAt.getTime() + 5 * 60 * 1000,
+        );
       }
 
       await manager.getRepository(MarketListing).save(listing);

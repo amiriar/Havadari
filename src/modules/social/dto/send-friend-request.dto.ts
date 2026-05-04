@@ -13,4 +13,3 @@ export class SendFriendRequestDto {
   @MinLength(3)
   toUserName?: string;
 }
-

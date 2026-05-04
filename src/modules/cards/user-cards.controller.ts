@@ -47,10 +47,7 @@ export class UserCardsController {
   }
 
   @Post('merge')
-  merge(
-    @UserDecorator() user: User,
-    @Body() dto: MergeUserCardsDto,
-  ) {
+  merge(@UserDecorator() user: User, @Body() dto: MergeUserCardsDto) {
     return this.userCardService.mergeDuplicatesToFgc(user, dto.userCardIds);
   }
 }

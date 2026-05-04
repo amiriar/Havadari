@@ -22,4 +22,3 @@ export class AchievementsController {
     return this.achievementsService.claim(user, achievementId);
   }
 }
-

@@ -35,4 +35,3 @@ export class AchievementDefinition extends ApplicationBaseEntity {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 }
-

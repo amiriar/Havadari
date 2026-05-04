@@ -21,4 +21,3 @@ export const UPGRADE_DUPLICATE_REQUIREMENTS: Record<number, number> = {
   4: 2, // upgrade to level 4
   5: 4, // upgrade to level 5
 };
-

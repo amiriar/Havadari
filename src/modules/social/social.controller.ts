@@ -1,7 +1,15 @@
 import { User } from '@app/auth/entities/user.entity';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SendFriendRequestDto } from './dto/send-friend-request.dto';
 import { SendGiftDto } from './dto/send-gift.dto';
@@ -105,4 +113,3 @@ export class SocialController {
     );
   }
 }
-

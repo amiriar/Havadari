@@ -69,4 +69,3 @@ export async function seedAchievements(dataSource: DataSource) {
   await repo.upsert(rows, ['code']);
   console.log('Achievements seeded');
 }
-

@@ -271,9 +271,11 @@ export class SocialService {
         if (!chestType) {
           throw new BadRequestException('Invalid gifted chest type.');
         }
-        let inventory = await manager.getRepository(UserChestInventory).findOne({
-          where: { user: { id: receiver.id }, chestType },
-        });
+        let inventory = await manager
+          .getRepository(UserChestInventory)
+          .findOne({
+            where: { user: { id: receiver.id }, chestType },
+          });
         if (!inventory) {
           inventory = manager.getRepository(UserChestInventory).create({
             user: receiver,

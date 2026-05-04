@@ -1,0 +1,99 @@
+import { User } from '@app/auth/entities/user.entity';
+import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { Url } from '@common/decorators/url.decorator';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { ClansService } from './clans.service';
+import { CreateClanDto } from './dto/create-clan.dto';
+import { JoinClanDto } from './dto/join-clan.dto';
+import { SendClanMessageDto } from './dto/send-clan-message.dto';
+
+@ApiTags('clans')
+@Controller('clans')
+export class ClansController {
+  constructor(private readonly clansService: ClansService) {}
+
+  @Post()
+  create(@UserDecorator() user: User, @Body() dto: CreateClanDto) {
+    return this.clansService.create(user, dto);
+  }
+
+  @Post('join')
+  join(@UserDecorator() user: User, @Body() dto: JoinClanDto) {
+    return this.clansService.join(user, dto);
+  }
+
+  @Post('leave')
+  leave(@UserDecorator() user: User) {
+    return this.clansService.leave(user);
+  }
+
+  @Delete(':clanId/members/:memberUserId')
+  kick(
+    @UserDecorator() user: User,
+    @Param('clanId') clanId: string,
+    @Param('memberUserId') memberUserId: string,
+  ) {
+    return this.clansService.kick(user, clanId, memberUserId);
+  }
+
+  @Get('me')
+  myClan(@UserDecorator() user: User) {
+    return this.clansService.myClan(user);
+  }
+
+  @Get(':clanId/members')
+  members(
+    @UserDecorator() user: User,
+    @Param('clanId') clanId: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Url() url?: string,
+  ) {
+    const parsedPage = page ? Number(page) : 1;
+    const parsedLimit = limit ? Number(limit) : 20;
+    return this.clansService.members(
+      user,
+      clanId,
+      Number.isFinite(parsedPage) ? parsedPage : 1,
+      Number.isFinite(parsedLimit) ? parsedLimit : 20,
+      url,
+    );
+  }
+
+  @Get(':clanId/chat')
+  messages(
+    @UserDecorator() user: User,
+    @Param('clanId') clanId: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Url() url?: string,
+  ) {
+    const parsedPage = page ? Number(page) : 1;
+    const parsedLimit = limit ? Number(limit) : 50;
+    return this.clansService.messages(
+      user,
+      clanId,
+      Number.isFinite(parsedPage) ? parsedPage : 1,
+      Number.isFinite(parsedLimit) ? parsedLimit : 50,
+      url,
+    );
+  }
+
+  @Post(':clanId/chat')
+  sendMessage(
+    @UserDecorator() user: User,
+    @Param('clanId') clanId: string,
+    @Body() dto: SendClanMessageDto,
+  ) {
+    return this.clansService.sendMessage(user, clanId, dto);
+  }
+}

@@ -20,4 +20,3 @@ export class CreateAuctionListingDto {
   @IsEnum(AuctionDurationHoursEnum)
   durationHours: AuctionDurationHoursEnum;
 }
-

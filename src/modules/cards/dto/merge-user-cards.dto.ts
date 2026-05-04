@@ -8,4 +8,3 @@ export class MergeUserCardsDto {
   @IsUUID('4', { each: true })
   userCardIds: string[];
 }
-

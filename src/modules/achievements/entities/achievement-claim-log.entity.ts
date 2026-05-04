@@ -25,4 +25,3 @@ export class AchievementClaimLog extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   rewardExp: number;
 }
-

@@ -51,4 +51,3 @@ export class CardValueService {
     return Math.min(1, cardVolume / maxVolume);
   }
 }
-

@@ -23,4 +23,3 @@ import { UserAchievementProgress } from './entities/user-achievement-progress.en
   exports: [AchievementsService],
 })
 export class AchievementsModule {}
-

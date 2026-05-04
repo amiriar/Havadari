@@ -5,4 +5,3 @@ export enum AchievementMetricEnum {
   DAILY_LOGIN_CLAIMS = 'daily_login_claims',
   COLLECT_CARDS = 'collect_cards',
 }
-
