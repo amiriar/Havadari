@@ -43,7 +43,7 @@ export class CardValueService {
       .select('card.id', 'cardId')
       .addSelect('COUNT(trade.id)', 'tradeCount')
       .groupBy('card.id')
-      .orderBy('tradeCount', 'DESC')
+      .orderBy('COUNT(trade.id)', 'DESC')
       .limit(1)
       .getRawOne<{ tradeCount?: string }>();
 
