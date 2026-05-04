@@ -1,4 +1,5 @@
 import { User } from '@app/auth/entities/user.entity';
+import { UserChestInventory } from '@app/chests/entities/user-chest-inventory.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FriendRequestEntity } from './entities/friend-request.entity';
@@ -9,11 +10,16 @@ import { SocialService } from './social.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, FriendRequestEntity, FriendshipEntity, GiftEntity]),
+    TypeOrmModule.forFeature([
+      User,
+      UserChestInventory,
+      FriendRequestEntity,
+      FriendshipEntity,
+      GiftEntity,
+    ]),
   ],
   controllers: [SocialController],
   providers: [SocialService],
   exports: [SocialService],
 })
 export class SocialModule {}
-

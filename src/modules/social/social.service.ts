@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { MoreThan, Repository } from 'typeorm';
+import { DataSource, MoreThan, Repository } from 'typeorm';
 import {
   FriendRequestStatusEnum,
   GiftStatusEnum,
@@ -18,6 +18,8 @@ import { SendGiftDto } from './dto/send-gift.dto';
 import { FriendRequestEntity } from './entities/friend-request.entity';
 import { FriendshipEntity } from './entities/friendship.entity';
 import { GiftEntity } from './entities/gift.entity';
+import { UserChestInventory } from '@app/chests/entities/user-chest-inventory.entity';
+import { ChestTypeEnum } from '@app/chests/constants/chest.types';
 
 const MAX_FRIENDS = 100;
 const DAILY_SEND_LIMIT = 5;
@@ -27,8 +29,11 @@ const FGC_GIFT_AMOUNT = 100;
 @Injectable()
 export class SocialService {
   constructor(
+    private readonly dataSource: DataSource,
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
+    @InjectRepository(UserChestInventory)
+    private readonly inventoryRepo: Repository<UserChestInventory>,
     @InjectRepository(FriendRequestEntity)
     private readonly requestRepo: Repository<FriendRequestEntity>,
     @InjectRepository(FriendshipEntity)
@@ -239,32 +244,62 @@ export class SocialService {
 
   async claimGift(user: User, giftId: string) {
     const me = await this.mustUser(user);
-    const gift = await this.giftRepo.findOne({
-      where: { id: giftId, toUser: { id: me.id } },
-      relations: { toUser: true },
+    return this.dataSource.transaction(async (manager) => {
+      const gift = await manager
+        .getRepository(GiftEntity)
+        .createQueryBuilder('gift')
+        .setLock('pessimistic_write')
+        .leftJoinAndSelect('gift.toUser', 'toUser')
+        .where('gift.id = :giftId', { giftId })
+        .andWhere('toUser.id = :userId', { userId: me.id })
+        .getOne();
+
+      if (!gift || gift.status !== GiftStatusEnum.SENT) {
+        throw new NotFoundException('Claimable gift not found.');
+      }
+
+      const receiver = await manager.getRepository(User).findOne({
+        where: { id: me.id },
+      });
+      if (!receiver) throw new UnauthorizedException('User not found.');
+
+      if (gift.type === GiftTypeEnum.FGC && gift.amountFgc > 0) {
+        receiver.fgc += gift.amountFgc;
+        await manager.getRepository(User).save(receiver);
+      } else if (gift.type === GiftTypeEnum.CHEST) {
+        const chestType = gift.chestType as ChestTypeEnum | null;
+        if (!chestType) {
+          throw new BadRequestException('Invalid gifted chest type.');
+        }
+        let inventory = await manager.getRepository(UserChestInventory).findOne({
+          where: { user: { id: receiver.id }, chestType },
+        });
+        if (!inventory) {
+          inventory = manager.getRepository(UserChestInventory).create({
+            user: receiver,
+            chestType,
+            quantity: 0,
+          });
+        }
+        inventory.quantity += 1;
+        await manager.getRepository(UserChestInventory).save(inventory);
+      }
+
+      gift.status = GiftStatusEnum.CLAIMED;
+      gift.claimedAt = new Date();
+      await manager.getRepository(GiftEntity).save(gift);
+
+      return {
+        claimed: true,
+        giftId: gift.id,
+        reward: {
+          type: gift.type,
+          amountFgc: gift.amountFgc,
+          chestType: gift.chestType,
+        },
+        balance: { fgc: receiver.fgc, gems: receiver.gems },
+      };
     });
-    if (!gift || gift.status !== GiftStatusEnum.SENT) {
-      throw new NotFoundException('Claimable gift not found.');
-    }
-
-    if (gift.type === GiftTypeEnum.FGC && gift.amountFgc > 0) {
-      me.fgc += gift.amountFgc;
-      await this.userRepo.save(me);
-    }
-    gift.status = GiftStatusEnum.CLAIMED;
-    gift.claimedAt = new Date();
-    await this.giftRepo.save(gift);
-
-    return {
-      claimed: true,
-      giftId: gift.id,
-      reward: {
-        type: gift.type,
-        amountFgc: gift.amountFgc,
-        chestType: gift.chestType,
-      },
-      balance: { fgc: me.fgc, gems: me.gems },
-    };
   }
 
   async myGifts(user: User, page = 1, limit = 20, url?: string) {

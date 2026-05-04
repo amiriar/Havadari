@@ -11,6 +11,7 @@ import { ChestsController } from './chests.controller';
 import { ChestsService } from './chests.service';
 import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
+import { UserChestInventory } from './entities/user-chest-inventory.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
 
 @Module({
@@ -24,6 +25,7 @@ import { UserChestState } from './entities/user-chest-state.entity';
       Card,
       UserCard,
       UserChestState,
+      UserChestInventory,
       ChestOpenLog,
       ChestDefinitionEntity,
     ]),

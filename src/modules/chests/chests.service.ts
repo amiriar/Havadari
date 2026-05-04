@@ -24,6 +24,7 @@ import {
 } from './constants/chest.types';
 import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
+import { UserChestInventory } from './entities/user-chest-inventory.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
 
 @Injectable()
@@ -37,6 +38,8 @@ export class ChestsService {
     private readonly userCardRepo: Repository<UserCard>,
     @InjectRepository(UserChestState)
     private readonly stateRepo: Repository<UserChestState>,
+    @InjectRepository(UserChestInventory)
+    private readonly inventoryRepo: Repository<UserChestInventory>,
     @InjectRepository(ChestOpenLog)
     private readonly logRepo: Repository<ChestOpenLog>,
     @InjectRepository(ChestDefinitionEntity)
@@ -58,6 +61,17 @@ export class ChestsService {
   async getState(user: User) {
     const authUser = await this.mustUser(user);
     const state = await this.getOrCreateState(authUser);
+    const inventoryRows = await this.inventoryRepo.find({
+      where: { user: { id: authUser.id } },
+      order: { chestType: 'ASC' },
+    });
+    const inventory = inventoryRows.reduce(
+      (acc, row) => {
+        acc[row.chestType] = row.quantity;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
     return {
       fgc: authUser.fgc,
       gems: authUser.gems,
@@ -69,6 +83,7 @@ export class ChestsService {
         epicToLegendaryCounter: state.epicToLegendaryCounter,
         totalOpensCounter: state.totalOpensCounter,
       },
+      inventory,
     };
   }
 
@@ -83,7 +98,13 @@ export class ChestsService {
     }
     const state = await this.getOrCreateState(authUser);
     this.ensureCooldown(def, state);
-    this.ensureBalance(authUser, def);
+    const inventoryRow = await this.inventoryRepo.findOne({
+      where: { user: { id: authUser.id }, chestType: type },
+    });
+    const hasInventory = Boolean(inventoryRow && inventoryRow.quantity > 0);
+    if (!hasInventory) {
+      this.ensureBalance(authUser, def);
+    }
 
     const pityBefore = {
       rareToEpicCounter: state.rareToEpicCounter,
@@ -93,8 +114,13 @@ export class ChestsService {
     const reward = await this.rollReward(def, state);
     const rewardPayload: Record<string, unknown> = {};
 
-    authUser.fgc -= def.cost.fgc || 0;
-    authUser.gems -= def.cost.gems || 0;
+    if (hasInventory) {
+      inventoryRow.quantity -= 1;
+      await this.inventoryRepo.save(inventoryRow);
+    } else {
+      authUser.fgc -= def.cost.fgc || 0;
+      authUser.gems -= def.cost.gems || 0;
+    }
 
     if (reward.type === 'card') {
       const card = await this.getRandomCardByRarity(authUser.id, reward.rarity);
@@ -103,13 +129,18 @@ export class ChestsService {
         state.epicToLegendaryCounter = pityBefore.epicToLegendaryCounter;
         state.totalOpensCounter = pityBefore.totalOpensCounter;
         // Refund full chest spend when no new card is available for the user.
-        authUser.fgc += def.cost.fgc || 0;
-        authUser.gems += def.cost.gems || 0;
+        if (hasInventory) {
+          inventoryRow.quantity += 1;
+          await this.inventoryRepo.save(inventoryRow);
+        } else {
+          authUser.fgc += def.cost.fgc || 0;
+          authUser.gems += def.cost.gems || 0;
+        }
         await this.userRepo.save(authUser);
         return {
           chestType: type,
-          spent: def.cost,
-          refunded: def.cost,
+          spent: hasInventory ? { inventory: 1 } : def.cost,
+          refunded: hasInventory ? { inventory: 1 } : def.cost,
           rewards: null,
           reason: `No ${reward.rarity} card found in catalog. Chest cost refunded.`,
           balances: { fgc: authUser.fgc, gems: authUser.gems },
@@ -164,8 +195,8 @@ export class ChestsService {
         user: authUser,
         chestType: type,
         rewards: rewardPayload,
-        spentFgc: def.cost.fgc || 0,
-        spentGems: def.cost.gems || 0,
+        spentFgc: hasInventory ? 0 : def.cost.fgc || 0,
+        spentGems: hasInventory ? 0 : def.cost.gems || 0,
       }),
     );
     const rankDelta =
@@ -212,7 +243,8 @@ export class ChestsService {
 
     return {
       chestType: type,
-      spent: def.cost,
+      spent: hasInventory ? { inventory: 1 } : def.cost,
+      source: hasInventory ? 'inventory' : 'shop',
       rewards: rewardPayload,
       balances: { fgc: authUser.fgc, gems: authUser.gems },
       pity: {
