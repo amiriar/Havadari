@@ -1,4 +1,5 @@
 import { User } from '@app/auth/entities/user.entity';
+import { NoCache } from '@common/decorators/no-cache';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
@@ -17,16 +18,19 @@ export class ChestsController {
   }
 
   @Get('state')
+  @NoCache()
   state(@UserDecorator() user: User) {
     return this.chestsService.getState(user);
   }
 
   @Post('open/:type')
+  @NoCache()
   open(@UserDecorator() user: User, @Param('type') type: string) {
     return this.chestsService.open(user, type as ChestTypeEnum);
   }
 
   @Get('logs')
+  @NoCache()
   logs(
     @UserDecorator() user: User,
     @Query('page') page?: string,

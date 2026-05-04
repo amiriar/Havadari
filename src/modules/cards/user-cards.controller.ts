@@ -1,4 +1,5 @@
 import { User as UserDecorator } from '@common/decorators/user.decorator';
+import { NoCache } from '@common/decorators/no-cache';
 import { Url } from '@common/decorators/url.decorator';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -13,6 +14,7 @@ export class UserCardsController {
   constructor(private readonly userCardService: UserCardService) {}
 
   @Post('starter-pack')
+  @NoCache()
   grantStarterPack(
     @UserDecorator() user: User,
     @Query('count') count?: string,
@@ -25,6 +27,7 @@ export class UserCardsController {
   }
 
   @Get()
+  @NoCache()
   listMine(
     @UserDecorator() user: User,
     @Query() query: GetUserCardsQueryDto,
@@ -39,6 +42,7 @@ export class UserCardsController {
   }
 
   @Post('upgrade/:userCardId')
+  @NoCache()
   upgrade(
     @UserDecorator() user: User,
     @Param('userCardId') userCardId: string,
@@ -47,6 +51,7 @@ export class UserCardsController {
   }
 
   @Post('merge')
+  @NoCache()
   merge(@UserDecorator() user: User, @Body() dto: MergeUserCardsDto) {
     return this.userCardService.mergeDuplicatesToFgc(user, dto.userCardIds);
   }

@@ -1,4 +1,5 @@
 import { User } from '@app/auth/entities/user.entity';
+import { NoCache } from '@common/decorators/no-cache';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import {
@@ -53,6 +54,7 @@ export class SocialController {
   }
 
   @Get('friends')
+  @NoCache()
   listFriends(
     @UserDecorator() user: User,
     @Query('page') page?: string,
@@ -70,6 +72,7 @@ export class SocialController {
   }
 
   @Get('friends/requests/incoming')
+  @NoCache()
   incomingRequests(
     @UserDecorator() user: User,
     @Query('page') page?: string,
@@ -92,11 +95,13 @@ export class SocialController {
   }
 
   @Post('gifts/claim/:giftId')
+  @NoCache()
   claimGift(@UserDecorator() user: User, @Param('giftId') giftId: string) {
     return this.socialService.claimGift(user, giftId);
   }
 
   @Get('gifts/inbox')
+  @NoCache()
   myGifts(
     @UserDecorator() user: User,
     @Query('page') page?: string,

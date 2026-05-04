@@ -1,6 +1,7 @@
 import { User as CurrentUser } from '@app/auth/entities/user.entity';
 import { ApplicationMainRoles } from '@common/enums/application-main-roles.enum';
 import { AuthorizeByRoles } from '@common/decorators/authorize-by-roles.decorator';
+import { NoCache } from '@common/decorators/no-cache';
 import { Url } from '@common/decorators/url.decorator';
 import { User } from '@common/decorators/user.decorator';
 import { PaginationQuery } from '@common/dto/pagination-input-query';
@@ -43,6 +44,7 @@ export class NotificationController {
   }
 
   @Get('my')
+  @NoCache()
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
   @ApiQuery({ name: 'isRead', required: false, type: Boolean, example: false })
@@ -60,16 +62,19 @@ export class NotificationController {
   }
 
   @Get('my/unread-count')
+  @NoCache()
   getMyUnreadCount(@User() user: CurrentUser) {
     return this.service.getMyUnreadCount(user);
   }
 
   @Patch('my/:id/read')
+  @NoCache()
   markAsRead(@Param('id') id: string, @User() user: CurrentUser) {
     return this.service.markAsRead(id, user);
   }
 
   @Patch('my/read-all')
+  @NoCache()
   markAllAsRead(@User() user: CurrentUser) {
     return this.service.markAllAsRead(user);
   }

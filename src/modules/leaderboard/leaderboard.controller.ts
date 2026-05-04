@@ -2,6 +2,7 @@ import { User } from '@app/auth/entities/user.entity';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import { AuthorizeByPermissions } from '@common/decorators/authorize-by-permissions.decorator';
+import { NoCache } from '@common/decorators/no-cache';
 import { READ_USER } from '@common/constants/permissions_name/user';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -19,6 +20,7 @@ export class LeaderboardController {
   ) {}
 
   @Get()
+  @NoCache()
   list(@Query() query: GetLeaderboardQueryDto, @Url() url: string) {
     return this.leaderboardService.getLeaderboard(
       query.type ?? LeaderboardTypeEnum.CLASSIC,
@@ -29,6 +31,7 @@ export class LeaderboardController {
   }
 
   @Get('me')
+  @NoCache()
   myRank(
     @UserDecorator() user: User,
     @Query('type') type?: LeaderboardTypeEnum,
@@ -40,6 +43,7 @@ export class LeaderboardController {
   }
 
   @Get('points-history')
+  @NoCache()
   @AuthorizeByPermissions([READ_USER])
   pointsHistory(
     @Query('page') page?: string,
@@ -58,6 +62,7 @@ export class LeaderboardController {
   }
 
   @Get('my-points-history')
+  @NoCache()
   myPointsHistory(
     @UserDecorator() user: User,
     @Query('page') page?: string,

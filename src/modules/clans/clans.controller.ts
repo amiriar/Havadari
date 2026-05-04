@@ -1,4 +1,5 @@
 import { User } from '@app/auth/entities/user.entity';
+import { NoCache } from '@common/decorators/no-cache';
 import { User as UserDecorator } from '@common/decorators/user.decorator';
 import { Url } from '@common/decorators/url.decorator';
 import {
@@ -46,11 +47,13 @@ export class ClansController {
   }
 
   @Get('me')
+  @NoCache()
   myClan(@UserDecorator() user: User) {
     return this.clansService.myClan(user);
   }
 
   @Get(':clanId/members')
+  @NoCache()
   members(
     @UserDecorator() user: User,
     @Param('clanId') clanId: string,
@@ -70,6 +73,7 @@ export class ClansController {
   }
 
   @Get(':clanId/chat')
+  @NoCache()
   messages(
     @UserDecorator() user: User,
     @Param('clanId') clanId: string,
