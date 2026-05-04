@@ -66,6 +66,24 @@ export class UserCardService {
     };
   }
 
+  async ensureStarterPack(user: User, count = 5) {
+    this.assertUser(user);
+    const existingCount = await this.userCardRepo.count({
+      where: { user: { id: user.id } },
+    });
+    if (existingCount > 0) {
+      return { granted: false, reason: 'already_has_cards' };
+    }
+
+    const cardsCount = await this.cardRepo.count();
+    if (cardsCount < 5) {
+      return { granted: false, reason: 'catalog_not_ready' };
+    }
+
+    await this.grantStarterPack(user, count);
+    return { granted: true };
+  }
+
   async listMine(user: User, page = 1, limit = 50, url?: string) {
     this.assertUser(user);
     return paginate(

@@ -32,6 +32,7 @@ import { UserService } from './user.service';
 import { RoleService } from './role.service';
 import { AuthControllerCode } from '../constants/controller-codes';
 import { HashingUtil } from '../utills/hasing-util';
+import { UserCardService } from '@app/cards/services/user-card.service';
 @Injectable()
 export class AuthService {
   constructor(
@@ -43,6 +44,7 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly rolesService: RoleService,
     private readonly configService: ConfigService,
+    private readonly userCardService: UserCardService,
   ) {}
 
   /**
@@ -104,6 +106,8 @@ export class AuthService {
     //cache loggedin user
     await this.cacheManager.set(user.id, user, ONE_HOUR_IN_MS);
 
+    await this.userCardService.ensureStarterPack(user);
+
     //sign token
     return await this.jwtService.signToken(user.id);
   }
@@ -164,6 +168,7 @@ export class AuthService {
     }
 
     await this.repository.update({ id: user.id }, { isEmailVerified: true });
+    await this.userCardService.ensureStarterPack(user);
 
     //sign token
     return await this.jwtService.signToken(user.id);
@@ -200,6 +205,7 @@ export class AuthService {
     }
 
     await this.repository.update({ id: user.id }, { isPhoneVerified: true });
+    await this.userCardService.ensureStarterPack(user);
 
     //sign token
     return await this.jwtService.signToken(user.id);

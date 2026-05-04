@@ -32,6 +32,6 @@ import { UserCardService } from './services/user-card.service';
     CardAvatarService,
     UserCardService,
   ],
-  exports: [CardGenerationService],
+  exports: [CardGenerationService, UserCardService],
 })
 export class CardsModule {}

@@ -7,6 +7,7 @@ import { OtpService } from './services/otp.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JWT_EXPIRE_TIME } from 'src/common/utils/constants.utils';
+import { CardsModule } from '../cards/cards.module';
 import { JwtService } from './services/jwt-service';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
@@ -25,6 +26,7 @@ import { RoleService } from './services/role.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Permission, PermissionCategory, Role]),
+    CardsModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
