@@ -128,14 +128,23 @@ export class BattleService {
   async start(userId: string, dto: StartBattleDto) {
     const player1 = await this.getUserByIdOrFail(userId);
     const mode = dto.mode ?? BattleModeEnum.CLASSIC;
-    if (mode !== BattleModeEnum.CLASSIC) {
-      throw new BadRequestException('Only classic mode is enabled right now.');
+    if (![BattleModeEnum.CLASSIC, BattleModeEnum.RANKED].includes(mode)) {
+      throw new BadRequestException('Only classic and ranked modes are enabled right now.');
     }
 
     const opponentType = dto.opponentType ?? BattleOpponentTypeEnum.BOT;
     const region = dto.region ?? BattleRegionEnum.GLOBAL;
+    const entryFee = mode === BattleModeEnum.RANKED ? 500 : 0;
 
     const player1Squad = await this.getValidatedSquad(userId, dto.userCardIds);
+    if (mode === BattleModeEnum.RANKED) {
+      this.validateRankedSquad(player1Squad);
+      if (Number(player1.fgc || 0) < entryFee) {
+        throw new BadRequestException('Not enough FGC for ranked entry fee.');
+      }
+      player1.fgc = Number(player1.fgc || 0) - entryFee;
+      await this.userRepo.save(player1);
+    }
     let player2: User | null = null;
     let player2Squad: Array<Record<string, unknown>>;
 
@@ -159,6 +168,14 @@ export class BattleService {
       }
       this.validateClassicPositions(p2Cards);
       player2Squad = p2Cards.map((x) => this.toSnapshot(x));
+      if (mode === BattleModeEnum.RANKED) {
+        this.validateRankedSquad(player2Squad);
+        if (Number(player2.fgc || 0) < entryFee) {
+          throw new BadRequestException('Opponent has not enough FGC for ranked entry fee.');
+        }
+        player2.fgc = Number(player2.fgc || 0) - entryFee;
+        await this.userRepo.save(player2);
+      }
     } else {
       player2Squad = await this.makeBotSquad(player1Squad);
     }
@@ -178,6 +195,7 @@ export class BattleService {
         currentRound: 0,
         player1RoundWins: 0,
         player2RoundWins: 0,
+        entryFee,
         winner: null,
         rewards: null,
       }),
@@ -277,19 +295,13 @@ export class BattleService {
     battle.winner = winner;
     battle.status = BattleStatusEnum.COMPLETED;
 
-    const p1Reward = this.classicReward(
-      winner === BattleWinnerEnum.PLAYER1
-        ? 'win'
-        : winner === BattleWinnerEnum.PLAYER2
-          ? 'lose'
-          : 'draw',
+    const p1Reward = this.rewardByMode(
+      this.resolveResult(winner, BattleWinnerEnum.PLAYER1),
+      battle.mode,
     );
-    const p2Reward = this.classicReward(
-      winner === BattleWinnerEnum.PLAYER2
-        ? 'win'
-        : winner === BattleWinnerEnum.PLAYER1
-          ? 'lose'
-          : 'draw',
+    const p2Reward = this.rewardByMode(
+      this.resolveResult(winner, BattleWinnerEnum.PLAYER2),
+      battle.mode,
     );
 
     const p1 = await this.getUserByIdOrFail(battle.player1.id);
@@ -349,10 +361,23 @@ export class BattleService {
     });
   }
 
-  private classicReward(result: 'win' | 'lose' | 'draw') {
+  private rewardByMode(result: 'win' | 'lose' | 'draw', mode: BattleModeEnum) {
+    if (mode === BattleModeEnum.RANKED) {
+      if (result === 'win') return { fgc: 200, exp: 70, trophies: 45 };
+      if (result === 'lose') return { fgc: 40, exp: 25, trophies: -20 };
+      return { fgc: 100, exp: 45, trophies: 8 };
+    }
     if (result === 'win') return { fgc: 100, exp: 50, trophies: 30 };
     if (result === 'lose') return { fgc: 20, exp: 20, trophies: -15 };
     return { fgc: 50, exp: 30, trophies: 5 };
+  }
+
+  private resolveResult(
+    winner: BattleWinnerEnum,
+    forPlayer: BattleWinnerEnum.PLAYER1 | BattleWinnerEnum.PLAYER2,
+  ): 'win' | 'lose' | 'draw' {
+    if (winner === BattleWinnerEnum.DRAW) return 'draw';
+    return winner === forPlayer ? 'win' : 'lose';
   }
 
   private resolveWinner(battle: Battle) {
@@ -429,6 +454,15 @@ export class BattleService {
       throw new BadRequestException(
         'Required positions: GK=1, DEF=1, MID=1, FW=2.',
       );
+    }
+  }
+
+  private validateRankedSquad(squad: Array<Record<string, unknown>>) {
+    const avg =
+      squad.reduce((acc, item) => acc + Number(item.overallRating || 0), 0) /
+      Math.max(1, squad.length);
+    if (avg < 80) {
+      throw new BadRequestException('Ranked requires minimum squad average rating of 80.');
     }
   }
 

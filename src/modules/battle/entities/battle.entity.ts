@@ -62,6 +62,9 @@ export class Battle extends ApplicationBaseEntity {
   @Column({ type: 'int', default: 0 })
   player2RoundWins: number;
 
+  @Column({ type: 'int', default: 0 })
+  entryFee: number;
+
   @Column({ type: 'enum', enum: BattleWinnerEnum, nullable: true })
   winner: BattleWinnerEnum | null;
 
