@@ -1,8 +1,10 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementsModule } from '@app/achievements/achievements.module';
 import { Card } from '@app/cards/entities/card.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { LeaderboardModule } from '@app/leaderboard/leaderboard.module';
 import { MissionsModule } from '@app/missions/missions.module';
+import { ProgressionModule } from '@app/progression/progression.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketController } from './market.controller';
@@ -15,6 +17,8 @@ import { CardValueService } from './services/card-value.service';
   imports: [
     LeaderboardModule,
     MissionsModule,
+    ProgressionModule,
+    AchievementsModule,
     TypeOrmModule.forFeature([
       User,
       Card,

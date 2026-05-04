@@ -1,4 +1,6 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
+import { AchievementsService } from '@app/achievements/achievements.service';
 import { Card } from '@app/cards/entities/card.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { UserCardAcquiredFromEnum } from '@app/cards/constants/card.enums';
@@ -6,6 +8,7 @@ import { RankPointsService } from '@app/leaderboard/rank-points.service';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import { MissionsService } from '@app/missions/missions.service';
 import { MissionMetricEnum } from '@app/missions/constants/mission.enums';
+import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
   Injectable,
@@ -40,6 +43,8 @@ export class ChestsService {
     private readonly definitionRepo: Repository<ChestDefinitionEntity>,
     private readonly rankPointsService: RankPointsService,
     private readonly missionsService: MissionsService,
+    private readonly progressionService: ProgressionService,
+    private readonly achievementsService: AchievementsService,
   ) {}
 
   async listDefinitions() {
@@ -124,6 +129,11 @@ export class ChestsService {
         isListed: false,
       });
       await this.userCardRepo.save(userCard);
+      await this.achievementsService.track(
+        authUser.id,
+        AchievementMetricEnum.COLLECT_CARDS,
+        1,
+      );
       rewardPayload.card = {
         userCardId: userCard.id,
         cardId: card.id,
@@ -181,6 +191,23 @@ export class ChestsService {
       authUser.id,
       MissionMetricEnum.OPEN_CHESTS,
       1,
+    );
+    await this.achievementsService.track(
+      authUser.id,
+      AchievementMetricEnum.OPEN_CHESTS,
+      1,
+    );
+    await this.progressionService.addExp(
+      authUser.id,
+      type === ChestTypeEnum.MYTHIC_CHEST
+        ? 40
+        : type === ChestTypeEnum.LEGENDARY_CHEST
+          ? 30
+          : type === ChestTypeEnum.EPIC_CHEST
+            ? 20
+            : type === ChestTypeEnum.RARE_CHEST
+              ? 12
+              : 8,
     );
 
     return {

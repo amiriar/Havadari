@@ -32,6 +32,7 @@ import { ChestsModule } from '../chests/chests.module';
 import { MarketModule } from '../market/market.module';
 import { LeaderboardModule } from '../leaderboard/leaderboard.module';
 import { MissionsModule } from '../missions/missions.module';
+import { AchievementsModule } from '../achievements/achievements.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -55,6 +56,7 @@ import { AppService } from './app.service';
     MarketModule,
     LeaderboardModule,
     MissionsModule,
+    AchievementsModule,
     SmsTemplateModule,
     SmsTemplateParameterModule,
     NotificationModule,

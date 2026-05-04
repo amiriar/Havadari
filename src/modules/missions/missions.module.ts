@@ -1,5 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementsModule } from '@app/achievements/achievements.module';
 import { LeaderboardModule } from '@app/leaderboard/leaderboard.module';
+import { ProgressionModule } from '@app/progression/progression.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MissionClaimLog } from './entities/mission-claim-log.entity';
@@ -11,6 +13,8 @@ import { MissionsService } from './missions.service';
 @Module({
   imports: [
     LeaderboardModule,
+    ProgressionModule,
+    AchievementsModule,
     TypeOrmModule.forFeature([
       User,
       MissionDefinition,

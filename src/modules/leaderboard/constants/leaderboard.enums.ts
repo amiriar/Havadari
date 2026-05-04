@@ -3,4 +3,5 @@ export enum LeaderboardTypeEnum {
   CHAMPIONS = 'champions',
   PREDICTION = 'prediction',
   IRAN = 'iran',
+  TROPHIES = 'trophies',
 }

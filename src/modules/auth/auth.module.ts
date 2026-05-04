@@ -8,6 +8,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JWT_EXPIRE_TIME } from 'src/common/utils/constants.utils';
 import { CardsModule } from '../cards/cards.module';
+import { AchievementsModule } from '../achievements/achievements.module';
+import { ProgressionModule } from '../progression/progression.module';
 import { JwtService } from './services/jwt-service';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
@@ -37,6 +39,8 @@ import { DailyLoginService } from './services/daily-login.service';
       DailyLoginRewardConfig,
     ]),
     CardsModule,
+    AchievementsModule,
+    ProgressionModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {

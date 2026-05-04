@@ -1,6 +1,9 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
+import { AchievementsService } from '@app/achievements/achievements.service';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import { RankPointsService } from '@app/leaderboard/rank-points.service';
+import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
   Injectable,
@@ -26,6 +29,8 @@ export class MissionsService {
     @InjectRepository(MissionClaimLog)
     private readonly claimLogRepo: Repository<MissionClaimLog>,
     private readonly rankPointsService: RankPointsService,
+    private readonly progressionService: ProgressionService,
+    private readonly achievementsService: AchievementsService,
   ) {}
 
   @Cron('0 5 0 * * *')
@@ -186,6 +191,27 @@ export class MissionsService {
         rewardRankPoints: mission.rewardRankPoints,
       }),
     );
+    await this.progressionService.addExp(me.id, 30);
+    await this.progressionService.addTrophies(me.id, 2);
+    if (mission.metric === MissionMetricEnum.OPEN_CHESTS) {
+      await this.achievementsService.track(
+        me.id,
+        AchievementMetricEnum.OPEN_CHESTS,
+        mission.targetValue,
+      );
+    } else if (mission.metric === MissionMetricEnum.SELL_CARDS) {
+      await this.achievementsService.track(
+        me.id,
+        AchievementMetricEnum.SELL_CARDS,
+        mission.targetValue,
+      );
+    } else if (mission.metric === MissionMetricEnum.BUY_CARDS) {
+      await this.achievementsService.track(
+        me.id,
+        AchievementMetricEnum.BUY_CARDS,
+        mission.targetValue,
+      );
+    }
 
     return {
       missionId: mission.id,

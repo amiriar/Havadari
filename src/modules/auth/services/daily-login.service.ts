@@ -1,4 +1,7 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
+import { AchievementsService } from '@app/achievements/achievements.service';
+import { ProgressionService } from '@app/progression/progression.service';
 import {
   Injectable,
   UnauthorizedException,
@@ -20,6 +23,8 @@ export class DailyLoginService {
     private readonly claimRepo: Repository<DailyLoginClaim>,
     @InjectRepository(DailyLoginRewardConfig)
     private readonly rewardConfigRepo: Repository<DailyLoginRewardConfig>,
+    private readonly progressionService: ProgressionService,
+    private readonly achievementsService: AchievementsService,
   ) {}
 
   async status(user: User) {
@@ -48,7 +53,14 @@ export class DailyLoginService {
 
   async claim(user: User) {
     const me = await this.mustUser(user);
-    return this.claimDailyReward(me.id);
+    const result = await this.claimDailyReward(me.id);
+    await this.progressionService.addExp(me.id, 20);
+    await this.achievementsService.track(
+      me.id,
+      AchievementMetricEnum.DAILY_LOGIN_CLAIMS,
+      1,
+    );
+    return result;
   }
 
   async history(user: User, page = 1, limit = 20, url?: string) {

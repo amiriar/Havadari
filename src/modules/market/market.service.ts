@@ -1,9 +1,12 @@
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
+import { AchievementsService } from '@app/achievements/achievements.service';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { RankPointSourceEnum } from '@app/leaderboard/constants/rank-point-source.enum';
 import { RankPointsService } from '@app/leaderboard/rank-points.service';
 import { MissionsService } from '@app/missions/missions.service';
 import { MissionMetricEnum } from '@app/missions/constants/mission.enums';
+import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
   Injectable,
@@ -38,6 +41,8 @@ export class MarketService {
     private readonly cardValueService: CardValueService,
     private readonly rankPointsService: RankPointsService,
     private readonly missionsService: MissionsService,
+    private readonly progressionService: ProgressionService,
+    private readonly achievementsService: AchievementsService,
   ) {}
 
   @Cron('0 */10 * * * *')
@@ -166,6 +171,20 @@ export class MarketService {
       1,
     );
     await this.missionsService.track(buyer.id, MissionMetricEnum.BUY_CARDS, 1);
+    await this.achievementsService.track(
+      seller.id,
+      AchievementMetricEnum.SELL_CARDS,
+      1,
+    );
+    await this.achievementsService.track(
+      buyer.id,
+      AchievementMetricEnum.BUY_CARDS,
+      1,
+    );
+    await this.progressionService.addExp(seller.id, 20);
+    await this.progressionService.addExp(buyer.id, 12);
+    await this.progressionService.addTrophies(seller.id, 3);
+    await this.progressionService.addTrophies(buyer.id, 1);
 
     return {
       listingId: listing.id,
@@ -399,6 +418,20 @@ export class MarketService {
           platformFee,
           sellerReceive,
         }),
+      );
+      await this.progressionService.addExp(seller.id, 20);
+      await this.progressionService.addExp(buyer.id, 12);
+      await this.progressionService.addTrophies(seller.id, 3);
+      await this.progressionService.addTrophies(buyer.id, 1);
+      await this.achievementsService.track(
+        seller.id,
+        AchievementMetricEnum.SELL_CARDS,
+        1,
+      );
+      await this.achievementsService.track(
+        buyer.id,
+        AchievementMetricEnum.BUY_CARDS,
+        1,
       );
       return;
     }

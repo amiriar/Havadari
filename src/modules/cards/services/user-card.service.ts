@@ -1,5 +1,8 @@
 import { Card } from '@app/cards/entities/card.entity';
 import { User } from '@app/auth/entities/user.entity';
+import { AchievementMetricEnum } from '@app/achievements/constants/achievement.enums';
+import { AchievementsService } from '@app/achievements/achievements.service';
+import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
   Injectable,
@@ -29,6 +32,8 @@ export class UserCardService {
     private readonly cardRepo: Repository<Card>,
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
+    private readonly progressionService: ProgressionService,
+    private readonly achievementsService: AchievementsService,
   ) {}
 
   async grantStarterPack(user: User, count = 5) {
@@ -67,6 +72,11 @@ export class UserCardService {
       }),
     );
     await this.userCardRepo.save(inserts);
+    await this.achievementsService.track(
+      user.id,
+      AchievementMetricEnum.COLLECT_CARDS,
+      inserts.length,
+    );
 
     return {
       granted: inserts.length,
@@ -222,6 +232,8 @@ export class UserCardService {
       me.fgc -= cost;
       await userCardRepo.save(target);
       await userRepo.save(me);
+      await this.progressionService.addExp(me.id, 25);
+      await this.progressionService.addTrophies(me.id, 2);
 
       return {
         upgraded: true,
@@ -277,6 +289,7 @@ export class UserCardService {
       await userCardRepo.delete(cards.map((c) => c.id));
       me.fgc += gainedFgc;
       await userRepo.save(me);
+      await this.progressionService.addExp(me.id, 10);
 
       return {
         merged: true,

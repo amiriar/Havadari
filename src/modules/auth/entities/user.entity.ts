@@ -66,6 +66,15 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
   @Column({ type: 'int', default: 0 })
   rankPoints: number;
 
+  @Column({ type: 'int', default: 1 })
+  level: number;
+
+  @Column({ type: 'int', default: 0 })
+  exp: number;
+
+  @Column({ type: 'int', default: 0 })
+  trophies: number;
+
   @Column({ type: 'int', default: 1000 })
   fgc: number;
 

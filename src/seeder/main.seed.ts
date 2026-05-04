@@ -16,6 +16,7 @@ import { seedLeaderboardRewards } from './leaderboard-rewards.seeder';
 import { seedChestDefinitions } from './chest-definitions.seeder';
 import { seedMissionDefinitions } from './missions.seeder';
 import { seedDailyLoginRewardConfig } from './daily-login-reward-config.seeder';
+import { seedAchievements } from './achievements.seeder';
 
 import { seedFiles } from './files.seeder';
 
@@ -64,6 +65,7 @@ async function runSeeder() {
   await seedChestDefinitions(dataSource);
   await seedMissionDefinitions(dataSource);
   await seedDailyLoginRewardConfig(dataSource);
+  await seedAchievements(dataSource);
   await seedFiles(dataSource);
   exit();
 }

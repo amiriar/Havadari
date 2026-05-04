@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AchievementsModule } from '@app/achievements/achievements.module';
 import { User } from '@app/auth/entities/user.entity';
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
+import { ProgressionModule } from '@app/progression/progression.module';
 import { AvatarGenerationRun } from './entities/avatar-generation-run.entity';
 import { Card } from './entities/card.entity';
 import { UserCard } from './entities/user-card.entity';
@@ -16,6 +18,8 @@ import { UserCardService } from './services/user-card.service';
 
 @Module({
   imports: [
+    ProgressionModule,
+    AchievementsModule,
     TypeOrmModule.forFeature([
       Card,
       AvatarGenerationRun,

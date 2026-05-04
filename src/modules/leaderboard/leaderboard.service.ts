@@ -50,7 +50,9 @@ export class LeaderboardService {
     const order =
       type === LeaderboardTypeEnum.PREDICTION
         ? ({ createdAt: 'ASC' } as const)
-        : ({ rankPoints: 'DESC' } as const);
+        : type === LeaderboardTypeEnum.TROPHIES
+          ? ({ trophies: 'DESC' } as const)
+          : ({ rankPoints: 'DESC' } as const);
 
     const paged = await paginate(
       this.userRepo,
@@ -71,8 +73,11 @@ export class LeaderboardService {
       score:
         type === LeaderboardTypeEnum.PREDICTION
           ? 0
-          : Number(row.rankPoints || 0),
+          : type === LeaderboardTypeEnum.TROPHIES
+            ? Number(row.trophies || 0)
+            : Number(row.rankPoints || 0),
       rankPoints: Number(row.rankPoints || 0),
+      trophies: Number(row.trophies || 0),
     }));
 
     return {
