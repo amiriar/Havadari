@@ -3,7 +3,7 @@ import { NoCache } from '@common/decorators/no-cache';
 import { Url } from '@common/decorators/url.decorator';
 import { User } from '@common/decorators/user.decorator';
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { BattleService } from './battle.service';
 import { BattleHistoryQueryDto } from './dto/battle-history-query.dto';
 import { EndBattleDto } from './dto/end-battle.dto';
@@ -111,9 +111,32 @@ export class BattleController {
     return this.battleService.tournamentMyNextMatch(user.id);
   }
 
+  @Post('tournament/match/start')
+  @NoCache()
+  @ApiOperation({ summary: 'Start real battle for a pending tournament match' })
+  @ApiQuery({ name: 'matchId', type: String, required: true })
+  tournamentStartMatch(@User() user: CurrentUser, @Query('matchId') matchId: string) {
+    return this.battleService.tournamentStartMatch(user.id, matchId);
+  }
+
+  @Get('tournament/fixtures')
+  @NoCache()
+  @ApiOperation({ summary: 'Get current tournament fixtures (group + knockout)' })
+  tournamentFixtures(@User() user: CurrentUser) {
+    return this.battleService.tournamentFixtures(user.id);
+  }
+
+  @Get('tournament/standings')
+  @NoCache()
+  @ApiOperation({ summary: 'Get current tournament standings' })
+  tournamentStandings(@User() user: CurrentUser) {
+    return this.battleService.tournamentStandings(user.id);
+  }
+
   @Post('tournament/match/resolve')
   @NoCache()
   @ApiOperation({ summary: 'Resolve a tournament match (api-only scaffold)' })
+  @ApiQuery({ name: 'matchId', type: String, required: true })
   tournamentResolveMatch(
     @User() user: CurrentUser,
     @Query('matchId') matchId: string,

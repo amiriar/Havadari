@@ -25,4 +25,7 @@ export class ChampionsTournament extends ApplicationBaseEntity {
 
   @Column({ type: 'int', default: 128 })
   maxParticipants: number;
+
+  @Column({ type: 'timestamp', nullable: true })
+  settledAt: Date | null;
 }

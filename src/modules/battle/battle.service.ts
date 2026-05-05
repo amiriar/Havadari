@@ -13,7 +13,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { In, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import {
   BattleModeEnum,
   BattleOpponentTypeEnum,
@@ -84,6 +84,7 @@ export class BattleService {
     private readonly tournamentMatchRepo: Repository<ChampionsMatch>,
     @InjectRepository(UserChestInventory)
     private readonly chestInventoryRepo: Repository<UserChestInventory>,
+    private readonly dataSource: DataSource,
     private readonly progressionService: ProgressionService,
   ) {}
 
@@ -460,7 +461,14 @@ export class BattleService {
   async end(userId: string, battleId: string) {
     const battle = await this.battleRepo.findOne({
       where: { id: battleId },
-      relations: { player1: true, player2: true },
+      relations: {
+        player1: true,
+        player2: true,
+        tournamentMatch: {
+          participantA: { user: true },
+          participantB: { user: true },
+        },
+      },
     });
     if (!battle) throw new NotFoundException('Battle not found.');
     if (battle.player1.id !== userId) {
@@ -511,6 +519,30 @@ export class BattleService {
           : null,
     };
     await this.battleRepo.save(battle);
+
+    if (
+      battle.tournamentMatch &&
+      battle.opponentType === BattleOpponentTypeEnum.PVP &&
+      battle.player2?.id
+    ) {
+      const winnerParticipantId =
+        battle.winner === BattleWinnerEnum.PLAYER1
+          ? battle.tournamentMatch.participantA.user.id === battle.player1.id
+            ? battle.tournamentMatch.participantA.id
+            : battle.tournamentMatch.participantB.id
+          : battle.winner === BattleWinnerEnum.PLAYER2
+            ? battle.tournamentMatch.participantA.user.id === battle.player2.id
+              ? battle.tournamentMatch.participantA.id
+              : battle.tournamentMatch.participantB.id
+            : null;
+      if (winnerParticipantId) {
+        await this.resolveTournamentMatchInternal(battle.tournamentMatch.id, {
+          winnerParticipantId,
+          scoreA: battle.player1RoundWins,
+          scoreB: battle.player2RoundWins,
+        });
+      }
+    }
 
     return {
       battleId: battle.id,
@@ -669,44 +701,98 @@ export class BattleService {
     return { tournamentStatus: tournament.status, match: match || null };
   }
 
+  async tournamentFixtures(userId: string) {
+    await this.getUserByIdOrFail(userId);
+    const tournament = await this.getOrCreateCurrentTournament();
+    const matches = await this.tournamentMatchRepo.find({
+      where: { tournament: { id: tournament.id } },
+      relations: {
+        participantA: { user: true },
+        participantB: { user: true },
+        winner: { user: true },
+      },
+      order: { createdAt: 'ASC' },
+    });
+    return {
+      tournamentId: tournament.id,
+      seasonKey: tournament.seasonKey,
+      phase: tournament.phase,
+      status: tournament.status,
+      fixtures: matches,
+    };
+  }
+
+  async tournamentStandings(userId: string) {
+    await this.getUserByIdOrFail(userId);
+    const tournament = await this.getOrCreateCurrentTournament();
+    const participants = await this.tournamentParticipantRepo.find({
+      where: { tournament: { id: tournament.id } },
+      relations: { user: true },
+      order: { groupPoints: 'DESC', createdAt: 'ASC' },
+    });
+    return {
+      tournamentId: tournament.id,
+      seasonKey: tournament.seasonKey,
+      standings: participants.map((p, idx) => ({
+        rank: idx + 1,
+        participantId: p.id,
+        userId: p.user.id,
+        username: p.user.userName,
+        groupPoints: p.groupPoints,
+        status: p.status,
+      })),
+    };
+  }
+
   async tournamentResolveMatch(
     userId: string,
     matchId: string,
     dto: ResolveTournamentMatchDto,
   ) {
-    await this.getUserByIdOrFail(userId);
+    const me = await this.getUserByIdOrFail(userId);
     if (!matchId) throw new BadRequestException('matchId is required.');
-    const match = await this.tournamentMatchRepo.findOne({
-      where: { id: matchId },
-      relations: {
-        tournament: true,
-        participantA: { user: true },
-        participantB: { user: true },
-      },
+    const match = await this.dataSource.transaction(async (manager) => {
+      const locked = await manager
+        .getRepository(ChampionsMatch)
+        .createQueryBuilder('m')
+        .leftJoinAndSelect('m.tournament', 't')
+        .leftJoinAndSelect('m.participantA', 'a')
+        .leftJoinAndSelect('m.participantB', 'b')
+        .leftJoinAndSelect('a.user', 'au')
+        .leftJoinAndSelect('b.user', 'bu')
+        .where('m.id = :id', { id: matchId })
+        .setLock('pessimistic_write')
+        .getOne();
+      if (!locked) throw new NotFoundException('Tournament match not found.');
+      if (locked.status !== TournamentMatchStatusEnum.PENDING) {
+        throw new BadRequestException('Match already resolved.');
+      }
+      const isParticipant =
+        locked.participantA.user.id === me.id || locked.participantB.user.id === me.id;
+      if (!isParticipant) {
+        throw new UnauthorizedException('Only this match participants can resolve it.');
+      }
+
+      const scoreA = dto.scoreA ?? 1;
+      const scoreB = dto.scoreB ?? 0;
+      let winner = null as ChampionsParticipant | null;
+      if (dto.winnerParticipantId) {
+        if (dto.winnerParticipantId === locked.participantA.id) winner = locked.participantA;
+        if (dto.winnerParticipantId === locked.participantB.id) winner = locked.participantB;
+        if (!winner) throw new BadRequestException('winnerParticipantId is not in this match.');
+      } else if (scoreA !== scoreB) {
+        winner = scoreA > scoreB ? locked.participantA : locked.participantB;
+      } else {
+        winner = Math.random() > 0.5 ? locked.participantA : locked.participantB;
+      }
+
+      locked.scoreA = scoreA;
+      locked.scoreB = scoreB;
+      locked.winner = winner;
+      locked.status = TournamentMatchStatusEnum.COMPLETED;
+      await manager.getRepository(ChampionsMatch).save(locked);
+      return locked;
     });
-    if (!match) throw new NotFoundException('Tournament match not found.');
-    if (match.status !== TournamentMatchStatusEnum.PENDING) {
-      throw new BadRequestException('Match already resolved.');
-    }
-
-    const scoreA = dto.scoreA ?? 1;
-    const scoreB = dto.scoreB ?? 0;
-    let winner = null as ChampionsParticipant | null;
-    if (dto.winnerParticipantId) {
-      if (dto.winnerParticipantId === match.participantA.id) winner = match.participantA;
-      if (dto.winnerParticipantId === match.participantB.id) winner = match.participantB;
-      if (!winner) throw new BadRequestException('winnerParticipantId is not in this match.');
-    } else if (scoreA !== scoreB) {
-      winner = scoreA > scoreB ? match.participantA : match.participantB;
-    } else {
-      winner = Math.random() > 0.5 ? match.participantA : match.participantB;
-    }
-
-    match.scoreA = scoreA;
-    match.scoreB = scoreB;
-    match.winner = winner;
-    match.status = TournamentMatchStatusEnum.COMPLETED;
-    await this.tournamentMatchRepo.save(match);
 
     if (match.stage === TournamentMatchStageEnum.GROUP) {
       await this.applyGroupPoints(match);
@@ -715,7 +801,93 @@ export class BattleService {
       await this.tryAdvanceKnockout(match.tournament.id, match.stage);
     }
 
-    return { resolved: true, matchId: match.id, winnerParticipantId: winner.id };
+    return { resolved: true, matchId: match.id, winnerParticipantId: match.winner?.id };
+  }
+
+  async tournamentStartMatch(userId: string, matchId: string) {
+    const me = await this.getUserByIdOrFail(userId);
+    if (!matchId) throw new BadRequestException('matchId is required.');
+    const fixture = await this.tournamentMatchRepo.findOne({
+      where: { id: matchId },
+      relations: {
+        tournament: true,
+        participantA: { user: true },
+        participantB: { user: true },
+      },
+    });
+    if (!fixture) throw new NotFoundException('Tournament match not found.');
+    if (fixture.status !== TournamentMatchStatusEnum.PENDING) {
+      throw new BadRequestException('Tournament match already resolved.');
+    }
+    const aUserId = fixture.participantA.user.id;
+    const bUserId = fixture.participantB.user.id;
+    if (me.id !== aUserId && me.id !== bUserId) {
+      throw new UnauthorizedException(
+        'Only tournament match participants can start this battle.',
+      );
+    }
+
+    const active = await this.battleRepo.findOne({
+      where: {
+        tournamentMatch: { id: fixture.id },
+        status: BattleStatusEnum.IN_PROGRESS,
+      },
+    });
+    if (active) {
+      return {
+        started: false,
+        reason: 'already_started',
+        battleId: active.id,
+      };
+    }
+
+    const starterIsA = me.id === aUserId;
+    const player1 = await this.getUserByIdOrFail(starterIsA ? aUserId : bUserId);
+    const player2 = await this.getUserByIdOrFail(starterIsA ? bUserId : aUserId);
+    const p1Cards = await this.userCardRepo.find({
+      where: { user: { id: player1.id }, isInDeck: true },
+      relations: { card: true },
+      order: { createdAt: 'ASC' },
+    });
+    const p2Cards = await this.userCardRepo.find({
+      where: { user: { id: player2.id }, isInDeck: true },
+      relations: { card: true },
+      order: { createdAt: 'ASC' },
+    });
+    if (p1Cards.length !== 5 || p2Cards.length !== 5) {
+      throw new BadRequestException('Both participants must have active 5-card squads.');
+    }
+    this.validateClassicPositions(p1Cards);
+    this.validateClassicPositions(p2Cards);
+
+    const battle = await this.battleRepo.save(
+      this.battleRepo.create({
+        mode: BattleModeEnum.CLASSIC,
+        status: BattleStatusEnum.IN_PROGRESS,
+        opponentType: BattleOpponentTypeEnum.PVP,
+        region: BattleRegionEnum.GLOBAL,
+        player1,
+        player2,
+        tournamentMatch: fixture,
+        player1Squad: p1Cards.map((x) => this.toSnapshot(x)),
+        player2Squad: p2Cards.map((x) => this.toSnapshot(x)),
+        categories: this.shuffleCategories(),
+        currentRound: 0,
+        player1RoundWins: 0,
+        player2RoundWins: 0,
+        entryFee: 0,
+        winner: null,
+        rewards: null,
+      }),
+    );
+
+    return {
+      started: true,
+      battleId: battle.id,
+      tournamentMatchId: fixture.id,
+      player1Id: player1.id,
+      player2Id: player2.id,
+    };
   }
 
   async tournamentSettleDemo(seasonKey?: string) {
@@ -723,6 +895,13 @@ export class BattleService {
       ? await this.tournamentRepo.findOne({ where: { seasonKey } })
       : await this.tournamentRepo.findOne({ order: { createdAt: 'DESC' } });
     if (!tournament) throw new NotFoundException('Tournament not found.');
+    if (tournament.settledAt) {
+      return {
+        settled: false,
+        reason: 'already_settled',
+        tournamentId: tournament.id,
+      };
+    }
 
     const participants = await this.tournamentParticipantRepo.find({
       where: { tournament: { id: tournament.id } },
@@ -787,6 +966,7 @@ export class BattleService {
     }
 
     tournament.status = TournamentStatusEnum.FINISHED;
+    tournament.settledAt = new Date();
     await this.tournamentRepo.save(tournament);
     return {
       settled: true,
@@ -1121,8 +1301,64 @@ export class BattleService {
         registrationEndsAt,
         endsAt,
         maxParticipants: 128,
+        settledAt: null,
       }),
     );
+  }
+
+  private async resolveTournamentMatchInternal(
+    matchId: string,
+    dto: ResolveTournamentMatchDto,
+  ) {
+    const match = await this.dataSource.transaction(async (manager) => {
+      const locked = await manager
+        .getRepository(ChampionsMatch)
+        .createQueryBuilder('m')
+        .leftJoinAndSelect('m.tournament', 't')
+        .leftJoinAndSelect('m.participantA', 'a')
+        .leftJoinAndSelect('m.participantB', 'b')
+        .where('m.id = :id', { id: matchId })
+        .setLock('pessimistic_write')
+        .getOne();
+      if (!locked) throw new NotFoundException('Tournament match not found.');
+      if (locked.status !== TournamentMatchStatusEnum.PENDING) return locked;
+
+      const scoreA = dto.scoreA ?? 1;
+      const scoreB = dto.scoreB ?? 0;
+      let winner = null as ChampionsParticipant | null;
+      if (dto.winnerParticipantId) {
+        if (dto.winnerParticipantId === locked.participantA.id)
+          winner = locked.participantA;
+        if (dto.winnerParticipantId === locked.participantB.id)
+          winner = locked.participantB;
+        if (!winner)
+          throw new BadRequestException(
+            'winnerParticipantId is not in this match.',
+          );
+      } else if (scoreA !== scoreB) {
+        winner = scoreA > scoreB ? locked.participantA : locked.participantB;
+      } else {
+        winner = Math.random() > 0.5 ? locked.participantA : locked.participantB;
+      }
+
+      locked.scoreA = scoreA;
+      locked.scoreB = scoreB;
+      locked.winner = winner;
+      locked.status = TournamentMatchStatusEnum.COMPLETED;
+      await manager.getRepository(ChampionsMatch).save(locked);
+      return locked;
+    });
+
+    if (match.status !== TournamentMatchStatusEnum.COMPLETED || !match.winner) {
+      return match;
+    }
+    if (match.stage === TournamentMatchStageEnum.GROUP) {
+      await this.applyGroupPoints(match);
+      await this.tryPromoteToKnockout(match.tournament.id);
+    } else {
+      await this.tryAdvanceKnockout(match.tournament.id, match.stage);
+    }
+    return match;
   }
 
   private async ensureGroupFixtures(tournamentId: string) {

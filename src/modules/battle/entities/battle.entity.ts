@@ -9,6 +9,7 @@ import {
   BattleStatCategoryEnum,
   BattleWinnerEnum,
 } from '../constants/battle.enums';
+import { ChampionsMatch } from './champions-match.entity';
 
 @Entity('battles')
 export class Battle extends ApplicationBaseEntity {
@@ -43,6 +44,10 @@ export class Battle extends ApplicationBaseEntity {
   @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn()
   player2: User | null;
+
+  @ManyToOne(() => ChampionsMatch, { onDelete: 'SET NULL', nullable: true })
+  @JoinColumn()
+  tournamentMatch: ChampionsMatch | null;
 
   @Column({ type: 'jsonb' })
   player1Squad: Array<Record<string, unknown>>;
