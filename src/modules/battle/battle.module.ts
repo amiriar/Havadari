@@ -13,6 +13,7 @@ import { RankedSeason } from './entities/ranked-season.entity';
 import { RankedSeasonSnapshot } from './entities/ranked-season-snapshot.entity';
 import { ChampionsTournament } from './entities/champions-tournament.entity';
 import { ChampionsParticipant } from './entities/champions-participant.entity';
+import { ChampionsMatch } from './entities/champions-match.entity';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ChampionsParticipant } from './entities/champions-participant.entity';
       RankedSeasonSnapshot,
       ChampionsTournament,
       ChampionsParticipant,
+      ChampionsMatch,
       UserChestInventory,
     ]),
     ProgressionModule,

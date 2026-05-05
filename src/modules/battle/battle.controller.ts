@@ -10,6 +10,7 @@ import { EndBattleDto } from './dto/end-battle.dto';
 import { FindMatchDto } from './dto/find-match.dto';
 import { PlayRoundDto } from './dto/play-round.dto';
 import { RankedSeasonRewardDto } from './dto/ranked-season-reward.dto';
+import { ResolveTournamentMatchDto } from './dto/resolve-tournament-match.dto';
 import { StartBattleDto } from './dto/start-battle.dto';
 import { TournamentEntryDto } from './dto/tournament-entry.dto';
 
@@ -86,7 +87,7 @@ export class BattleController {
   @NoCache()
   @ApiOperation({ summary: 'Get current champions tournament' })
   tournamentCurrent(@User() user: CurrentUser) {
-    return this.battleService.tournamentCurrent(user.id);
+    return this.battleService.tournamentCurrent(user?.id);
   }
 
   @Post('tournament/join')
@@ -101,6 +102,24 @@ export class BattleController {
   @ApiOperation({ summary: 'Get my current tournament status' })
   tournamentMe(@User() user: CurrentUser) {
     return this.battleService.tournamentMyStatus(user.id);
+  }
+
+  @Get('tournament/my-next-match')
+  @NoCache()
+  @ApiOperation({ summary: 'Get my next pending tournament match' })
+  tournamentMyNextMatch(@User() user: CurrentUser) {
+    return this.battleService.tournamentMyNextMatch(user.id);
+  }
+
+  @Post('tournament/match/resolve')
+  @NoCache()
+  @ApiOperation({ summary: 'Resolve a tournament match (api-only scaffold)' })
+  tournamentResolveMatch(
+    @User() user: CurrentUser,
+    @Query('matchId') matchId: string,
+    @Body() dto: ResolveTournamentMatchDto,
+  ) {
+    return this.battleService.tournamentResolveMatch(user?.id, matchId, dto);
   }
 
   @Post('tournament/settle-demo')

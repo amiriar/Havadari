@@ -36,11 +36,17 @@ import {
 } from './constants/ranked.constants';
 import { ChampionsTournament } from './entities/champions-tournament.entity';
 import { ChampionsParticipant } from './entities/champions-participant.entity';
+import { ChampionsMatch } from './entities/champions-match.entity';
 import {
   TournamentEntryTypeEnum,
   TournamentParticipantStatusEnum,
   TournamentStatusEnum,
 } from './constants/tournament.enums';
+import {
+  TournamentMatchStageEnum,
+  TournamentMatchStatusEnum,
+} from './constants/tournament-match.enums';
+import { ResolveTournamentMatchDto } from './dto/resolve-tournament-match.dto';
 
 type PendingMatch = {
   userId: string;
@@ -74,6 +80,8 @@ export class BattleService {
     private readonly tournamentRepo: Repository<ChampionsTournament>,
     @InjectRepository(ChampionsParticipant)
     private readonly tournamentParticipantRepo: Repository<ChampionsParticipant>,
+    @InjectRepository(ChampionsMatch)
+    private readonly tournamentMatchRepo: Repository<ChampionsMatch>,
     @InjectRepository(UserChestInventory)
     private readonly chestInventoryRepo: Repository<UserChestInventory>,
     private readonly progressionService: ProgressionService,
@@ -123,6 +131,7 @@ export class BattleService {
       tournament.status = TournamentStatusEnum.IN_PROGRESS;
       tournament.phase = 'group';
       await this.tournamentRepo.save(tournament);
+      await this.ensureGroupFixtures(tournament.id);
     }
 
     if (
@@ -637,6 +646,78 @@ export class BattleService {
     };
   }
 
+  async tournamentMyNextMatch(userId: string) {
+    const user = await this.getUserByIdOrFail(userId);
+    const tournament = await this.getOrCreateCurrentTournament();
+    if (tournament.status !== TournamentStatusEnum.IN_PROGRESS) {
+      return { tournamentStatus: tournament.status, match: null };
+    }
+    const participant = await this.tournamentParticipantRepo.findOne({
+      where: { tournament: { id: tournament.id }, user: { id: user.id } },
+    });
+    if (!participant) {
+      return { tournamentStatus: tournament.status, match: null };
+    }
+    const match = await this.tournamentMatchRepo.findOne({
+      where: [
+        { tournament: { id: tournament.id }, status: TournamentMatchStatusEnum.PENDING, participantA: { id: participant.id } },
+        { tournament: { id: tournament.id }, status: TournamentMatchStatusEnum.PENDING, participantB: { id: participant.id } },
+      ],
+      relations: { participantA: { user: true }, participantB: { user: true } },
+      order: { createdAt: 'ASC' },
+    });
+    return { tournamentStatus: tournament.status, match: match || null };
+  }
+
+  async tournamentResolveMatch(
+    userId: string,
+    matchId: string,
+    dto: ResolveTournamentMatchDto,
+  ) {
+    await this.getUserByIdOrFail(userId);
+    if (!matchId) throw new BadRequestException('matchId is required.');
+    const match = await this.tournamentMatchRepo.findOne({
+      where: { id: matchId },
+      relations: {
+        tournament: true,
+        participantA: { user: true },
+        participantB: { user: true },
+      },
+    });
+    if (!match) throw new NotFoundException('Tournament match not found.');
+    if (match.status !== TournamentMatchStatusEnum.PENDING) {
+      throw new BadRequestException('Match already resolved.');
+    }
+
+    const scoreA = dto.scoreA ?? 1;
+    const scoreB = dto.scoreB ?? 0;
+    let winner = null as ChampionsParticipant | null;
+    if (dto.winnerParticipantId) {
+      if (dto.winnerParticipantId === match.participantA.id) winner = match.participantA;
+      if (dto.winnerParticipantId === match.participantB.id) winner = match.participantB;
+      if (!winner) throw new BadRequestException('winnerParticipantId is not in this match.');
+    } else if (scoreA !== scoreB) {
+      winner = scoreA > scoreB ? match.participantA : match.participantB;
+    } else {
+      winner = Math.random() > 0.5 ? match.participantA : match.participantB;
+    }
+
+    match.scoreA = scoreA;
+    match.scoreB = scoreB;
+    match.winner = winner;
+    match.status = TournamentMatchStatusEnum.COMPLETED;
+    await this.tournamentMatchRepo.save(match);
+
+    if (match.stage === TournamentMatchStageEnum.GROUP) {
+      await this.applyGroupPoints(match);
+      await this.tryPromoteToKnockout(match.tournament.id);
+    } else {
+      await this.tryAdvanceKnockout(match.tournament.id, match.stage);
+    }
+
+    return { resolved: true, matchId: match.id, winnerParticipantId: winner.id };
+  }
+
   async tournamentSettleDemo(seasonKey?: string) {
     const tournament = seasonKey
       ? await this.tournamentRepo.findOne({ where: { seasonKey } })
@@ -1015,7 +1096,6 @@ export class BattleService {
     );
     const cycle = Math.floor(daysSinceYearStart / 14) + 1;
     const seasonKey = `${year}-C${String(cycle).padStart(2, '0')}`;
-
     const existing = await this.tournamentRepo.findOne({
       where: { seasonKey },
     });
@@ -1031,7 +1111,6 @@ export class BattleService {
       now.getTime() < registrationEndsAt.getTime()
         ? TournamentStatusEnum.REGISTRATION
         : TournamentStatusEnum.IN_PROGRESS;
-
     return this.tournamentRepo.save(
       this.tournamentRepo.create({
         seasonKey,
@@ -1044,6 +1123,211 @@ export class BattleService {
         maxParticipants: 128,
       }),
     );
+  }
+
+  private async ensureGroupFixtures(tournamentId: string) {
+    const existing = await this.tournamentMatchRepo.count({
+      where: { tournament: { id: tournamentId } },
+    });
+    if (existing > 0) return;
+    const participants = await this.tournamentParticipantRepo.find({
+      where: { tournament: { id: tournamentId } },
+      relations: { user: true, tournament: true },
+      order: { createdAt: 'ASC' },
+    });
+    if (participants.length < 8) return;
+    const shuffled = [...participants].sort(() => Math.random() - 0.5);
+    const groups: ChampionsParticipant[][] = [];
+    for (let i = 0; i < shuffled.length; i += 8) {
+      groups.push(shuffled.slice(i, i + 8));
+    }
+    const rows: ChampionsMatch[] = [];
+    groups.forEach((group, idx) => {
+      if (group.length < 2) return;
+      const rounds = [
+        [[0, 1], [2, 3], [4, 5], [6, 7]],
+        [[0, 2], [1, 3], [4, 6], [5, 7]],
+        [[0, 3], [1, 2], [4, 7], [5, 6]],
+      ];
+      rounds.forEach((pairs, ridx) => {
+        pairs.forEach(([a, b]) => {
+          if (!group[a] || !group[b]) return;
+          rows.push(
+            this.tournamentMatchRepo.create({
+              tournament: group[a].tournament,
+              participantA: group[a],
+              participantB: group[b],
+              winner: null,
+              stage: TournamentMatchStageEnum.GROUP,
+              status: TournamentMatchStatusEnum.PENDING,
+              roundNo: ridx + 1,
+              groupNo: idx + 1,
+              scoreA: 0,
+              scoreB: 0,
+            }),
+          );
+        });
+      });
+    });
+    if (rows.length) await this.tournamentMatchRepo.save(rows);
+  }
+
+  private async applyGroupPoints(match: ChampionsMatch) {
+    const pA = await this.tournamentParticipantRepo.findOne({
+      where: { id: match.participantA.id },
+    });
+    const pB = await this.tournamentParticipantRepo.findOne({
+      where: { id: match.participantB.id },
+    });
+    if (!pA || !pB) return;
+    if (match.winner?.id === pA.id) {
+      pA.groupPoints += 3;
+    } else if (match.winner?.id === pB.id) {
+      pB.groupPoints += 3;
+    } else {
+      pA.groupPoints += 1;
+      pB.groupPoints += 1;
+    }
+    await this.tournamentParticipantRepo.save([pA, pB]);
+  }
+
+  private async tryPromoteToKnockout(tournamentId: string) {
+    const pendingGroup = await this.tournamentMatchRepo.count({
+      where: {
+        tournament: { id: tournamentId },
+        stage: TournamentMatchStageEnum.GROUP,
+        status: TournamentMatchStatusEnum.PENDING,
+      },
+    });
+    if (pendingGroup > 0) return;
+
+    const already = await this.tournamentMatchRepo.count({
+      where: {
+        tournament: { id: tournamentId },
+        stage: TournamentMatchStageEnum.QUARTER_FINAL,
+      },
+    });
+    if (already > 0) return;
+
+    const participants = await this.tournamentParticipantRepo.find({
+      where: { tournament: { id: tournamentId } },
+      relations: { tournament: true, user: true },
+    });
+    const top8 = participants
+      .sort((a, b) => b.groupPoints - a.groupPoints || Number(b.user.rankPoints || 0) - Number(a.user.rankPoints || 0))
+      .slice(0, 8);
+    if (top8.length < 8) return;
+    const pairs = [
+      [0, 7],
+      [1, 6],
+      [2, 5],
+      [3, 4],
+    ];
+    const rows = pairs.map(([a, b]) =>
+      this.tournamentMatchRepo.create({
+        tournament: top8[a].tournament,
+        participantA: top8[a],
+        participantB: top8[b],
+        winner: null,
+        stage: TournamentMatchStageEnum.QUARTER_FINAL,
+        status: TournamentMatchStatusEnum.PENDING,
+        roundNo: 1,
+        groupNo: null,
+        scoreA: 0,
+        scoreB: 0,
+      }),
+    );
+    await this.tournamentMatchRepo.save(rows);
+    const t = await this.tournamentRepo.findOne({ where: { id: tournamentId } });
+    if (t) {
+      t.phase = 'quarter_final';
+      await this.tournamentRepo.save(t);
+    }
+  }
+
+  private async tryAdvanceKnockout(
+    tournamentId: string,
+    stage: TournamentMatchStageEnum,
+  ) {
+    const pendingCurrent = await this.tournamentMatchRepo.count({
+      where: {
+        tournament: { id: tournamentId },
+        stage,
+        status: TournamentMatchStatusEnum.PENDING,
+      },
+    });
+    if (pendingCurrent > 0) return;
+
+    const winners = await this.tournamentMatchRepo.find({
+      where: {
+        tournament: { id: tournamentId },
+        stage,
+        status: TournamentMatchStatusEnum.COMPLETED,
+      },
+      relations: { winner: { user: true }, tournament: true },
+      order: { createdAt: 'ASC' },
+    });
+    const participants = winners.map((x) => x.winner).filter(Boolean) as ChampionsParticipant[];
+    if (!participants.length) return;
+
+    const nextStage =
+      stage === TournamentMatchStageEnum.QUARTER_FINAL
+        ? TournamentMatchStageEnum.SEMI_FINAL
+        : stage === TournamentMatchStageEnum.SEMI_FINAL
+          ? TournamentMatchStageEnum.FINAL
+          : null;
+
+    if (!nextStage) {
+      const champion = participants[0];
+      const tournament = await this.tournamentRepo.findOne({ where: { id: tournamentId } });
+      if (tournament) {
+        tournament.phase = 'final';
+        tournament.status = TournamentStatusEnum.FINISHED;
+        await this.tournamentRepo.save(tournament);
+      }
+      const allParticipants = await this.tournamentParticipantRepo.find({
+        where: { tournament: { id: tournamentId } },
+      });
+      if (allParticipants.length) {
+        for (const p of allParticipants) {
+          p.status = TournamentParticipantStatusEnum.ELIMINATED;
+        }
+        await this.tournamentParticipantRepo.save(allParticipants);
+      }
+      champion.status = TournamentParticipantStatusEnum.CHAMPION;
+      await this.tournamentParticipantRepo.save(champion);
+      await this.tournamentSettleDemo(tournament?.seasonKey);
+      return;
+    }
+
+    const exists = await this.tournamentMatchRepo.count({
+      where: { tournament: { id: tournamentId }, stage: nextStage },
+    });
+    if (exists > 0) return;
+    const rows: ChampionsMatch[] = [];
+    for (let i = 0; i < participants.length; i += 2) {
+      if (!participants[i + 1]) break;
+      rows.push(
+        this.tournamentMatchRepo.create({
+          tournament: participants[i].tournament,
+          participantA: participants[i],
+          participantB: participants[i + 1],
+          winner: null,
+          stage: nextStage,
+          status: TournamentMatchStatusEnum.PENDING,
+          roundNo: 1,
+          groupNo: null,
+          scoreA: 0,
+          scoreB: 0,
+        }),
+      );
+    }
+    if (rows.length) await this.tournamentMatchRepo.save(rows);
+    const t = await this.tournamentRepo.findOne({ where: { id: tournamentId } });
+    if (t) {
+      t.phase = nextStage;
+      await this.tournamentRepo.save(t);
+    }
   }
 
   private async grantChest(
