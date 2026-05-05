@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import {
@@ -21,7 +21,7 @@ export class CardAvatarService {
     private readonly runRepo: Repository<AvatarGenerationRun>,
   ) {}
 
-  @Cron('0 */5 * * * *')
+  @Cron(CronExpression.EVERY_5_MINUTES)
   async pollQueue() {
     await this.processQueue(20);
   }

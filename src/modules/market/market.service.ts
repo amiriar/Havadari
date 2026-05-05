@@ -14,7 +14,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { DataSource, LessThan, Repository } from 'typeorm';
@@ -46,7 +46,7 @@ export class MarketService {
     private readonly achievementsService: AchievementsService,
   ) {}
 
-  @Cron('0 */10 * * * *')
+  @Cron(CronExpression.EVERY_10_MINUTES)
   async expireListingsCron() {
     await this.expireOldListings();
   }

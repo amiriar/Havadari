@@ -1,6 +1,8 @@
 import { User } from '@app/auth/entities/user.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { Card } from '@app/cards/entities/card.entity';
+import { UserChestInventory } from '@app/chests/entities/user-chest-inventory.entity';
+import { ChestTypeEnum } from '@app/chests/constants/chest.types';
 import { ProgressionService } from '@app/progression/progression.service';
 import {
   BadRequestException,
@@ -10,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { In, Repository } from 'typeorm';
 import {
   BattleModeEnum,
@@ -32,6 +34,13 @@ import {
   RANKED_TIERS,
   RankedTierConfig,
 } from './constants/ranked.constants';
+import { ChampionsTournament } from './entities/champions-tournament.entity';
+import { ChampionsParticipant } from './entities/champions-participant.entity';
+import {
+  TournamentEntryTypeEnum,
+  TournamentParticipantStatusEnum,
+  TournamentStatusEnum,
+} from './constants/tournament.enums';
 
 type PendingMatch = {
   userId: string;
@@ -61,10 +70,16 @@ export class BattleService {
     private readonly rankedSeasonRepo: Repository<RankedSeason>,
     @InjectRepository(RankedSeasonSnapshot)
     private readonly rankedSnapshotRepo: Repository<RankedSeasonSnapshot>,
+    @InjectRepository(ChampionsTournament)
+    private readonly tournamentRepo: Repository<ChampionsTournament>,
+    @InjectRepository(ChampionsParticipant)
+    private readonly tournamentParticipantRepo: Repository<ChampionsParticipant>,
+    @InjectRepository(UserChestInventory)
+    private readonly chestInventoryRepo: Repository<UserChestInventory>,
     private readonly progressionService: ProgressionService,
   ) {}
 
-  @Cron('0 0 0 1 * *')
+  @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_MIDNIGHT)
   async resetRankedSeasonMonthly() {
     const season = await this.getOrCreateActiveSeason();
     if (!season) return { reset: false };
@@ -94,6 +109,37 @@ export class BattleService {
     await this.rankedSeasonRepo.save(season);
     await this.getOrCreateActiveSeason();
     return { reset: true };
+  }
+
+  @Cron(CronExpression.EVERY_10_MINUTES)
+  async tournamentLifecycleCron() {
+    const now = new Date();
+    const tournament = await this.getOrCreateCurrentTournament();
+
+    if (
+      tournament.status === TournamentStatusEnum.REGISTRATION &&
+      tournament.registrationEndsAt.getTime() <= now.getTime()
+    ) {
+      tournament.status = TournamentStatusEnum.IN_PROGRESS;
+      tournament.phase = 'group';
+      await this.tournamentRepo.save(tournament);
+    }
+
+    if (
+      tournament.status === TournamentStatusEnum.IN_PROGRESS &&
+      tournament.endsAt.getTime() <= now.getTime()
+    ) {
+      await this.tournamentSettleDemo(tournament.seasonKey);
+      const closed = await this.tournamentRepo.findOne({
+        where: { id: tournament.id },
+      });
+      if (closed) {
+        closed.status = TournamentStatusEnum.FINISHED;
+        closed.phase = 'final';
+        await this.tournamentRepo.save(closed);
+      }
+      await this.getOrCreateCurrentTournament();
+    }
   }
 
   async distributeSeasonRewards(seasonKey?: string) {
@@ -499,6 +545,175 @@ export class BattleService {
     };
   }
 
+  async tournamentCurrent(userId: string) {
+    await this.getUserByIdOrFail(userId);
+    return this.getOrCreateCurrentTournament();
+  }
+
+  async tournamentJoin(userId: string, entryType: TournamentEntryTypeEnum) {
+    const user = await this.getUserByIdOrFail(userId);
+    const tournament = await this.getOrCreateCurrentTournament();
+    if (tournament.status !== TournamentStatusEnum.REGISTRATION) {
+      throw new BadRequestException('Tournament registration is closed.');
+    }
+    const already = await this.tournamentParticipantRepo.findOne({
+      where: { tournament: { id: tournament.id }, user: { id: user.id } },
+    });
+    if (already)
+      throw new BadRequestException('Already joined current tournament.');
+
+    const count = await this.tournamentParticipantRepo.count({
+      where: { tournament: { id: tournament.id } },
+    });
+    if (count >= tournament.maxParticipants) {
+      throw new BadRequestException('Tournament is full.');
+    }
+
+    const squad = await this.getValidatedSquad(user.id);
+    this.validateTournamentSquad(squad);
+
+    const seasonEntriesByType = await this.tournamentParticipantRepo.count({
+      where: {
+        tournament: { seasonKey: tournament.seasonKey },
+        user: { id: user.id },
+        entryType,
+      },
+    });
+    if (
+      entryType === TournamentEntryTypeEnum.FREE &&
+      seasonEntriesByType >= 1
+    ) {
+      throw new BadRequestException('Free entry already used this season.');
+    }
+    if (entryType === TournamentEntryTypeEnum.FGC && seasonEntriesByType >= 3) {
+      throw new BadRequestException('FGC entry limit reached for this season.');
+    }
+
+    if (entryType === TournamentEntryTypeEnum.PREMIUM) {
+      if (Number(user.gems || 0) < 150) {
+        throw new BadRequestException('Not enough gems.');
+      }
+      user.gems -= 150;
+      await this.userRepo.save(user);
+    } else if (entryType === TournamentEntryTypeEnum.FGC) {
+      if (Number(user.fgc || 0) < 2000) {
+        throw new BadRequestException('Not enough FGC.');
+      }
+      user.fgc -= 2000;
+      await this.userRepo.save(user);
+    }
+
+    const participant = await this.tournamentParticipantRepo.save(
+      this.tournamentParticipantRepo.create({
+        tournament,
+        user,
+        entryType,
+        status: TournamentParticipantStatusEnum.REGISTERED,
+        groupPoints: 0,
+      }),
+    );
+    return {
+      joined: true,
+      tournamentId: tournament.id,
+      seasonKey: tournament.seasonKey,
+      participantId: participant.id,
+      entryType,
+      balances: { fgc: user.fgc, gems: user.gems },
+    };
+  }
+
+  async tournamentMyStatus(userId: string) {
+    const user = await this.getUserByIdOrFail(userId);
+    const tournament = await this.getOrCreateCurrentTournament();
+    const participant = await this.tournamentParticipantRepo.findOne({
+      where: { tournament: { id: tournament.id }, user: { id: user.id } },
+    });
+    return {
+      tournamentId: tournament.id,
+      seasonKey: tournament.seasonKey,
+      tournamentStatus: tournament.status,
+      phase: tournament.phase,
+      participant: participant || null,
+    };
+  }
+
+  async tournamentSettleDemo(seasonKey?: string) {
+    const tournament = seasonKey
+      ? await this.tournamentRepo.findOne({ where: { seasonKey } })
+      : await this.tournamentRepo.findOne({ order: { createdAt: 'DESC' } });
+    if (!tournament) throw new NotFoundException('Tournament not found.');
+
+    const participants = await this.tournamentParticipantRepo.find({
+      where: { tournament: { id: tournament.id } },
+      relations: { user: true },
+      order: { createdAt: 'ASC' },
+    });
+    if (!participants.length) throw new BadRequestException('No participants.');
+
+    const ranked = participants
+      .map((p) => ({
+        p,
+        score:
+          p.groupPoints + Number(p.user.rankPoints || 0) + Math.random() * 1000,
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.p);
+
+    for (let i = 0; i < ranked.length; i += 1) {
+      const row = ranked[i];
+      const place = i + 1;
+      let rewardFgc = 0;
+      let rewardGems = 0;
+      let rewardChest: ChestTypeEnum | null = null;
+      let rewardChestQty = 0;
+
+      if (place === 1) {
+        row.status = TournamentParticipantStatusEnum.CHAMPION;
+        rewardFgc = 50000;
+        rewardGems = 500;
+        rewardChest = ChestTypeEnum.MYTHIC_CHEST;
+        rewardChestQty = 3;
+      } else if (place === 2) {
+        row.status = TournamentParticipantStatusEnum.RUNNER_UP;
+        rewardFgc = 25000;
+        rewardGems = 250;
+        rewardChest = ChestTypeEnum.LEGENDARY_CHEST;
+        rewardChestQty = 2;
+      } else if (place <= 4) {
+        row.status = TournamentParticipantStatusEnum.TOP4;
+        rewardFgc = 10000;
+        rewardGems = 100;
+        rewardChest = ChestTypeEnum.EPIC_CHEST;
+        rewardChestQty = 2;
+      } else if (place <= 8) {
+        row.status = TournamentParticipantStatusEnum.TOP8;
+        rewardFgc = 3000;
+        rewardGems = 30;
+        rewardChest = ChestTypeEnum.RARE_CHEST;
+        rewardChestQty = 2;
+      } else {
+        row.status = TournamentParticipantStatusEnum.ELIMINATED;
+      }
+
+      row.user.fgc = Number(row.user.fgc || 0) + rewardFgc;
+      row.user.gems = Number(row.user.gems || 0) + rewardGems;
+      await this.userRepo.save(row.user);
+      await this.tournamentParticipantRepo.save(row);
+
+      if (rewardChest && rewardChestQty > 0) {
+        await this.grantChest(row.user.id, rewardChest, rewardChestQty);
+      }
+    }
+
+    tournament.status = TournamentStatusEnum.FINISHED;
+    await this.tournamentRepo.save(tournament);
+    return {
+      settled: true,
+      tournamentId: tournament.id,
+      participants: ranked.length,
+    };
+  }
+
   async history(userId: string, query: BattleHistoryQueryDto, url?: string) {
     await this.getUserByIdOrFail(userId);
     const qb = this.battleRepo
@@ -629,6 +844,26 @@ export class BattleService {
     if (avg < 80) {
       throw new BadRequestException(
         'Ranked requires minimum squad average rating of 80.',
+      );
+    }
+  }
+
+  private validateTournamentSquad(squad: Array<Record<string, unknown>>) {
+    const avg =
+      squad.reduce((acc, item) => acc + Number(item.overallRating || 0), 0) /
+      Math.max(1, squad.length);
+    if (avg < 85) {
+      throw new BadRequestException(
+        'Tournament requires minimum squad average rating of 85.',
+      );
+    }
+    const hasLegendaryPlus = squad.some((x) => {
+      const overall = Number(x.overallRating || 0);
+      return overall >= 94;
+    });
+    if (!hasLegendaryPlus) {
+      throw new BadRequestException(
+        'Tournament requires at least one Legendary or higher card.',
       );
     }
   }
@@ -767,6 +1002,69 @@ export class BattleService {
         endsAt: end,
         isActive: true,
         rewardsDistributedAt: null,
+      }),
+    );
+  }
+
+  private async getOrCreateCurrentTournament() {
+    const now = new Date();
+    const year = now.getUTCFullYear();
+    const yearStart = Date.UTC(year, 0, 1, 0, 0, 0, 0);
+    const daysSinceYearStart = Math.floor(
+      (now.getTime() - yearStart) / (24 * 60 * 60 * 1000),
+    );
+    const cycle = Math.floor(daysSinceYearStart / 14) + 1;
+    const seasonKey = `${year}-C${String(cycle).padStart(2, '0')}`;
+
+    const existing = await this.tournamentRepo.findOne({
+      where: { seasonKey },
+    });
+    if (existing) return existing;
+
+    const cycleStartDays = (cycle - 1) * 14;
+    const startsAt = new Date(yearStart + cycleStartDays * 24 * 60 * 60 * 1000);
+    const registrationEndsAt = new Date(
+      startsAt.getTime() + 2 * 24 * 60 * 60 * 1000,
+    );
+    const endsAt = new Date(startsAt.getTime() + 14 * 24 * 60 * 60 * 1000);
+    const status =
+      now.getTime() < registrationEndsAt.getTime()
+        ? TournamentStatusEnum.REGISTRATION
+        : TournamentStatusEnum.IN_PROGRESS;
+
+    return this.tournamentRepo.save(
+      this.tournamentRepo.create({
+        seasonKey,
+        status,
+        phase:
+          status === TournamentStatusEnum.REGISTRATION ? 'group' : 'knockout',
+        startsAt,
+        registrationEndsAt,
+        endsAt,
+        maxParticipants: 128,
+      }),
+    );
+  }
+
+  private async grantChest(
+    userId: string,
+    chestType: ChestTypeEnum,
+    qty: number,
+  ) {
+    const existing = await this.chestInventoryRepo.findOne({
+      where: { user: { id: userId }, chestType },
+      relations: { user: true },
+    });
+    if (existing) {
+      existing.quantity = Number(existing.quantity || 0) + qty;
+      await this.chestInventoryRepo.save(existing);
+      return;
+    }
+    await this.chestInventoryRepo.save(
+      this.chestInventoryRepo.create({
+        user: { id: userId } as User,
+        chestType,
+        quantity: qty,
       }),
     );
   }

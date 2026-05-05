@@ -33,6 +33,7 @@ export class MissionsService {
     private readonly achievementsService: AchievementsService,
   ) {}
 
+  // Keep slight delay after midnight to avoid boundary collisions.
   @Cron('0 5 0 * * *')
   async cleanupDailyProgress() {
     const today = this.getDailyKey();
@@ -44,7 +45,8 @@ export class MissionsService {
       .execute();
   }
 
-  @Cron('0 10 0 * * 1')
+  // Iran week ends on Friday, so weekly cleanup runs at start of Saturday.
+  @Cron('0 10 0 * * 6')
   async cleanupWeeklyProgress() {
     const week = this.getWeeklyKey();
     await this.progressRepo

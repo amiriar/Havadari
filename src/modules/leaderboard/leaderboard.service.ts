@@ -22,7 +22,8 @@ export class LeaderboardService {
     private readonly rankPointsService: RankPointsService,
   ) {}
 
-  @Cron('0 0 0 * * 1')
+  // Iran week ends on Friday, so weekly reset runs at start of Saturday.
+  @Cron('0 0 0 * * 6')
   async resetClassicWeekly() {
     // Soft weekly reset for rank points with history logging.
     const users = await this.userRepo.find();

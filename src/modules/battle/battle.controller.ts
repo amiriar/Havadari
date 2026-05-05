@@ -11,6 +11,7 @@ import { FindMatchDto } from './dto/find-match.dto';
 import { PlayRoundDto } from './dto/play-round.dto';
 import { RankedSeasonRewardDto } from './dto/ranked-season-reward.dto';
 import { StartBattleDto } from './dto/start-battle.dto';
+import { TournamentEntryDto } from './dto/tournament-entry.dto';
 
 @ApiTags('battle')
 @ApiBearerAuth()
@@ -79,5 +80,33 @@ export class BattleController {
     @Body() dto: RankedSeasonRewardDto,
   ) {
     return this.battleService.claimSeasonReward(user.id, dto.seasonKey);
+  }
+
+  @Get('tournament/current')
+  @NoCache()
+  @ApiOperation({ summary: 'Get current champions tournament' })
+  tournamentCurrent(@User() user: CurrentUser) {
+    return this.battleService.tournamentCurrent(user.id);
+  }
+
+  @Post('tournament/join')
+  @NoCache()
+  @ApiOperation({ summary: 'Join current champions tournament' })
+  tournamentJoin(@User() user: CurrentUser, @Body() dto: TournamentEntryDto) {
+    return this.battleService.tournamentJoin(user.id, dto.entryType);
+  }
+
+  @Get('tournament/me')
+  @NoCache()
+  @ApiOperation({ summary: 'Get my current tournament status' })
+  tournamentMe(@User() user: CurrentUser) {
+    return this.battleService.tournamentMyStatus(user.id);
+  }
+
+  @Post('tournament/settle-demo')
+  @NoCache()
+  @ApiOperation({ summary: 'Settle tournament demo (api-only scaffold)' })
+  tournamentSettleDemo(@Body() dto: RankedSeasonRewardDto) {
+    return this.battleService.tournamentSettleDemo(dto.seasonKey);
   }
 }

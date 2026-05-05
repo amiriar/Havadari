@@ -9,7 +9,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import Handlebars from 'handlebars';
 import {
   FilterOperator,
@@ -421,7 +421,7 @@ export class SmsService implements ISender {
     });
   }
 
-  @Cron('0 * * * * *') // Job will complete every 1 minute
+  @Cron(CronExpression.EVERY_MINUTE) // Job will complete every 1 minute
   async handleScheduledSms() {
     const now = new Date();
     const pendingSmsList = await this.smsRepository.find({
