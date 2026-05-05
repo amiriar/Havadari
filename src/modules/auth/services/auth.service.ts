@@ -1,5 +1,6 @@
 import { notFoundTemplate } from '@common/messages/en/templates/errors/not-found.template';
 import { CACHED_ROLES, ONE_HOUR_IN_MS } from '@common/utils/constants.utils';
+import { ACTIVE_USER_SESSION_PREFIX } from '@common/constants/keys';
 import { getFlatPermissions } from '@common/utils/get-flat-permissions';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
@@ -33,6 +34,7 @@ import { RoleService } from './role.service';
 import { AuthControllerCode } from '../constants/controller-codes';
 import { HashingUtil } from '../utills/hasing-util';
 import { UserCardService } from '@app/cards/services/user-card.service';
+import { randomUUID } from 'crypto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -108,8 +110,8 @@ export class AuthService {
 
     await this.userCardService.ensureStarterPack(user.id);
 
-    //sign token
-    return await this.jwtService.signToken(user.id);
+    //sign token for the latest active account session
+    return await this.signTokenForLatestSession(user.id);
   }
 
   /**
@@ -170,8 +172,8 @@ export class AuthService {
     await this.repository.update({ id: user.id }, { isEmailVerified: true });
     await this.userCardService.ensureStarterPack(user.id);
 
-    //sign token
-    return await this.jwtService.signToken(user.id);
+    //sign token for the latest active account session
+    return await this.signTokenForLatestSession(user.id);
   }
 
   /**
@@ -207,8 +209,8 @@ export class AuthService {
     await this.repository.update({ id: user.id }, { isPhoneVerified: true });
     await this.userCardService.ensureStarterPack(user.id);
 
-    //sign token
-    return await this.jwtService.signToken(user.id);
+    //sign token for the latest active account session
+    return await this.signTokenForLatestSession(user.id);
   }
 
   /**
@@ -218,6 +220,7 @@ export class AuthService {
    */
   async refreshToken(token: string): Promise<LoginResponse> {
     const payload: JwtPayload = await this.jwtService.verifyRefreshToken(token);
+    await this.ensureActiveSession(payload.sub, payload.sid);
 
     const user: User = await this.repository.findOne({
       where: { id: payload.sub },
@@ -247,7 +250,10 @@ export class AuthService {
     //cache loggedin user
     await this.cacheManager.set(user.id, user, ONE_HOUR_IN_MS);
 
-    const accessToken: string = await this.jwtService.signAccessToken(user.id);
+    const accessToken: string = await this.jwtService.signAccessToken(
+      user.id,
+      payload.sid,
+    );
 
     return {
       accessToken,
@@ -332,6 +338,7 @@ export class AuthService {
       });
 
     const payload: JwtPayload = this.jwtService.verifyAccessToken(authToken);
+    await this.ensureActiveSession(payload.sub, payload.sid);
 
     let user: User = await this.cacheManager.get(payload.sub);
 
@@ -381,5 +388,44 @@ export class AuthService {
       });
     }
     return user;
+  }
+
+  private async signTokenForLatestSession(userId: string): Promise<LoginResponse> {
+    const sessionId = randomUUID();
+    await this.setActiveSession(userId, sessionId);
+    return this.jwtService.signToken(userId, sessionId);
+  }
+
+  private getActiveSessionKey(userId: string): string {
+    return `${ACTIVE_USER_SESSION_PREFIX}:${userId}`;
+  }
+
+  private async setActiveSession(userId: string, sessionId: string): Promise<void> {
+    await this.cacheManager.set(this.getActiveSessionKey(userId), sessionId, 0);
+  }
+
+  private async ensureActiveSession(
+    userId: string,
+    sessionId?: string,
+  ): Promise<void> {
+    if (!sessionId) {
+      throw new UnauthorizedException({
+        code: `${AuthControllerCode}11`,
+        statusCode: HttpStatus.UNAUTHORIZED,
+        message: 'session expired',
+      });
+    }
+
+    const currentSessionId: string = await this.cacheManager.get(
+      this.getActiveSessionKey(userId),
+    );
+
+    if (!currentSessionId || currentSessionId !== sessionId) {
+      throw new UnauthorizedException({
+        code: `${AuthControllerCode}11`,
+        statusCode: HttpStatus.UNAUTHORIZED,
+        message: 'session replaced by another login',
+      });
+    }
   }
 }

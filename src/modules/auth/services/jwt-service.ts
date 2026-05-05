@@ -12,8 +12,12 @@ export class JwtService {
     private readonly NestJwtService: NestJwtService,
   ) {}
 
-  async signRefreshToken(userId: string) {
-    const payload: JwtPayload = new JwtPayload(userId, this.configService);
+  async signRefreshToken(userId: string, sessionId: string) {
+    const payload: JwtPayload = new JwtPayload(
+      userId,
+      sessionId,
+      this.configService,
+    );
     const strPayload = JSON.stringify(payload);
     const parsedPayload = JSON.parse(strPayload);
     const token = this.NestJwtService.signAsync(parsedPayload, {
@@ -24,17 +28,21 @@ export class JwtService {
     return token;
   }
 
-  async signAccessToken(userId: string) {
-    const paylod: JwtPayload = new JwtPayload(userId, this.configService);
+  async signAccessToken(userId: string, sessionId: string) {
+    const paylod: JwtPayload = new JwtPayload(
+      userId,
+      sessionId,
+      this.configService,
+    );
     const strPayload = JSON.stringify(paylod);
     const parsedPayload = JSON.parse(strPayload);
     const token: string = await this.NestJwtService.signAsync(parsedPayload);
     return token;
   }
 
-  async signToken(userId: string): Promise<LoginResponse> {
-    const accessToken = await this.signAccessToken(userId);
-    const refreshToken = await this.signRefreshToken(userId);
+  async signToken(userId: string, sessionId: string): Promise<LoginResponse> {
+    const accessToken = await this.signAccessToken(userId, sessionId);
+    const refreshToken = await this.signRefreshToken(userId, sessionId);
 
     return {
       accessToken,

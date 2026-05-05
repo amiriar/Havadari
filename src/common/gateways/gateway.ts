@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Cache } from 'cache-manager';
 import { Socket } from 'socket.io';
+import { SESSION_REPLACED } from '@common/constants/websocket-events';
 export class Gateway
   implements OnGatewayConnection, OnGatewayInit, OnGatewayDisconnect
 {
@@ -18,13 +19,14 @@ export class Gateway
   }
 
   async handleConnection(@ConnectedSocket() client: Socket): Promise<void> {
+    await this.disconnectOtherUserSockets(client);
     await this.setUserOnline(client);
 
     Logger.log('client Connected', 'WebSocket Gateway');
   }
 
   async handleDisconnect(@ConnectedSocket() client: Socket): Promise<void> {
-    await this.setUserOffline(client.data.user);
+    await this.setUserOffline(client);
 
     Logger.log('client disconnected', 'WebSocket Gateway');
   }
@@ -58,12 +60,18 @@ export class Gateway
 
   async setUserOffline(client: Socket) {
     const onlineUsers = await this.getOnlineUsers();
-    onlineUsers.delete(client);
+    const filteredOnlineUsers = new Set(
+      Array.from(onlineUsers).filter((onlineUser) => {
+        return onlineUser?.socketId !== client.id;
+      }),
+    );
 
     const onlineUsersHash = await this.getOnlineUsersHash();
-    onlineUsersHash.delete(client.id);
+    if (client.data?.user?.id) {
+      onlineUsersHash.delete(client.data.user.id);
+    }
 
-    await this.cacheManager.set(ONLINE_USERS, Array.from(onlineUsers), 0);
+    await this.cacheManager.set(ONLINE_USERS, Array.from(filteredOnlineUsers), 0);
     await this.cacheManager.set(
       ONLINE_USERS_HASH,
       Array.from(onlineUsersHash),
@@ -89,5 +97,27 @@ export class Gateway
     const onlineUsersArray: string[] =
       await this.cacheManager.get(ONLINE_USERS_HASH);
     return new Set(onlineUsersArray);
+  }
+
+  private async disconnectOtherUserSockets(client: Socket): Promise<void> {
+    const userId = client.data?.user?.id;
+    if (!userId) return;
+
+    const sockets = await this.getOnlineUsersArray();
+    const duplicatedSockets = sockets.filter(
+      (onlineUser) => onlineUser?.user?.id === userId,
+    );
+
+    for (const connectedSocket of duplicatedSockets) {
+      const socketId: string | undefined = connectedSocket?.socketId;
+      if (!socketId || socketId === client.id) continue;
+
+      client.nsp.to(socketId).emit(SESSION_REPLACED, {
+        message: 'session replaced by another login',
+      });
+
+      const oldSocket = client.nsp.sockets?.get(socketId);
+      oldSocket?.disconnect(true);
+    }
   }
 }
