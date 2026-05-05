@@ -24,28 +24,28 @@ export class BattleController {
   @NoCache()
   @ApiOperation({ summary: 'Find pvp match or prepare bot fallback' })
   findMatch(@User() user: CurrentUser, @Body() dto: FindMatchDto) {
-    return this.battleService.findMatch(user.id, dto);
+    return this.battleService.findMatch(user?.id, dto);
   }
 
   @Post('start')
   @NoCache()
   @ApiOperation({ summary: 'Start a battle' })
   start(@User() user: CurrentUser, @Body() dto: StartBattleDto) {
-    return this.battleService.start(user.id, dto);
+    return this.battleService.start(user?.id, dto);
   }
 
   @Post('play-round')
   @NoCache()
   @ApiOperation({ summary: 'Play next round of a battle' })
   playRound(@User() user: CurrentUser, @Body() dto: PlayRoundDto) {
-    return this.battleService.playRound(user.id, dto.battleId);
+    return this.battleService.playRound(user?.id, dto.battleId);
   }
 
   @Post('end')
   @NoCache()
   @ApiOperation({ summary: 'Finalize battle and settle rewards' })
   end(@User() user: CurrentUser, @Body() dto: EndBattleDto) {
-    return this.battleService.end(user.id, dto.battleId);
+    return this.battleService.end(user?.id, dto.battleId);
   }
 
   @Get('history')
@@ -56,14 +56,14 @@ export class BattleController {
     @Query() query: BattleHistoryQueryDto,
     @Url() url?: string,
   ) {
-    return this.battleService.history(user.id, query, url);
+    return this.battleService.history(user?.id, query, url);
   }
 
   @Get('ranked/season')
   @NoCache()
   @ApiOperation({ summary: 'Get ranked season meta and tier info' })
   rankedSeason(@User() user: CurrentUser) {
-    return this.battleService.rankedSeasonMeta(user.id);
+    return this.battleService.rankedSeasonMeta(user?.id);
   }
 
   @Post('ranked/distribute-season-rewards')
@@ -80,7 +80,7 @@ export class BattleController {
     @User() user: CurrentUser,
     @Body() dto: RankedSeasonRewardDto,
   ) {
-    return this.battleService.claimSeasonReward(user.id, dto.seasonKey);
+    return this.battleService.claimSeasonReward(user?.id, dto.seasonKey);
   }
 
   @Get('tournament/current')
@@ -94,21 +94,21 @@ export class BattleController {
   @NoCache()
   @ApiOperation({ summary: 'Join current champions tournament' })
   tournamentJoin(@User() user: CurrentUser, @Body() dto: TournamentEntryDto) {
-    return this.battleService.tournamentJoin(user.id, dto.entryType);
+    return this.battleService.tournamentJoin(user?.id, dto.entryType);
   }
 
   @Get('tournament/me')
   @NoCache()
   @ApiOperation({ summary: 'Get my current tournament status' })
   tournamentMe(@User() user: CurrentUser) {
-    return this.battleService.tournamentMyStatus(user.id);
+    return this.battleService.tournamentMyStatus(user?.id);
   }
 
   @Get('tournament/my-next-match')
   @NoCache()
   @ApiOperation({ summary: 'Get my next pending tournament match' })
   tournamentMyNextMatch(@User() user: CurrentUser) {
-    return this.battleService.tournamentMyNextMatch(user.id);
+    return this.battleService.tournamentMyNextMatch(user?.id);
   }
 
   @Post('tournament/match/start')
@@ -116,21 +116,21 @@ export class BattleController {
   @ApiOperation({ summary: 'Start real battle for a pending tournament match' })
   @ApiQuery({ name: 'matchId', type: String, required: true })
   tournamentStartMatch(@User() user: CurrentUser, @Query('matchId') matchId: string) {
-    return this.battleService.tournamentStartMatch(user.id, matchId);
+    return this.battleService.tournamentStartMatch(user?.id, matchId);
   }
 
   @Get('tournament/fixtures')
   @NoCache()
   @ApiOperation({ summary: 'Get current tournament fixtures (group + knockout)' })
   tournamentFixtures(@User() user: CurrentUser) {
-    return this.battleService.tournamentFixtures(user.id);
+    return this.battleService.tournamentFixtures(user?.id);
   }
 
   @Get('tournament/standings')
   @NoCache()
   @ApiOperation({ summary: 'Get current tournament standings' })
   tournamentStandings(@User() user: CurrentUser) {
-    return this.battleService.tournamentStandings(user.id);
+    return this.battleService.tournamentStandings(user?.id);
   }
 
   @Post('tournament/match/resolve')

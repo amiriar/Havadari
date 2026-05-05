@@ -26,7 +26,7 @@ export class SocialController {
     @User() user: CurrentUser,
     @Body() dto: SendFriendRequestDto,
   ) {
-    return this.socialService.sendFriendRequest(user.id, dto);
+    return this.socialService.sendFriendRequest(user?.id, dto);
   }
 
   @Post('friends/accept/:requestId')
@@ -34,7 +34,7 @@ export class SocialController {
     @User() user: CurrentUser,
     @Param('requestId') requestId: string,
   ) {
-    return this.socialService.acceptFriendRequest(user.id, requestId);
+    return this.socialService.acceptFriendRequest(user?.id, requestId);
   }
 
   @Post('friends/reject/:requestId')
@@ -42,7 +42,7 @@ export class SocialController {
     @User() user: CurrentUser,
     @Param('requestId') requestId: string,
   ) {
-    return this.socialService.rejectFriendRequest(user.id, requestId);
+    return this.socialService.rejectFriendRequest(user?.id, requestId);
   }
 
   @Delete('friends/:friendUserId')
@@ -50,7 +50,7 @@ export class SocialController {
     @User() user: CurrentUser,
     @Param('friendUserId') friendUserId: string,
   ) {
-    return this.socialService.removeFriend(user.id, friendUserId);
+    return this.socialService.removeFriend(user?.id, friendUserId);
   }
 
   @Get('friends')
@@ -64,7 +64,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.listFriends(
-      user.id,
+      user?.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
@@ -82,7 +82,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.listIncomingRequests(
-      user.id,
+      user?.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
@@ -91,13 +91,13 @@ export class SocialController {
 
   @Post('gifts/send')
   sendGift(@User() user: CurrentUser, @Body() dto: SendGiftDto) {
-    return this.socialService.sendGift(user.id, dto);
+    return this.socialService.sendGift(user?.id, dto);
   }
 
   @Post('gifts/claim/:giftId')
   @NoCache()
   claimGift(@User() user: CurrentUser, @Param('giftId') giftId: string) {
-    return this.socialService.claimGift(user.id, giftId);
+    return this.socialService.claimGift(user?.id, giftId);
   }
 
   @Get('gifts/inbox')
@@ -111,7 +111,7 @@ export class SocialController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.socialService.myGifts(
-      user.id,
+      user?.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,

@@ -12,11 +12,11 @@ export class UserSquadController {
 
   @Get()
   getSquad(@User() user: CurrentUser) {
-    return this.userCardService.getActiveSquad(user.id);
+    return this.userCardService.getActiveSquad(user?.id);
   }
 
   @Put()
   updateSquad(@User() user: CurrentUser, @Body() dto: UpdateUserSquadDto) {
-    return this.userCardService.updateSquad(user.id, dto);
+    return this.userCardService.updateSquad(user?.id, dto);
   }
 }

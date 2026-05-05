@@ -18,7 +18,7 @@ export class UserCardsController {
   grantStarterPack(@User() user: CurrentUser, @Query('count') count?: string) {
     const parsed = count ? Number(count) : 5;
     return this.userCardService.grantStarterPack(
-      user.id,
+      user?.id,
       Number.isFinite(parsed) ? parsed : 5,
     );
   }
@@ -31,7 +31,7 @@ export class UserCardsController {
     @Url() url: string,
   ) {
     return this.userCardService.listMine(
-      user.id,
+      user?.id,
       query.page ?? 1,
       query.limit ?? 50,
       url,
@@ -41,12 +41,12 @@ export class UserCardsController {
   @Post('upgrade/:userCardId')
   @NoCache()
   upgrade(@User() user: CurrentUser, @Param('userCardId') userCardId: string) {
-    return this.userCardService.upgrade(user.id, userCardId);
+    return this.userCardService.upgrade(user?.id, userCardId);
   }
 
   @Post('merge')
   @NoCache()
   merge(@User() user: CurrentUser, @Body() dto: MergeUserCardsDto) {
-    return this.userCardService.mergeDuplicatesToFgc(user.id, dto.userCardIds);
+    return this.userCardService.mergeDuplicatesToFgc(user?.id, dto.userCardIds);
   }
 }

@@ -14,13 +14,13 @@ export class MissionsController {
   @Get()
   @NoCache()
   list(@User() user: CurrentUser) {
-    return this.missionsService.list(user.id);
+    return this.missionsService.list(user?.id);
   }
 
   @Post('claim/:missionId')
   @NoCache()
   claim(@User() user: CurrentUser, @Param('missionId') missionId: string) {
-    return this.missionsService.claim(user.id, missionId);
+    return this.missionsService.claim(user?.id, missionId);
   }
 
   @Post('track')

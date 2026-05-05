@@ -13,7 +13,7 @@ export class AchievementsController {
   @Get()
   @NoCache()
   list(@User() user: CurrentUser) {
-    return this.achievementsService.list(user.id);
+    return this.achievementsService.list(user?.id);
   }
 
   @Post('claim/:achievementId')
@@ -22,6 +22,6 @@ export class AchievementsController {
     @User() user: CurrentUser,
     @Param('achievementId') achievementId: string,
   ) {
-    return this.achievementsService.claim(user.id, achievementId);
+    return this.achievementsService.claim(user?.id, achievementId);
   }
 }

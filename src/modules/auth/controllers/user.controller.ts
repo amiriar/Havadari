@@ -98,7 +98,7 @@ export class UserController {
   @NoCache()
   @Get('profile')
   async getProfile(@User() user: CurrentUser) {
-    return await this.userService.findOne(user.id);
+    return await this.userService.findOne(user?.id);
   }
 
   @UseInterceptors(StripUserSecretsInterCeptor)
@@ -138,7 +138,7 @@ export class UserController {
     body: updateProfileDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    return this.userService.update(user.id, body, files);
+    return this.userService.update(user?.id, body, files);
   }
 
   @Put(':id')
@@ -222,12 +222,12 @@ export class UserController {
 
   @Get('profile/daily-login/status')
   async dailyLoginStatus(@User() user: CurrentUser) {
-    return this.dailyLoginService.status(user.id);
+    return this.dailyLoginService.status(user?.id);
   }
 
   @Post('profile/daily-login/claim')
   async claimDailyLogin(@User() user: CurrentUser) {
-    return this.dailyLoginService.claim(user.id);
+    return this.dailyLoginService.claim(user?.id);
   }
 
   @Get('profile/daily-login/history')
@@ -240,7 +240,7 @@ export class UserController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.dailyLoginService.history(
-      user.id,
+      user?.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,

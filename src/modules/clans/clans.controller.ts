@@ -24,17 +24,17 @@ export class ClansController {
 
   @Post()
   create(@User() user: CurrentUser, @Body() dto: CreateClanDto) {
-    return this.clansService.create(user.id, dto);
+    return this.clansService.create(user?.id, dto);
   }
 
   @Post('join')
   join(@User() user: CurrentUser, @Body() dto: JoinClanDto) {
-    return this.clansService.join(user.id, dto);
+    return this.clansService.join(user?.id, dto);
   }
 
   @Post('leave')
   leave(@User() user: CurrentUser) {
-    return this.clansService.leave(user.id);
+    return this.clansService.leave(user?.id);
   }
 
   @Delete(':clanId/members/:memberUserId')
@@ -43,13 +43,13 @@ export class ClansController {
     @Param('clanId') clanId: string,
     @Param('memberUserId') memberUserId: string,
   ) {
-    return this.clansService.kick(user.id, clanId, memberUserId);
+    return this.clansService.kick(user?.id, clanId, memberUserId);
   }
 
   @Get('me')
   @NoCache()
   myClan(@User() user: CurrentUser) {
-    return this.clansService.myClan(user.id);
+    return this.clansService.myClan(user?.id);
   }
 
   @Get(':clanId/members')
@@ -64,7 +64,7 @@ export class ClansController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.clansService.members(
-      user.id,
+      user?.id,
       clanId,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
@@ -84,7 +84,7 @@ export class ClansController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 50;
     return this.clansService.messages(
-      user.id,
+      user?.id,
       clanId,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 50,
@@ -98,6 +98,6 @@ export class ClansController {
     @Param('clanId') clanId: string,
     @Body() dto: SendClanMessageDto,
   ) {
-    return this.clansService.sendMessage(user.id, clanId, dto);
+    return this.clansService.sendMessage(user?.id, clanId, dto);
   }
 }

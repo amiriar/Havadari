@@ -34,7 +34,7 @@ export class LeaderboardController {
   @NoCache()
   myRank(@User() user: CurrentUser, @Query('type') type?: LeaderboardTypeEnum) {
     return this.leaderboardService.getMyRank(
-      user.id,
+      user?.id,
       type ?? LeaderboardTypeEnum.CLASSIC,
     );
   }
@@ -69,7 +69,7 @@ export class LeaderboardController {
     const parsedPage = page ? Number(page) : 1;
     const parsedLimit = limit ? Number(limit) : 20;
     return this.rankPointsService.history(
-      user.id,
+      user?.id,
       Number.isFinite(parsedPage) ? parsedPage : 1,
       Number.isFinite(parsedLimit) ? parsedLimit : 20,
       url,
