@@ -43,6 +43,16 @@ export class RankPointsService {
   }
 
   async history(userId: string, page = 1, limit = 20, url?: string) {
+    if (!userId) {
+      return paginate(
+        this.eventRepo,
+        { page, limit: Math.min(limit, 200), route: url },
+        {
+          relations: { user: true },
+          order: { createdAt: 'DESC' },
+        },
+      );
+    }
     return paginate(
       this.eventRepo,
       { page, limit: Math.min(limit, 200), route: url },

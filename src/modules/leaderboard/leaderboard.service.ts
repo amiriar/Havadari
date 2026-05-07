@@ -9,6 +9,7 @@ import { LeaderboardTypeEnum } from './constants/leaderboard.enums';
 import { RankPointSourceEnum } from './constants/rank-point-source.enum';
 import { LeaderboardReward } from './entities/leaderboard-reward.entity';
 import { RankPointsService } from './rank-points.service';
+import { AdminUpsertLeaderboardRewardDto } from './dto/admin-upsert-leaderboard-reward.dto';
 
 @Injectable()
 export class LeaderboardService {
@@ -100,6 +101,36 @@ export class LeaderboardService {
         score: 0,
       }
     );
+  }
+
+  async adminListRewards(type?: LeaderboardTypeEnum) {
+    return this.rewardRepo.find({
+      where: type ? { type } : {},
+      order: { type: 'ASC', rankFrom: 'ASC' },
+    });
+  }
+
+  async adminUpsertReward(dto: AdminUpsertLeaderboardRewardDto) {
+    const existing = await this.rewardRepo.findOne({
+      where: {
+        type: dto.type,
+        rankFrom: dto.rankFrom,
+        rankTo: dto.rankTo,
+      },
+    });
+    const entity = existing || this.rewardRepo.create();
+    entity.type = dto.type;
+    entity.rankFrom = dto.rankFrom;
+    entity.rankTo = dto.rankTo;
+    entity.rewardFgc = dto.rewardFgc;
+    entity.rewardGems = dto.rewardGems;
+    entity.rewardChest = dto.rewardChest ?? null;
+    return this.rewardRepo.save(entity);
+  }
+
+  async adminDeleteReward(id: string) {
+    await this.rewardRepo.delete({ id });
+    return { deleted: true, id };
   }
 
   private async getRewards(type: LeaderboardTypeEnum) {
