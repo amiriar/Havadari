@@ -51,4 +51,13 @@ export class CardsController {
   regenerate(@Param('cardId') cardId: string) {
     return this.avatarService.regenerate(cardId);
   }
+
+  @IsPublic()
+  @Post('avatars/process')
+  process(@Query('limit') limit?: string) {
+    const parsedLimit = limit ? Number(limit) : 1;
+    return this.avatarService.processQueue(
+      Number.isFinite(parsedLimit) ? parsedLimit : 1,
+    );
+  }
 }

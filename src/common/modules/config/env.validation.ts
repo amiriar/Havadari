@@ -54,6 +54,12 @@ export const envValidationSchema = Joi.object({
   API_FOOTBALL_WORLD_CUP_LEAGUE_ID: Joi.string().optional(),
   API_FOOTBALL_LEAGUE_IDS: Joi.string().optional(),
   FOOTBALL_DATA_COMPETITION_CODES: Joi.string().optional(),
+  CARD_IMAGE_PROVIDER: Joi.string().valid('placeholder', 'gapgpt').optional(),
+  CARD_IMAGE_PROVIDER_ENABLED: Joi.string().valid('true', 'false').optional(),
+  GAPGPT_API_KEY: Joi.string().optional(),
+  GAPGPT_BASE_URL: Joi.string().uri().optional(),
+  GAPGPT_IMAGE_MODEL: Joi.string().optional(),
+  GAPGPT_IMAGE_SIZE: Joi.string().optional(),
 
   // Redis Configurations
   REDIS_ENABLED: Joi.string().valid('true', 'false').optional(),

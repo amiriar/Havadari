@@ -9,6 +9,7 @@ import {
 } from '../constants/card.enums';
 import { AvatarGenerationRun } from '../entities/avatar-generation-run.entity';
 import { Card } from '../entities/card.entity';
+import { GapgptImageService } from './gapgpt-image.service';
 
 @Injectable()
 export class CardAvatarService {
@@ -19,6 +20,7 @@ export class CardAvatarService {
     private readonly cardRepo: Repository<Card>,
     @InjectRepository(AvatarGenerationRun)
     private readonly runRepo: Repository<AvatarGenerationRun>,
+    private readonly gapgptImageService: GapgptImageService,
   ) {}
 
   @Cron(CronExpression.EVERY_5_MINUTES)
@@ -70,8 +72,7 @@ export class CardAvatarService {
     for (const card of pending) {
       try {
         const prompt = card.avatarPrompt || this.buildPrompt(card);
-        // Hook point for real AI model integration
-        const generatedUrl = this.buildPlaceholderAvatarUrl(card);
+        const generatedUrl = await this.generateAvatar(card, prompt);
         card.avatarPrompt = prompt;
         card.avatarUrl = generatedUrl;
         card.avatarStatus = AvatarStatusEnum.GENERATED;
@@ -101,8 +102,37 @@ export class CardAvatarService {
     };
   }
 
+  private async generateAvatar(card: Card, prompt: string): Promise<string> {
+    const provider = (
+      process.env.CARD_IMAGE_PROVIDER || 'placeholder'
+    ).toLowerCase();
+    if (provider === 'gapgpt') {
+      return this.gapgptImageService.generateImage(prompt);
+    }
+    return this.buildPlaceholderAvatarUrl(card);
+  }
+
   private buildPrompt(card: Card) {
-    return `Cartoon football trading card portrait, ${card.playerName}, ${card.nationality}, ${card.position}, ${card.rarity} rarity style, clean background, high contrast`;
+    const rarityEffect =
+      card.rarity === CardRarityEnum.MYTHIC
+        ? 'mythic aura, radiant red-gold energy accents'
+        : card.rarity === CardRarityEnum.LEGENDARY
+          ? 'legendary glow, golden highlights'
+          : card.rarity === CardRarityEnum.EPIC
+            ? 'epic energy arcs, vivid accent glow'
+            : card.rarity === CardRarityEnum.RARE
+              ? 'rare shine, crisp blue accent lighting'
+              : 'subtle clean lighting accents';
+    return [
+      `Cartoon flat-vector football trading card portrait of ${card.playerName},`,
+      `${card.nationality} professional football player,`,
+      `${card.position},`,
+      'clean front-facing symmetrical pose, polished sports avatar illustration,',
+      'smooth gradients, thick clean outlines, sticker/avatar aesthetic,',
+      'high detail, centered composition, minimal clean background,',
+      `${rarityEffect},`,
+      '2D vector art, NOT realistic, no text, no watermark, no logo',
+    ].join(' ');
   }
 
   private buildPlaceholderAvatarUrl(card: Card) {
