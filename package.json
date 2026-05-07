@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write .",
     "dev": "cross-env NODE_ENV=development nest start --watch",
-    "start": "nest start",
+    "start": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main.js",

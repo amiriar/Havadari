@@ -8,6 +8,7 @@ import { deepMerge } from '@common/utils/deep-merge';
 import { getFlatPermissions } from '@common/utils/get-flat-permissions';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
+  BadRequestException,
   HttpStatus,
   Inject,
   Injectable,
@@ -30,6 +31,7 @@ import { FindUsersDto } from '../dto/find-users.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { VerifyUserDto } from '../dto/verify-user.dto';
+import { AdminAdjustUserWalletDto } from '../dto/admin-adjust-user-wallet.dto';
 import { Role } from '../entities/role.entity';
 import { User } from '../entities/user.entity';
 import { RoleService } from './role.service';
@@ -364,6 +366,33 @@ export class UserService extends BaseService {
       return;
     }
     await this.repository.update(userId, { avatar: avatar.url });
+  }
+
+  async adjustWallet(userId: string, dto: AdminAdjustUserWalletDto) {
+    const user = await this.findOneMinimal(userId);
+    const fgcDelta = Number(dto.fgcDelta ?? 0);
+    const gemsDelta = Number(dto.gemsDelta ?? 0);
+
+    const nextFgc = Number(user.fgc || 0) + fgcDelta;
+    const nextGems = Number(user.gems || 0) + gemsDelta;
+    if (nextFgc < 0 || nextGems < 0) {
+      throw new BadRequestException({
+        code: `${UserControllerCode}02`,
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: 'Resulting wallet balance cannot be negative.',
+      });
+    }
+
+    user.fgc = nextFgc;
+    user.gems = nextGems;
+    await this.repository.save(user);
+
+    return {
+      userId: user.id,
+      fgc: user.fgc,
+      gems: user.gems,
+      delta: { fgcDelta, gemsDelta },
+    };
   }
 
   // async setAllAvatars() {

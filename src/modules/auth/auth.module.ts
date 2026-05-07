@@ -26,6 +26,7 @@ import { DailyLoginRewardConfig } from './entities/daily-login-reward-config.ent
 import { RoleController } from './controllers/role.controller';
 import { RoleService } from './services/role.service';
 import { DailyLoginService } from './services/daily-login.service';
+import { AdminUsersController } from './controllers/admin-users.controller';
 
 @Global()
 @Module({
@@ -62,6 +63,7 @@ import { DailyLoginService } from './services/daily-login.service';
     PermissionController,
     PermissionCategoryController,
     RoleController,
+    AdminUsersController,
   ],
   providers: [
     AuthService,

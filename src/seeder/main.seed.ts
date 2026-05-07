@@ -18,8 +18,6 @@ import { seedMissionDefinitions } from './missions.seeder';
 import { seedDailyLoginRewardConfig } from './daily-login-reward-config.seeder';
 import { seedAchievements } from './achievements.seeder';
 
-import { seedFiles } from './files.seeder';
-
 dotenv.config();
 let dataSource: DataSource;
 
@@ -66,7 +64,6 @@ async function runSeeder() {
   await seedMissionDefinitions(dataSource);
   await seedDailyLoginRewardConfig(dataSource);
   await seedAchievements(dataSource);
-  await seedFiles(dataSource);
   exit();
 }
 runSeeder();

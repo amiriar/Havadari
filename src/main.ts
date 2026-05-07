@@ -56,7 +56,11 @@ async function bootstrap() {
 
   setUpSwagger(app);
 
-  const port: number = configService.get<number>('APP_PORT', 3000);
+  const port: number = Number(
+    configService.get<string>('PORT') ??
+      configService.get<string>('APP_PORT') ??
+      3000,
+  );
 
   app.useWebSocketAdapter(wsAdepter);
 

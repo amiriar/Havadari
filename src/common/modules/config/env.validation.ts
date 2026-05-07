@@ -2,13 +2,35 @@ import * as Joi from 'joi';
 
 export const envValidationSchema = Joi.object({
   // DB Configurations
-  DB_TYPE: Joi.string().valid('postgres').required(),
-  DB_CONNECTION_STRING: Joi.string().optional(),
-  DB_HOST: Joi.string().required(),
-  DB_PORT: Joi.number().required(),
-  DB_USERNAME: Joi.string().required(),
-  DB_PASSWORD: Joi.string().required(),
-  DB_NAME: Joi.string().required(),
+  DB_TYPE: Joi.string().valid('postgres').optional(),
+  DB_CONNECTION_STRING: Joi.string()
+    .uri({ scheme: ['postgres', 'postgresql'] })
+    .optional(),
+  DB_HOST: Joi.string().when('DB_CONNECTION_STRING', {
+    is: Joi.exist(),
+    then: Joi.optional(),
+    otherwise: Joi.required(),
+  }),
+  DB_PORT: Joi.number().when('DB_CONNECTION_STRING', {
+    is: Joi.exist(),
+    then: Joi.optional(),
+    otherwise: Joi.required(),
+  }),
+  DB_USERNAME: Joi.string().when('DB_CONNECTION_STRING', {
+    is: Joi.exist(),
+    then: Joi.optional(),
+    otherwise: Joi.required(),
+  }),
+  DB_PASSWORD: Joi.string().when('DB_CONNECTION_STRING', {
+    is: Joi.exist(),
+    then: Joi.optional(),
+    otherwise: Joi.required(),
+  }),
+  DB_NAME: Joi.string().when('DB_CONNECTION_STRING', {
+    is: Joi.exist(),
+    then: Joi.optional(),
+    otherwise: Joi.required(),
+  }),
 
   // JWT Configurations
   JWT_SECRET: Joi.string().required(),

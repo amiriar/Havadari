@@ -68,3 +68,6 @@ docker-compose.dev.yml
 
 # I18n
 src/generated/i18n.generated.ts
+
+install.bat
+runflare.exe
