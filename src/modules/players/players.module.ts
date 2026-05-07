@@ -5,6 +5,7 @@ import { Player } from './entities/player.entity';
 import { PlayerStatSnapshot } from './entities/player-stat-snapshot.entity';
 import { PlayerSyncRun } from './entities/player-sync-run.entity';
 import { PlayersController } from './players.controller';
+import { AdminPlayersController } from './controllers/admin-players.controller';
 import { PlayersService } from './players.service';
 import { ApiFootballPlayerProvider } from './providers/api-football-player.provider';
 import { FootballDataPlayerProvider } from './providers/football-data-player.provider';
@@ -14,7 +15,7 @@ import { FootballDataPlayerProvider } from './providers/football-data-player.pro
     TypeOrmModule.forFeature([Player, PlayerStatSnapshot, PlayerSyncRun]),
     CardsModule,
   ],
-  controllers: [PlayersController],
+  controllers: [PlayersController, AdminPlayersController],
   providers: [
     PlayersService,
     ApiFootballPlayerProvider,

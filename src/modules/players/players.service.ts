@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
@@ -417,6 +422,39 @@ export class PlayersService {
         order: { createdAt: 'DESC' },
       },
     );
+  }
+
+  async adminGetById(id: string) {
+    const player = await this.playerRepo.findOne({ where: { id } });
+    if (!player) throw new NotFoundException('Player not found.');
+    return player;
+  }
+
+  async adminUpdatePlayer(id: string, payload: Record<string, unknown>) {
+    const player = await this.adminGetById(id);
+    const allowedKeys = new Set([
+      'fullName',
+      'nationality',
+      'teamName',
+      'competitionCode',
+      'position',
+      'birthDate',
+      'heightCm',
+      'weightKg',
+      'rawPayload',
+    ]);
+    for (const [key, value] of Object.entries(payload || {})) {
+      if (allowedKeys.has(key)) {
+        (player as any)[key] = value;
+      }
+    }
+    return this.playerRepo.save(player);
+  }
+
+  async adminDeletePlayer(id: string) {
+    const player = await this.adminGetById(id);
+    await this.playerRepo.softRemove(player);
+    return { deleted: true, playerId: id };
   }
 
   private async upsertPlayers(
