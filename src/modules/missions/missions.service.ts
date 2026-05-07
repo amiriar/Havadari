@@ -12,10 +12,12 @@ import {
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { paginate } from 'nestjs-typeorm-paginate';
 import { MissionMetricEnum, MissionTypeEnum } from './constants/mission.enums';
 import { MissionClaimLog } from './entities/mission-claim-log.entity';
 import { MissionDefinition } from './entities/mission-definition.entity';
 import { UserMissionProgress } from './entities/user-mission-progress.entity';
+import { AdminUpsertMissionDto } from './dto/admin-upsert-mission.dto';
 
 @Injectable()
 export class MissionsService {
@@ -228,6 +230,59 @@ export class MissionsService {
         gems: me.gems,
       },
     };
+  }
+
+  async adminListDefinitions() {
+    return this.missionRepo.find({
+      order: { type: 'ASC', createdAt: 'ASC' },
+    });
+  }
+
+  async adminUpsertDefinition(dto: AdminUpsertMissionDto) {
+    const existing = await this.missionRepo.findOne({
+      where: { code: dto.code },
+    });
+    const row = existing || this.missionRepo.create();
+    row.code = dto.code;
+    row.title = dto.title;
+    row.description = dto.description ?? null;
+    row.type = dto.type;
+    row.metric = dto.metric;
+    row.targetValue = dto.targetValue;
+    row.rewardFgc = dto.rewardFgc ?? 0;
+    row.rewardGems = dto.rewardGems ?? 0;
+    row.rewardRankPoints = dto.rewardRankPoints ?? 0;
+    row.isActive = dto.isActive ?? true;
+    return this.missionRepo.save(row);
+  }
+
+  async adminDeleteDefinition(id: string) {
+    await this.missionRepo.delete({ id });
+    return { deleted: true, id };
+  }
+
+  async adminProgress(page = 1, limit = 20, userId?: string, url?: string) {
+    return paginate(
+      this.progressRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: userId ? { user: { id: userId } } : {},
+        relations: { user: true, mission: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminClaimLogs(page = 1, limit = 20, userId?: string, url?: string) {
+    return paginate(
+      this.claimLogRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: userId ? { user: { id: userId } } : {},
+        relations: { user: true, mission: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
   }
 
   private getPeriodKey(type: MissionTypeEnum) {

@@ -8,6 +8,7 @@ import { MissionClaimLog } from './entities/mission-claim-log.entity';
 import { MissionDefinition } from './entities/mission-definition.entity';
 import { UserMissionProgress } from './entities/user-mission-progress.entity';
 import { MissionsController } from './missions.controller';
+import { AdminMissionsController } from './admin-missions.controller';
 import { MissionsService } from './missions.service';
 
 @Module({
@@ -22,7 +23,7 @@ import { MissionsService } from './missions.service';
       MissionClaimLog,
     ]),
   ],
-  controllers: [MissionsController],
+  controllers: [MissionsController, AdminMissionsController],
   providers: [MissionsService],
   exports: [MissionsService],
 })
