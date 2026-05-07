@@ -337,6 +337,80 @@ export class MarketService {
     });
   }
 
+  async adminListings(query: GetMarketListingsQueryDto, url?: string) {
+    const qb = this.listingRepo
+      .createQueryBuilder('listing')
+      .leftJoinAndSelect('listing.seller', 'seller')
+      .leftJoinAndSelect('listing.highestBidder', 'highestBidder')
+      .leftJoinAndSelect('listing.userCard', 'userCard')
+      .leftJoinAndSelect('userCard.card', 'card')
+      .orderBy('listing.createdAt', 'DESC');
+
+    if (query.rarity) {
+      qb.andWhere('card.rarity = :rarity', { rarity: query.rarity });
+    }
+    if (query.position) {
+      qb.andWhere('card.position = :position', { position: query.position });
+    }
+    if (query.type) {
+      qb.andWhere('listing.type = :type', { type: query.type });
+    }
+
+    return paginate(qb, {
+      page: query.page ?? 1,
+      limit: query.limit ?? 20,
+      route: url,
+    });
+  }
+
+  async adminTrades(page = 1, limit = 20, url?: string) {
+    const qb = this.tradeRepo
+      .createQueryBuilder('trade')
+      .leftJoinAndSelect('trade.seller', 'seller')
+      .leftJoinAndSelect('trade.buyer', 'buyer')
+      .leftJoinAndSelect('trade.userCard', 'userCard')
+      .leftJoinAndSelect('userCard.card', 'card')
+      .orderBy('trade.createdAt', 'DESC');
+    return paginate(qb, {
+      page,
+      limit: Math.min(limit, 200),
+      route: url,
+    });
+  }
+
+  async adminUserListings(userId: string, page = 1, limit = 20, url?: string) {
+    const user = await this.getUserByIdOrFail(userId);
+    const qb = this.listingRepo
+      .createQueryBuilder('listing')
+      .leftJoinAndSelect('listing.seller', 'seller')
+      .leftJoinAndSelect('listing.highestBidder', 'highestBidder')
+      .leftJoinAndSelect('listing.userCard', 'userCard')
+      .leftJoinAndSelect('userCard.card', 'card')
+      .where('seller.id = :userId', { userId: user.id })
+      .orderBy('listing.createdAt', 'DESC');
+    return paginate(qb, { page, limit: Math.min(limit, 200), route: url });
+  }
+
+  async adminForceCancel(listingId: string) {
+    const listing = await this.listingRepo.findOne({
+      where: { id: listingId },
+      relations: { userCard: true },
+    });
+    if (!listing) throw new NotFoundException('Listing not found.');
+    if (listing.status !== ListingStatusEnum.ACTIVE) {
+      return {
+        cancelled: false,
+        listingId,
+        reason: `listing_status_${listing.status}`,
+      };
+    }
+    listing.status = ListingStatusEnum.CANCELLED;
+    listing.userCard.isListed = false;
+    await this.userCardRepo.save(listing.userCard);
+    await this.listingRepo.save(listing);
+    return { cancelled: true, listingId };
+  }
+
   async myListings(userId: string, page = 1, limit = 20, url?: string) {
     const me = await this.getUserByIdOrFail(userId);
     const qb = this.listingRepo

@@ -8,6 +8,7 @@ import { ProgressionModule } from '@app/progression/progression.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MarketController } from './market.controller';
+import { AdminMarketController } from './admin-market.controller';
 import { MarketService } from './market.service';
 import { MarketListing } from './entities/market-listing.entity';
 import { MarketTrade } from './entities/market-trade.entity';
@@ -27,7 +28,7 @@ import { CardValueService } from './services/card-value.service';
       MarketTrade,
     ]),
   ],
-  controllers: [MarketController],
+  controllers: [MarketController, AdminMarketController],
   providers: [MarketService, CardValueService],
   exports: [MarketService],
 })
