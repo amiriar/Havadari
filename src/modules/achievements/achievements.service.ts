@@ -6,11 +6,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { paginate } from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import { AchievementMetricEnum } from './constants/achievement.enums';
 import { AchievementClaimLog } from './entities/achievement-claim-log.entity';
 import { AchievementDefinition } from './entities/achievement-definition.entity';
 import { UserAchievementProgress } from './entities/user-achievement-progress.entity';
+import { AdminUpsertAchievementDto } from './dto/admin-upsert-achievement.dto';
 
 @Injectable()
 export class AchievementsService {
@@ -164,6 +166,57 @@ export class AchievementsService {
         exp: updated?.exp ?? 0,
       },
     };
+  }
+
+  async adminListDefinitions() {
+    return this.definitionRepo.find({ order: { createdAt: 'ASC' } });
+  }
+
+  async adminUpsertDefinition(dto: AdminUpsertAchievementDto) {
+    const existing = await this.definitionRepo.findOne({
+      where: { code: dto.code },
+    });
+    const row = existing || this.definitionRepo.create();
+    row.code = dto.code;
+    row.title = dto.title;
+    row.description = dto.description ?? null;
+    row.metric = dto.metric;
+    row.targetValue = dto.targetValue;
+    row.rewardFgc = dto.rewardFgc ?? 0;
+    row.rewardGems = dto.rewardGems ?? 0;
+    row.rewardTrophies = dto.rewardTrophies ?? 0;
+    row.rewardExp = dto.rewardExp ?? 0;
+    row.isActive = dto.isActive ?? true;
+    return this.definitionRepo.save(row);
+  }
+
+  async adminDeleteDefinition(id: string) {
+    await this.definitionRepo.delete({ id });
+    return { deleted: true, id };
+  }
+
+  async adminProgress(page = 1, limit = 20, userId?: string, url?: string) {
+    return paginate(
+      this.progressRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: userId ? { user: { id: userId } } : {},
+        relations: { user: true, achievement: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminClaimLogs(page = 1, limit = 20, userId?: string, url?: string) {
+    return paginate(
+      this.claimLogRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: userId ? { user: { id: userId } } : {},
+        relations: { user: true, achievement: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
   }
 
   private async getUserByIdOrFail(userId?: string) {
