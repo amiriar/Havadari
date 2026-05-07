@@ -6,6 +6,7 @@ import { ProgressionModule } from '@app/progression/progression.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BattleController } from './battle.controller';
+import { AdminBattleController } from './admin-battle.controller';
 import { BattleService } from './battle.service';
 import { BattleRound } from './entities/battle-round.entity';
 import { Battle } from './entities/battle.entity';
@@ -32,7 +33,7 @@ import { ChampionsMatch } from './entities/champions-match.entity';
     ]),
     ProgressionModule,
   ],
-  controllers: [BattleController],
+  controllers: [BattleController, AdminBattleController],
   providers: [BattleService],
   exports: [BattleService],
 })

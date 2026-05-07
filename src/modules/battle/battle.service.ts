@@ -1009,6 +1009,66 @@ export class BattleService {
     });
   }
 
+  async adminListBattles(query: BattleHistoryQueryDto, url?: string) {
+    const qb = this.battleRepo
+      .createQueryBuilder('battle')
+      .leftJoinAndSelect('battle.player1', 'player1')
+      .leftJoinAndSelect('battle.player2', 'player2')
+      .leftJoinAndSelect('battle.tournamentMatch', 'tournamentMatch')
+      .orderBy('battle.createdAt', 'DESC');
+
+    if (query.mode) {
+      qb.andWhere('battle.mode = :mode', { mode: query.mode });
+    }
+    return paginate(qb, {
+      page: query.page ?? 1,
+      limit: Math.min(query.limit ?? 20, 100),
+      route: url,
+    });
+  }
+
+  async adminGetBattle(battleId: string) {
+    const battle = await this.battleRepo.findOne({
+      where: { id: battleId },
+      relations: {
+        player1: true,
+        player2: true,
+        tournamentMatch: true,
+      },
+    });
+    if (!battle) throw new NotFoundException('Battle not found.');
+    const rounds = await this.roundRepo.find({
+      where: { battle: { id: battle.id } },
+      order: { roundNumber: 'ASC' },
+    });
+    return { ...battle, rounds };
+  }
+
+  async adminForceResolveTournamentMatch(matchId: string) {
+    const match = await this.tournamentMatchRepo.findOne({
+      where: { id: matchId },
+      relations: { participantA: true, participantB: true },
+    });
+    if (!match) throw new NotFoundException('Tournament match not found.');
+    if (match.status !== TournamentMatchStatusEnum.PENDING) {
+      return { resolved: false, reason: `match_status_${match.status}`, matchId };
+    }
+    const winnerParticipantId =
+      Math.random() > 0.5 ? match.participantA.id : match.participantB.id;
+    const scoreA = Math.floor(Math.random() * 4);
+    const scoreB = Math.floor(Math.random() * 4);
+    const resolved = await this.resolveTournamentMatchInternal(match.id, {
+      winnerParticipantId,
+      scoreA,
+      scoreB,
+    });
+    return {
+      resolved: true,
+      matchId: resolved.id,
+      winnerParticipantId: resolved.winner?.id,
+    };
+  }
+
   private rewardByMode(result: 'win' | 'lose' | 'draw', mode: BattleModeEnum) {
     if (mode === BattleModeEnum.RANKED) {
       if (result === 'win') return { fgc: 200, exp: 70, trophies: 45 };
