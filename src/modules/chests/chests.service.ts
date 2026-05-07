@@ -26,6 +26,7 @@ import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
 import { UserChestInventory } from './entities/user-chest-inventory.entity';
 import { UserChestState } from './entities/user-chest-state.entity';
+import { AdminUpdateChestDefinitionDto } from './dto/admin-update-chest-definition.dto';
 
 @Injectable()
 export class ChestsService {
@@ -262,6 +263,72 @@ export class ChestsService {
       { page, limit: Math.min(limit, 200), route: url },
       { where: { user: { id: authUser.id } }, order: { createdAt: 'DESC' } },
     );
+  }
+
+  async adminListDefinitions(includeInactive = true) {
+    const defs = await this.definitionRepo.find({
+      where: includeInactive ? {} : { isActive: true },
+      order: { type: 'ASC' },
+    });
+    return defs;
+  }
+
+  async adminUpdateDefinition(
+    type: ChestTypeEnum,
+    dto: AdminUpdateChestDefinitionDto,
+  ) {
+    const def = await this.definitionRepo.findOne({ where: { type } });
+    if (!def) throw new BadRequestException('Chest definition not found.');
+    if (dto.isActive !== undefined) def.isActive = dto.isActive;
+    if (dto.costFgc !== undefined) def.costFgc = dto.costFgc;
+    if (dto.costGems !== undefined) def.costGems = dto.costGems;
+    if (dto.cooldownSeconds !== undefined)
+      def.cooldownSeconds = dto.cooldownSeconds;
+    if (dto.drops !== undefined) def.drops = dto.drops;
+    return this.definitionRepo.save(def);
+  }
+
+  async adminListOpenLogs(page = 1, limit = 20, url?: string) {
+    return paginate(
+      this.logRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        relations: { user: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminGetUserInventory(userId: string) {
+    await this.getUserByIdOrFail(userId);
+    return this.inventoryRepo.find({
+      where: { user: { id: userId } },
+      order: { chestType: 'ASC' },
+    });
+  }
+
+  async adminSetUserInventory(
+    userId: string,
+    chestType: ChestTypeEnum,
+    quantity: number,
+  ) {
+    await this.getUserByIdOrFail(userId);
+    if (quantity < 0) {
+      throw new BadRequestException('quantity must be >= 0.');
+    }
+    let row = await this.inventoryRepo.findOne({
+      where: { user: { id: userId }, chestType },
+    });
+    if (!row) {
+      row = this.inventoryRepo.create({
+        user: { id: userId } as User,
+        chestType,
+        quantity,
+      });
+    } else {
+      row.quantity = quantity;
+    }
+    return this.inventoryRepo.save(row);
   }
 
   private async rollReward(def: ChestDefinition, state: UserChestState) {

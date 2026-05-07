@@ -8,6 +8,7 @@ import { ProgressionModule } from '@app/progression/progression.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChestsController } from './chests.controller';
+import { AdminChestsController } from './admin-chests.controller';
 import { ChestsService } from './chests.service';
 import { ChestDefinitionEntity } from './entities/chest-definition.entity';
 import { ChestOpenLog } from './entities/chest-open-log.entity';
@@ -30,7 +31,7 @@ import { UserChestState } from './entities/user-chest-state.entity';
       ChestDefinitionEntity,
     ]),
   ],
-  controllers: [ChestsController],
+  controllers: [ChestsController, AdminChestsController],
   providers: [ChestsService],
   exports: [ChestsService],
 })
