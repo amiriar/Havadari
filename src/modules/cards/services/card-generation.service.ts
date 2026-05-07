@@ -36,9 +36,16 @@ export class CardGenerationService {
       const stats = await this.statRepo.findOne({
         where: { player: { id: player.id }, season },
       });
+      const hasStats = this.ratingService.hasMeaningfulStats(stats);
       const ratings = this.ratingService.calculate(player, stats);
+      if (!hasStats) {
+        ratings.overall = this.ratingService.deterministicFallbackOverall(player);
+      }
       const rarity = this.ratingService.rarity(ratings.overall);
-      const baseValue = this.ratingService.baseValue(rarity);
+      const baseValue = this.ratingService.adjustedBaseValue(
+        rarity,
+        ratings.overall,
+      );
       const weeklyPerformanceScore =
         this.ratingService.weeklyPerformanceScore(stats);
 
