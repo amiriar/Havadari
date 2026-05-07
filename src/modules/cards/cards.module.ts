@@ -9,6 +9,7 @@ import { AvatarGenerationRun } from './entities/avatar-generation-run.entity';
 import { Card } from './entities/card.entity';
 import { UserCard } from './entities/user-card.entity';
 import { CardsController } from './cards.controller';
+import { AdminCardsController } from './admin-cards.controller';
 import { UserCardsController } from './user-cards.controller';
 import { UserSquadController } from './user-squad.controller';
 import { CardAvatarService } from './services/card-avatar.service';
@@ -29,7 +30,12 @@ import { UserCardService } from './services/user-card.service';
       User,
     ]),
   ],
-  controllers: [CardsController, UserCardsController, UserSquadController],
+  controllers: [
+    CardsController,
+    UserCardsController,
+    UserSquadController,
+    AdminCardsController,
+  ],
   providers: [
     CardGenerationService,
     PlayerRatingService,

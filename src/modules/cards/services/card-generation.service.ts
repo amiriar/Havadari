@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
@@ -11,6 +11,9 @@ import {
   PlayerPositionEnum,
 } from '../constants/card.enums';
 import { PlayerRatingService } from './player-rating.service';
+import { AdminCardQueryDto } from '../dto/admin-card-query.dto';
+import { AdminCreateCardDto } from '../dto/admin-create-card.dto';
+import { AdminUpdateCardDto } from '../dto/admin-update-card.dto';
 
 @Injectable()
 export class CardGenerationService {
@@ -105,5 +108,63 @@ export class CardGenerationService {
         order: { overallRating: 'DESC' },
       },
     );
+  }
+
+  async adminList(query: AdminCardQueryDto, url?: string) {
+    const qb = this.cardRepo.createQueryBuilder('card');
+    if (query.q?.trim()) {
+      qb.andWhere('card.playerName ILIKE :q', { q: `%${query.q.trim()}%` });
+    }
+    if (query.rarity) qb.andWhere('card.rarity = :rarity', { rarity: query.rarity });
+    if (query.position) qb.andWhere('card.position = :position', { position: query.position });
+    if (query.edition) qb.andWhere('card.edition = :edition', { edition: query.edition });
+    qb.orderBy('card.createdAt', 'DESC');
+
+    return paginate(qb, {
+      page: query.page ?? 1,
+      limit: Math.min(500, query.limit ?? 20),
+      route: url,
+    });
+  }
+
+  async adminGetById(id: string) {
+    const card = await this.cardRepo.findOne({ where: { id } });
+    if (!card) throw new NotFoundException('Card not found.');
+    return card;
+  }
+
+  async adminCreate(dto: AdminCreateCardDto) {
+    const entity = this.cardRepo.create({
+      sourceProvider: dto.sourceProvider ?? null,
+      sourceProviderPlayerId: dto.sourceProviderPlayerId ?? null,
+      playerName: dto.playerName,
+      nationality: dto.nationality,
+      position: dto.position,
+      overallRating: dto.overallRating,
+      speed: dto.speed,
+      power: dto.power,
+      skill: dto.skill,
+      attack: dto.attack,
+      defend: dto.defend,
+      rarity: dto.rarity,
+      edition: dto.edition,
+      baseValue: dto.baseValue,
+      weeklyPerformanceScore: dto.weeklyPerformanceScore ?? 0,
+      ratingVersion: dto.ratingVersion ?? 'v1',
+      avatarStatus: AvatarStatusEnum.PENDING,
+    });
+    return this.cardRepo.save(entity);
+  }
+
+  async adminUpdate(id: string, dto: AdminUpdateCardDto) {
+    const card = await this.adminGetById(id);
+    Object.assign(card, dto);
+    return this.cardRepo.save(card);
+  }
+
+  async adminDelete(id: string) {
+    const card = await this.adminGetById(id);
+    await this.cardRepo.softRemove(card);
+    return { deleted: true, cardId: id };
   }
 }
