@@ -3,8 +3,11 @@ import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { AdminAuthorizationGuard } from '@common/guards/http/admin-authorization.guard';
 import { PermissionCategoryService } from '../services/permission-category.service';
 import { Url } from '@common/decorators/url.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @Controller('permission-categories')
 @UseGuards(AdminAuthorizationGuard)
+@ApiTags('Admin')
+@ApiBearerAuth()
 export class PermissionCategoryController {
   constructor(private readonly categoryService: PermissionCategoryService) {}
 

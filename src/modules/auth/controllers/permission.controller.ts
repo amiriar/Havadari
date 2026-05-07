@@ -1,4 +1,5 @@
 import { AdminAuthorizationGuard } from '@common/guards/http/admin-authorization.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -16,6 +17,8 @@ import { GeneratePermissionNamePipe } from '../pipes/generate-permission-name.pi
 import { PermissionService } from '../services/permission.service';
 @Controller('permissions')
 @UseGuards(AdminAuthorizationGuard)
+@ApiTags('Admin')
+@ApiBearerAuth()
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 

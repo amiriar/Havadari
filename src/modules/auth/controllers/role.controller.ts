@@ -1,6 +1,7 @@
 // src/modules/auth/controllers/role.controller.ts
 
 import { AdminAuthorizationGuard } from '@common/guards/http/admin-authorization.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -20,6 +21,8 @@ import { UpdateRoleDto } from '../dto/update-role.dto';
 
 @UseGuards(AdminAuthorizationGuard)
 @Controller('roles')
+@ApiTags('Admin')
+@ApiBearerAuth()
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
