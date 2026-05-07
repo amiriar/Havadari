@@ -6,6 +6,7 @@ import { FriendRequestEntity } from './entities/friend-request.entity';
 import { FriendshipEntity } from './entities/friendship.entity';
 import { GiftEntity } from './entities/gift.entity';
 import { SocialController } from './social.controller';
+import { AdminSocialController } from './admin-social.controller';
 import { SocialService } from './social.service';
 
 @Module({
@@ -18,7 +19,7 @@ import { SocialService } from './social.service';
       GiftEntity,
     ]),
   ],
-  controllers: [SocialController],
+  controllers: [SocialController, AdminSocialController],
   providers: [SocialService],
   exports: [SocialService],
 })

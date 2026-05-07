@@ -322,6 +322,76 @@ export class SocialService {
     );
   }
 
+  async adminFriendships(page = 1, limit = 20, url?: string) {
+    return paginate(
+      this.friendshipRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        relations: { userA: true, userB: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminFriendRequests(page = 1, limit = 20, url?: string) {
+    return paginate(
+      this.requestRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        relations: { fromUser: true, toUser: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminGifts(page = 1, limit = 20, url?: string) {
+    return paginate(
+      this.giftRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        relations: { fromUser: true, toUser: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminDeleteFriendship(friendshipId: string) {
+    const row = await this.friendshipRepo.findOne({ where: { id: friendshipId } });
+    if (!row) throw new NotFoundException('Friendship not found.');
+    await this.friendshipRepo.delete(friendshipId);
+    return { deleted: true, friendshipId };
+  }
+
+  async adminRejectRequest(requestId: string) {
+    const request = await this.requestRepo.findOne({ where: { id: requestId } });
+    if (!request) throw new NotFoundException('Friend request not found.');
+    if (request.status !== FriendRequestStatusEnum.PENDING) {
+      return {
+        rejected: false,
+        reason: `request_status_${request.status}`,
+        requestId,
+      };
+    }
+    request.status = FriendRequestStatusEnum.REJECTED;
+    await this.requestRepo.save(request);
+    return { rejected: true, requestId };
+  }
+
+  async adminCancelGift(giftId: string) {
+    const gift = await this.giftRepo.findOne({ where: { id: giftId } });
+    if (!gift) throw new NotFoundException('Gift not found.');
+    if (gift.status !== GiftStatusEnum.SENT) {
+      return {
+        cancelled: false,
+        reason: `gift_status_${gift.status}`,
+        giftId,
+      };
+    }
+    gift.status = GiftStatusEnum.EXPIRED;
+    await this.giftRepo.save(gift);
+    return { cancelled: true, giftId };
+  }
+
   private async resolveTarget(dto: SendFriendRequestDto) {
     if (dto.toUserId) {
       return this.userRepo.findOne({ where: { id: dto.toUserId } });
