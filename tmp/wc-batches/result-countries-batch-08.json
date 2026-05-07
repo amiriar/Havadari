@@ -1,0 +1,4354 @@
+{
+  "createdAt": "2026-05-07T11:04:50.954Z",
+  "apiBase": "https://transfermarkt-api.fly.dev",
+  "seasonId": "2025",
+  "countries": [
+    {
+      "country": "Portugal",
+      "competitions": [
+        {
+          "id": "POPO",
+          "name": "Taça de Portugal",
+          "error": "500 Internal Server Error"
+        },
+        {
+          "id": "PO1",
+          "name": "Liga Portugal",
+          "seasonId": "2025",
+          "clubsCount": 18
+        },
+        {
+          "id": "POCP",
+          "name": "Allianz Cup",
+          "error": "500 Internal Server Error"
+        },
+        {
+          "id": "POSU",
+          "name": "Supertaça Cândido de Oliveira",
+          "error": "500 Internal Server Error"
+        },
+        {
+          "id": "PO2",
+          "name": "Liga Portugal 2",
+          "seasonId": "2025",
+          "clubsCount": 18
+        },
+        {
+          "id": "PT3A",
+          "name": "Liga 3",
+          "seasonId": "2025",
+          "clubsCount": 20
+        },
+        {
+          "id": "PT23",
+          "name": "Liga Revelação U23",
+          "seasonId": "2025",
+          "clubsCount": 17
+        },
+        {
+          "id": "PTPR",
+          "name": "U-23 Cup Portugal",
+          "error": "500 Internal Server Error"
+        },
+        {
+          "id": "P3As",
+          "name": "Liga 3 - Relegation round",
+          "seasonId": "2025",
+          "clubsCount": 12
+        },
+        {
+          "id": "P23C",
+          "name": "Liga Revelação U23 - Championship round",
+          "seasonId": "2025",
+          "clubsCount": 8
+        }
+      ],
+      "teams": [
+        {
+          "source": {
+            "id": "336",
+            "name": "Sporting CP"
+          },
+          "resolved": {
+            "id": "336",
+            "name": "Sporting CP",
+            "country": "Portugal"
+          },
+          "playersCount": 25,
+          "players": [
+            {
+              "id": "234811",
+              "name": "Rui Silva",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1994-07-02",
+              "age": 32,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 191,
+              "foot": "left",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Real Betis Balompié",
+              "contract": "2028-06-30",
+              "marketValue": 7000000
+            },
+            {
+              "id": "329813",
+              "name": "João Virgínia",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1999-10-10",
+              "age": 26,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 192,
+              "foot": "left",
+              "joinedOn": "2025-07-25",
+              "signedFrom": "Everton FC",
+              "contract": "2028-06-30",
+              "marketValue": 1000000
+            },
+            {
+              "id": "974982",
+              "name": "Ousmane Diomande",
+              "position": "Centre-Back",
+              "dateOfBirth": "2003-04-12",
+              "age": 22,
+              "nationality": [
+                "Cote d'Ivoire"
+              ],
+              "height": 190,
+              "foot": "right",
+              "joinedOn": "2023-01-31",
+              "signedFrom": ": Ablöse €14.50m",
+              "contract": "2030-06-30",
+              "marketValue": 45000000
+            },
+            {
+              "id": "549006",
+              "name": "Gonçalo Inácio",
+              "position": "Centre-Back",
+              "dateOfBirth": "2001-08-25",
+              "age": 24,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 186,
+              "foot": "left",
+              "joinedOn": "2020-01-07",
+              "signedFrom": "Sporting CP U23",
+              "contract": "2030-06-30",
+              "marketValue": 40000000
+            },
+            {
+              "id": "548193",
+              "name": "Zeno Debast",
+              "position": "Centre-Back",
+              "dateOfBirth": "2003-10-24",
+              "age": 22,
+              "nationality": [
+                "Belgium"
+              ],
+              "height": 191,
+              "foot": "right",
+              "joinedOn": "2024-04-07",
+              "signedFrom": "RSC Anderlecht",
+              "contract": "2029-06-30",
+              "marketValue": 30000000
+            },
+            {
+              "id": "504073",
+              "name": "Eduardo Quaresma",
+              "position": "Centre-Back",
+              "dateOfBirth": "2002-02-03",
+              "age": 24,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2020-01-03",
+              "signedFrom": "Sporting CP U23",
+              "contract": "2028-06-30",
+              "marketValue": 15000000
+            },
+            {
+              "id": "572675",
+              "name": "Maxi Araújo",
+              "position": "Left-Back",
+              "dateOfBirth": "2000-02-15",
+              "age": 26,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 179,
+              "foot": "left",
+              "joinedOn": "2024-08-27",
+              "signedFrom": "Deportivo Toluca",
+              "contract": "2029-06-30",
+              "marketValue": 25000000
+            },
+            {
+              "id": "290391",
+              "name": "Nuno Santos",
+              "position": "Left-Back",
+              "dateOfBirth": "1995-02-13",
+              "age": 31,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 177,
+              "foot": "left",
+              "joinedOn": "2020-08-21",
+              "signedFrom": "Rio Ave FC",
+              "contract": "2027-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "314944",
+              "name": "Ricardo Mangas",
+              "position": "Left-Back",
+              "dateOfBirth": "1998-03-19",
+              "age": 28,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 179,
+              "foot": "left",
+              "joinedOn": "2025-06-08",
+              "signedFrom": "Spartak Moscow",
+              "contract": "2029-06-30",
+              "marketValue": 2500000
+            },
+            {
+              "id": "946883",
+              "name": "Iván Fresneda",
+              "position": "Right-Back",
+              "dateOfBirth": "2004-09-28",
+              "age": 21,
+              "nationality": [
+                "Spain"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2023-08-30",
+              "signedFrom": "Real Valladolid CF",
+              "contract": "2028-06-30",
+              "marketValue": 12000000,
+              "status": "Muscle injury - Return expected on 30/06/2026"
+            },
+            {
+              "id": "546186",
+              "name": "Georgios Vagiannidis",
+              "position": "Right-Back",
+              "dateOfBirth": "2001-12-09",
+              "age": 24,
+              "nationality": [
+                "Greece"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2025-06-08",
+              "signedFrom": "Panathinaikos",
+              "contract": "2030-06-30",
+              "marketValue": 11000000
+            },
+            {
+              "id": "461496",
+              "name": "Morten Hjulmand",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1999-06-25",
+              "age": 26,
+              "nationality": [
+                "Denmark"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2023-08-13",
+              "signedFrom": "US Lecce",
+              "contract": "2028-06-30",
+              "marketValue": 45000000,
+              "status": "Team captain; Ankle injury - Return expected on 31/05/2026"
+            },
+            {
+              "id": "958937",
+              "name": "João Simões",
+              "position": "Central Midfield",
+              "dateOfBirth": "2007-06-01",
+              "age": 19,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 178,
+              "foot": "left",
+              "joinedOn": "2024-01-11",
+              "signedFrom": "Sporting CP B",
+              "contract": "2030-06-30",
+              "marketValue": 15000000,
+              "status": "Metatarsal fracture - Return expected on 30/06/2026"
+            },
+            {
+              "id": "461943",
+              "name": "Daniel Bragança",
+              "position": "Central Midfield",
+              "dateOfBirth": "1999-05-27",
+              "age": 26,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 178,
+              "foot": "left",
+              "joinedOn": "2020-03-08",
+              "signedFrom": "Sporting CP U23",
+              "contract": "2027-06-30",
+              "marketValue": 10000000
+            },
+            {
+              "id": "524315",
+              "name": "Hidemasa Morita",
+              "position": "Central Midfield",
+              "dateOfBirth": "1995-10-05",
+              "age": 30,
+              "nationality": [
+                "Japan"
+              ],
+              "height": 177,
+              "foot": "right",
+              "joinedOn": "2022-01-07",
+              "signedFrom": ": Ablöse €3.45m",
+              "contract": "2026-06-30",
+              "marketValue": 9000000
+            },
+            {
+              "id": "405564",
+              "name": "Giorgi Kochorashvili",
+              "position": "Central Midfield",
+              "dateOfBirth": "1999-06-29",
+              "age": 26,
+              "nationality": [
+                "Georgia"
+              ],
+              "height": 178,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Levante UD",
+              "contract": "2030-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "412669",
+              "name": "Francisco Trincão",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "1999-12-29",
+              "age": 26,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 184,
+              "foot": "left",
+              "joinedOn": "2023-01-07",
+              "signedFrom": "FC Barcelona",
+              "contract": "2030-06-30",
+              "marketValue": 35000000
+            },
+            {
+              "id": "426620",
+              "name": "Pedro Gonçalves",
+              "position": "Left Winger",
+              "dateOfBirth": "1998-06-28",
+              "age": 27,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 173,
+              "foot": "right",
+              "joinedOn": "2020-08-18",
+              "signedFrom": "FC Famalicão",
+              "contract": "2030-06-30",
+              "marketValue": 28000000
+            },
+            {
+              "id": "1138758",
+              "name": "Geovany Quenda",
+              "position": "Right Winger",
+              "dateOfBirth": "2007-04-30",
+              "age": 19,
+              "nationality": [
+                "Portugal",
+                "Guinea-Bissau"
+              ],
+              "height": 172,
+              "foot": "left",
+              "joinedOn": "2024-01-07",
+              "signedFrom": "Sporting CP U23",
+              "contract": "2027-06-30",
+              "marketValue": 42000000
+            },
+            {
+              "id": "701979",
+              "name": "Geny Catamo",
+              "position": "Right Winger",
+              "dateOfBirth": "2001-01-26",
+              "age": 25,
+              "nationality": [
+                "Mozambique"
+              ],
+              "height": 172,
+              "foot": "left",
+              "joinedOn": "2023-01-07",
+              "signedFrom": "Sporting CP B",
+              "contract": "2028-06-30",
+              "marketValue": 20000000
+            },
+            {
+              "id": "991800",
+              "name": "Luís Guilherme",
+              "position": "Right Winger",
+              "dateOfBirth": "2006-09-02",
+              "age": 20,
+              "nationality": [
+                "Brazil"
+              ],
+              "height": 175,
+              "foot": "left",
+              "joinedOn": "2026-04-01",
+              "signedFrom": "West Ham United",
+              "contract": "2030-06-30",
+              "marketValue": 12000000
+            },
+            {
+              "id": "666971",
+              "name": "Souleymane Faye",
+              "position": "Right Winger",
+              "dateOfBirth": "2003-08-02",
+              "age": 23,
+              "nationality": [
+                "Senegal"
+              ],
+              "height": 179,
+              "foot": "right",
+              "joinedOn": "2026-01-21",
+              "signedFrom": "Granada CF",
+              "contract": "2030-06-30",
+              "marketValue": 4000000
+            },
+            {
+              "id": "424784",
+              "name": "Luis Suárez",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1997-02-12",
+              "age": 28,
+              "nationality": [
+                "Colombia",
+                "Spain"
+              ],
+              "height": 181,
+              "foot": "right",
+              "joinedOn": "2025-07-28",
+              "signedFrom": "UD Almería",
+              "contract": "2030-06-30",
+              "marketValue": 28000000
+            },
+            {
+              "id": "532444",
+              "name": "Fotis Ioannidis",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2000-10-01",
+              "age": 26,
+              "nationality": [
+                "Greece"
+              ],
+              "height": 187,
+              "foot": "both",
+              "joinedOn": "2025-01-09",
+              "signedFrom": "Panathinaikos",
+              "contract": "2030-06-30",
+              "marketValue": 18000000,
+              "status": "Inner ligament injury - Return expected on 31/05/2026"
+            },
+            {
+              "id": "1057523",
+              "name": "Rafael Nel",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2005-03-04",
+              "age": 21,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2026-03-22",
+              "signedFrom": "Sporting CP B",
+              "contract": "2029-06-30",
+              "marketValue": 1500000
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "720",
+            "name": "FC Porto"
+          },
+          "resolved": {
+            "id": "720",
+            "name": "FC Porto",
+            "country": "Portugal"
+          },
+          "playersCount": 27,
+          "players": [
+            {
+              "id": "357153",
+              "name": "Diogo Costa",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1999-09-19",
+              "age": 26,
+              "nationality": [
+                "Portugal",
+                "Switzerland"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2019-01-07",
+              "signedFrom": "FC Porto B",
+              "contract": "2030-06-30",
+              "marketValue": 40000000,
+              "status": "Team captain"
+            },
+            {
+              "id": "155396",
+              "name": "Cláudio Ramos",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1991-11-16",
+              "age": 34,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2020-08-14",
+              "signedFrom": "CD Tondela",
+              "contract": "2027-06-30",
+              "marketValue": 1000000
+            },
+            {
+              "id": "198638",
+              "name": "João Costa",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1996-02-02",
+              "age": 30,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-09-07",
+              "signedFrom": "CF Estrela Amadora",
+              "contract": "2030-06-30",
+              "marketValue": 800000
+            },
+            {
+              "id": "425918",
+              "name": "Jakub Kiwior",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-02-15",
+              "age": 26,
+              "nationality": [
+                "Poland"
+              ],
+              "height": 189,
+              "foot": "left",
+              "joinedOn": "2025-01-09",
+              "signedFrom": "Arsenal FC",
+              "contract": "2026-06-30",
+              "marketValue": 27000000
+            },
+            {
+              "id": "491693",
+              "name": "Nehuén Pérez",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-06-24",
+              "age": 25,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Udinese Calcio",
+              "contract": "2029-06-30",
+              "marketValue": 13000000
+            },
+            {
+              "id": "243028",
+              "name": "Jan Bednarek",
+              "position": "Centre-Back",
+              "dateOfBirth": "1996-12-04",
+              "age": 30,
+              "nationality": [
+                "Poland"
+              ],
+              "height": 189,
+              "foot": "right",
+              "joinedOn": "2025-07-28",
+              "signedFrom": "Southampton FC",
+              "contract": "2029-06-30",
+              "marketValue": 11000000
+            },
+            {
+              "id": "921533",
+              "name": "Dominik Prpić",
+              "position": "Centre-Back",
+              "dateOfBirth": "2004-05-19",
+              "age": 21,
+              "nationality": [
+                "Croatia"
+              ],
+              "height": 188,
+              "foot": "left",
+              "joinedOn": "2025-10-07",
+              "signedFrom": "HNK Hajduk Split",
+              "contract": "2030-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "29241",
+              "name": "Thiago Silva",
+              "position": "Centre-Back",
+              "dateOfBirth": "1984-09-22",
+              "age": 41,
+              "nationality": [
+                "Brazil",
+                "France"
+              ],
+              "height": 181,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Fluminense Football Club",
+              "contract": "2026-06-30",
+              "marketValue": 600000
+            },
+            {
+              "id": "478365",
+              "name": "Francisco Moura",
+              "position": "Left-Back",
+              "dateOfBirth": "1999-08-16",
+              "age": 26,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 181,
+              "foot": "left",
+              "joinedOn": "2024-02-09",
+              "signedFrom": "FC Famalicão",
+              "contract": "2029-06-30",
+              "marketValue": 12000000
+            },
+            {
+              "id": "544784",
+              "name": "Zaidu Sanusi",
+              "position": "Left-Back",
+              "dateOfBirth": "1997-06-13",
+              "age": 28,
+              "nationality": [
+                "Nigeria"
+              ],
+              "height": 182,
+              "foot": "left",
+              "joinedOn": "2020-08-30",
+              "signedFrom": ": Ablöse €4.00m",
+              "contract": "2027-06-30",
+              "marketValue": 3000000
+            },
+            {
+              "id": "877139",
+              "name": "Alberto Costa",
+              "position": "Right-Back",
+              "dateOfBirth": "2003-09-29",
+              "age": 22,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-07-24",
+              "signedFrom": "Juventus FC",
+              "contract": "2030-06-30",
+              "marketValue": 15000000
+            },
+            {
+              "id": "935480",
+              "name": "Martim Fernandes",
+              "position": "Right-Back",
+              "dateOfBirth": "2006-01-18",
+              "age": 20,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 181,
+              "foot": "right",
+              "joinedOn": "2024-04-17",
+              "signedFrom": "FC Porto B",
+              "contract": "2030-06-30",
+              "marketValue": 12000000
+            },
+            {
+              "id": "756990",
+              "name": "Alan Varela",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2001-04-07",
+              "age": 24,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 177,
+              "foot": "right",
+              "joinedOn": "2023-08-16",
+              "signedFrom": "CA Boca Juniors",
+              "contract": "2030-06-30",
+              "marketValue": 32000000
+            },
+            {
+              "id": "370791",
+              "name": "Pablo Rosario",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1997-07-01",
+              "age": 29,
+              "nationality": [
+                "Dominican Republic",
+                "Netherlands"
+              ],
+              "height": 188,
+              "foot": "right",
+              "joinedOn": "2025-08-28",
+              "signedFrom": "OGC Nice",
+              "contract": "2029-06-30",
+              "marketValue": 8000000
+            },
+            {
+              "id": "926993",
+              "name": "Victor Froholdt",
+              "position": "Central Midfield",
+              "dateOfBirth": "2006-02-25",
+              "age": 20,
+              "nationality": [
+                "Denmark"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2025-07-23",
+              "signedFrom": "FC Copenhagen",
+              "contract": "2030-06-30",
+              "marketValue": 30000000
+            },
+            {
+              "id": "182893",
+              "name": "Seko Fofana",
+              "position": "Central Midfield",
+              "dateOfBirth": "1995-07-05",
+              "age": 31,
+              "nationality": [
+                "Cote d'Ivoire",
+                "France"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2026-02-02",
+              "signedFrom": "Stade Rennais FC",
+              "contract": "2026-06-30",
+              "marketValue": 8000000
+            },
+            {
+              "id": "957653",
+              "name": "Rodrigo Mora",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2007-05-05",
+              "age": 19,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 168,
+              "foot": "right",
+              "joinedOn": "2024-01-07",
+              "signedFrom": "FC Porto B",
+              "contract": "2030-06-30",
+              "marketValue": 38000000
+            },
+            {
+              "id": "699704",
+              "name": "Gabri Veiga",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2002-05-27",
+              "age": 23,
+              "nationality": [
+                "Spain"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2025-05-06",
+              "signedFrom": "Al-Ahli SFC",
+              "contract": "2030-06-30",
+              "marketValue": 25000000
+            },
+            {
+              "id": "634461",
+              "name": "Borja Sainz",
+              "position": "Left Winger",
+              "dateOfBirth": "2001-02-21",
+              "age": 25,
+              "nationality": [
+                "Spain"
+              ],
+              "height": 174,
+              "foot": "right",
+              "joinedOn": "2025-07-13",
+              "signedFrom": "Norwich City",
+              "contract": "2030-06-30",
+              "marketValue": 22000000
+            },
+            {
+              "id": "1162012",
+              "name": "Oskar Pietuszewski",
+              "position": "Left Winger",
+              "dateOfBirth": "2008-05-20",
+              "age": 17,
+              "nationality": [
+                "Poland"
+              ],
+              "height": 179,
+              "foot": "right",
+              "joinedOn": "2026-07-01",
+              "signedFrom": "Jagiellonia Bialystok",
+              "contract": "2029-05-01",
+              "marketValue": 20000000
+            },
+            {
+              "id": "324804",
+              "name": "Yann Karamoh",
+              "position": "Left Winger",
+              "dateOfBirth": "1998-08-07",
+              "age": 27,
+              "nationality": [
+                "France",
+                "Cote d'Ivoire"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2025-09-18",
+              "signedFrom": "Without Club",
+              "contract": "2026-06-30",
+              "marketValue": 1500000
+            },
+            {
+              "id": "1004725",
+              "name": "William Gomes",
+              "position": "Right Winger",
+              "dateOfBirth": "2006-03-15",
+              "age": 20,
+              "nationality": [
+                "Brazil"
+              ],
+              "height": 171,
+              "foot": "left",
+              "joinedOn": "2025-01-31",
+              "signedFrom": "São Paulo Futebol Clube",
+              "contract": "2029-06-30",
+              "marketValue": 20000000
+            },
+            {
+              "id": "520662",
+              "name": "Pepê",
+              "position": "Right Winger",
+              "dateOfBirth": "1997-02-24",
+              "age": 29,
+              "nationality": [
+                "Brazil",
+                "Italy"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2021-01-07",
+              "signedFrom": "Grêmio Foot-Ball Porto Alegrense",
+              "contract": "2028-06-30",
+              "marketValue": 20000000
+            },
+            {
+              "id": "991268",
+              "name": "Samu Aghehowa",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-05-05",
+              "age": 22,
+              "nationality": [
+                "Spain",
+                "Nigeria"
+              ],
+              "height": 193,
+              "foot": "right",
+              "joinedOn": "2024-08-23",
+              "signedFrom": "Atlético de Madrid",
+              "contract": "2029-06-30",
+              "marketValue": 45000000,
+              "status": "Cruciate ligament tear - Return expected on 31/10/2026"
+            },
+            {
+              "id": "538874",
+              "name": "Terem Moffi",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1999-05-25",
+              "age": 26,
+              "nationality": [
+                "Nigeria"
+              ],
+              "height": 188,
+              "foot": "left",
+              "joinedOn": "2026-01-30",
+              "signedFrom": "OGC Nice",
+              "contract": "2026-06-30",
+              "marketValue": 10000000
+            },
+            {
+              "id": "1063292",
+              "name": "Deniz Gül",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-02-07",
+              "age": 21,
+              "nationality": [
+                "Türkiye",
+                "Sweden"
+              ],
+              "height": 190,
+              "foot": "right",
+              "joinedOn": "2024-08-24",
+              "signedFrom": "Hammarby IF",
+              "contract": "2029-06-30",
+              "marketValue": 6000000
+            },
+            {
+              "id": "72522",
+              "name": "Luuk de Jong",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1990-08-27",
+              "age": 35,
+              "nationality": [
+                "Netherlands"
+              ],
+              "height": 188,
+              "foot": "right",
+              "joinedOn": "2025-03-08",
+              "signedFrom": "PSV Eindhoven",
+              "contract": "2026-06-30",
+              "marketValue": 1000000,
+              "status": "Cruciate ligament tear - Return expected on 30/09/2026"
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "294",
+            "name": "SL Benfica"
+          },
+          "resolved": {
+            "id": "294",
+            "name": "SL Benfica",
+            "country": "Portugal"
+          },
+          "playersCount": 28,
+          "players": [
+            {
+              "id": "537844",
+              "name": "Anatoliy Trubin",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2001-01-08",
+              "age": 24,
+              "nationality": [
+                "Ukraine"
+              ],
+              "height": 199,
+              "foot": "right",
+              "joinedOn": "2023-10-08",
+              "signedFrom": "Shakhtar Donetsk",
+              "contract": "2028-06-30",
+              "marketValue": 25000000
+            },
+            {
+              "id": "504072",
+              "name": "Samuel Soares",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2002-06-15",
+              "age": 23,
+              "nationality": [
+                "Portugal",
+                "Guinea-Bissau"
+              ],
+              "height": 190,
+              "foot": "right",
+              "joinedOn": "2023-01-01",
+              "signedFrom": "SL Benfica B",
+              "contract": "2027-06-30",
+              "marketValue": 4000000
+            },
+            {
+              "id": "650568",
+              "name": "António Silva",
+              "position": "Centre-Back",
+              "dateOfBirth": "2003-10-30",
+              "age": 22,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2022-01-07",
+              "signedFrom": "SL Benfica U23",
+              "contract": "2027-06-30",
+              "marketValue": 28000000
+            },
+            {
+              "id": "504087",
+              "name": "Tomás Araújo",
+              "position": "Centre-Back",
+              "dateOfBirth": "2002-05-16",
+              "age": 23,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2022-01-07",
+              "signedFrom": "SL Benfica B",
+              "contract": "2029-06-30",
+              "marketValue": 28000000,
+              "status": "Muscle injury - Return unknown"
+            },
+            {
+              "id": "54781",
+              "name": "Nicolás Otamendi",
+              "position": "Centre-Back",
+              "dateOfBirth": "1988-12-02",
+              "age": 38,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2020-09-29",
+              "signedFrom": "Manchester City",
+              "contract": "2026-06-30",
+              "marketValue": 1000000,
+              "status": "Team captain; Red card suspension – Liga Portugal – until 11/05/2026"
+            },
+            {
+              "id": "605396",
+              "name": "Samuel Dahl",
+              "position": "Left-Back",
+              "dateOfBirth": "2003-04-03",
+              "age": 23,
+              "nationality": [
+                "Sweden"
+              ],
+              "height": 174,
+              "foot": "left",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "AS Roma",
+              "contract": "2029-06-30",
+              "marketValue": 12000000
+            },
+            {
+              "id": "1233701",
+              "name": "José Neto",
+              "position": "Left-Back",
+              "dateOfBirth": "2008-04-19",
+              "age": 18,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 184,
+              "foot": "left",
+              "signedFrom": "",
+              "contract": "2031-06-30",
+              "marketValue": 3000000
+            },
+            {
+              "id": "519184",
+              "name": "Amar Dedić",
+              "position": "Right-Back",
+              "dateOfBirth": "2002-08-18",
+              "age": 23,
+              "nationality": [
+                "Bosnia-Herzegovina"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2025-07-14",
+              "signedFrom": "Red Bull Salzburg",
+              "contract": "2030-06-30",
+              "marketValue": 15000000
+            },
+            {
+              "id": "452607",
+              "name": "Alexander Bah",
+              "position": "Right-Back",
+              "dateOfBirth": "1997-09-12",
+              "age": 28,
+              "nationality": [
+                "Denmark",
+                "The Gambia"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2022-01-07",
+              "signedFrom": "SK Slavia Prague",
+              "contract": "2029-06-30",
+              "marketValue": 9000000
+            },
+            {
+              "id": "611855",
+              "name": "Sidny Lopes Cabral",
+              "position": "Right-Back",
+              "dateOfBirth": "2002-09-18",
+              "age": 23,
+              "nationality": [
+                "Cape Verde",
+                "Netherlands"
+              ],
+              "height": 176,
+              "foot": "both",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "CF Estrela Amadora",
+              "contract": "2030-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "1134199",
+              "name": "Daniel Banjaqui",
+              "position": "Right-Back",
+              "dateOfBirth": "2008-03-24",
+              "age": 18,
+              "nationality": [
+                "Portugal",
+                "Guinea-Bissau"
+              ],
+              "height": 184,
+              "foot": "right",
+              "signedFrom": "",
+              "contract": "2031-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "735573",
+              "name": "Richard Ríos",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2000-02-06",
+              "age": 25,
+              "nationality": [
+                "Colombia"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2025-07-22",
+              "signedFrom": "Sociedade Esportiva Palmeiras",
+              "contract": "2030-06-30",
+              "marketValue": 22000000,
+              "status": "Yellow card suspension – Liga Portugal – until 11/05/2026"
+            },
+            {
+              "id": "671915",
+              "name": "Enzo Barrenechea",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2001-05-22",
+              "age": 24,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-07-18",
+              "signedFrom": "Aston Villa",
+              "contract": "2026-06-30",
+              "marketValue": 15000000
+            },
+            {
+              "id": "699592",
+              "name": "Manu Silva",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2001-12-06",
+              "age": 24,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 190,
+              "foot": "right",
+              "joinedOn": "2025-01-20",
+              "signedFrom": "Vitória Guimarães SC",
+              "contract": "2030-06-30",
+              "marketValue": 9000000
+            },
+            {
+              "id": "223367",
+              "name": "Fredrik Aursnes",
+              "position": "Central Midfield",
+              "dateOfBirth": "1995-10-12",
+              "age": 30,
+              "nationality": [
+                "Norway"
+              ],
+              "height": 181,
+              "foot": "right",
+              "joinedOn": "2022-08-24",
+              "signedFrom": ": Ablöse €13.00m",
+              "contract": "2029-06-30",
+              "marketValue": 17000000
+            },
+            {
+              "id": "357233",
+              "name": "Leandro Barreiro",
+              "position": "Central Midfield",
+              "dateOfBirth": "2000-03-01",
+              "age": 26,
+              "nationality": [
+                "Luxembourg",
+                "Portugal"
+              ],
+              "height": 174,
+              "foot": "right",
+              "joinedOn": "2024-02-07",
+              "signedFrom": "1.FSV Mainz 05",
+              "contract": "2029-06-30",
+              "marketValue": 15000000
+            },
+            {
+              "id": "637792",
+              "name": "João Veloso",
+              "position": "Central Midfield",
+              "dateOfBirth": "2005-06-26",
+              "age": 20,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "SL Benfica B",
+              "contract": "2028-06-30",
+              "marketValue": 1500000,
+              "status": "Shoulder injury - Return unknown"
+            },
+            {
+              "id": "623325",
+              "name": "Georgiy Sudakov",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2002-01-09",
+              "age": 23,
+              "nationality": [
+                "Ukraine"
+              ],
+              "height": 177,
+              "foot": "both",
+              "joinedOn": "2025-08-30",
+              "signedFrom": "Shakhtar Donetsk",
+              "contract": "2026-06-30",
+              "marketValue": 28000000
+            },
+            {
+              "id": "931415",
+              "name": "João Rego",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2005-06-20",
+              "age": 20,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2025-01-01",
+              "signedFrom": "SL Benfica B",
+              "contract": "2030-06-30",
+              "marketValue": 3000000
+            },
+            {
+              "id": "670103",
+              "name": "Andreas Schjelderup",
+              "position": "Left Winger",
+              "dateOfBirth": "2004-01-06",
+              "age": 21,
+              "nationality": [
+                "Norway"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2023-12-01",
+              "signedFrom": "FC Nordsjaelland",
+              "contract": "2028-06-30",
+              "marketValue": 20000000
+            },
+            {
+              "id": "139396",
+              "name": "Bruma",
+              "position": "Left Winger",
+              "dateOfBirth": "1994-10-24",
+              "age": 31,
+              "nationality": [
+                "Portugal",
+                "Guinea-Bissau"
+              ],
+              "height": 173,
+              "foot": "right",
+              "joinedOn": "2025-03-02",
+              "signedFrom": "SC Braga",
+              "contract": "2028-06-30",
+              "marketValue": 5000000,
+              "status": "unknown injury - Return unknown"
+            },
+            {
+              "id": "303259",
+              "name": "Dodi Lukébakio",
+              "position": "Right Winger",
+              "dateOfBirth": "1997-09-24",
+              "age": 28,
+              "nationality": [
+                "Belgium",
+                "DR Congo"
+              ],
+              "height": 187,
+              "foot": "left",
+              "joinedOn": "2025-01-09",
+              "signedFrom": "Sevilla FC",
+              "contract": "2030-06-30",
+              "marketValue": 20000000
+            },
+            {
+              "id": "1000674",
+              "name": "Gianluca Prestianni",
+              "position": "Right Winger",
+              "dateOfBirth": "2006-01-31",
+              "age": 20,
+              "nationality": [
+                "Argentina",
+                "Italy"
+              ],
+              "height": 166,
+              "foot": "right",
+              "joinedOn": "2024-01-31",
+              "signedFrom": "CA Vélez Sarsfield",
+              "contract": "2029-06-30",
+              "marketValue": 12000000,
+              "status": "Suspension through sports court – UEFA Champions League"
+            },
+            {
+              "id": "238055",
+              "name": "Rafa Silva",
+              "position": "Second Striker",
+              "dateOfBirth": "1993-05-17",
+              "age": 32,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 172,
+              "foot": "right",
+              "joinedOn": "2026-01-22",
+              "signedFrom": "Besiktas JK",
+              "contract": "2028-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "324503",
+              "name": "Vangelis Pavlidis",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1998-11-21",
+              "age": 27,
+              "nationality": [
+                "Greece"
+              ],
+              "height": 186,
+              "foot": "both",
+              "joinedOn": "2024-01-07",
+              "signedFrom": "AZ Alkmaar",
+              "contract": "2029-06-30",
+              "marketValue": 32000000
+            },
+            {
+              "id": "548028",
+              "name": "Franjo Ivanović",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2003-01-10",
+              "age": 22,
+              "nationality": [
+                "Croatia"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2025-07-31",
+              "signedFrom": "Union Saint-Gilloise",
+              "contract": "2030-06-30",
+              "marketValue": 18000000
+            },
+            {
+              "id": "1092964",
+              "name": "Anísio Cabral",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2008-02-15",
+              "age": 18,
+              "nationality": [
+                "Portugal",
+                "Guinea-Bissau"
+              ],
+              "height": 187,
+              "foot": "left",
+              "joinedOn": "2026-01-25",
+              "signedFrom": "SL Benfica U19",
+              "contract": "2031-06-30",
+              "marketValue": 5000000
+            },
+            {
+              "id": "617267",
+              "name": "Henrique Araújo",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2002-01-19",
+              "age": 24,
+              "nationality": [
+                "Portugal"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2022-01-07",
+              "signedFrom": "SL Benfica B",
+              "contract": "2027-06-30",
+              "marketValue": 2000000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Ghana",
+      "competitions": [
+        {
+          "id": "GHPL",
+          "name": "Ghana Premier League",
+          "seasonId": "2025",
+          "clubsCount": 18
+        }
+      ],
+      "teams": [
+        {
+          "source": {
+            "id": "502",
+            "name": "Asante Kotoko SC"
+          },
+          "resolved": {
+            "id": "502",
+            "name": "Asante Kotoko SC",
+            "country": "Ghana"
+          },
+          "playersCount": 35,
+          "players": [
+            {
+              "id": "543522",
+              "name": "Mohamed Camara",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2000-03-16",
+              "age": 26,
+              "nationality": [
+                "Guinea"
+              ],
+              "height": 194,
+              "foot": "right",
+              "joinedOn": "2024-01-08",
+              "signedFrom": "SOAR Academie",
+              "contract": "2026-06-30",
+              "marketValue": 125000
+            },
+            {
+              "id": "883900",
+              "name": "Dari Aziz Haruna",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2001-05-23",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Bechem United FC",
+              "contract": "2029-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "1313950",
+              "name": "Benjamin Twum",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2005-10-15",
+              "age": 20,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-12-26",
+              "signedFrom": "Young Apostles FC",
+              "marketValue": 25000
+            },
+            {
+              "id": "1287413",
+              "name": "Ndongani Samba Gilbani",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-02-02",
+              "age": 26,
+              "nationality": [
+                "Congo"
+              ],
+              "height": 188,
+              "foot": "right",
+              "joinedOn": "2024-11-07",
+              "signedFrom": "Rahimo FC",
+              "marketValue": 125000
+            },
+            {
+              "id": "1176487",
+              "name": "Joseph Ablorh",
+              "position": "Centre-Back",
+              "dateOfBirth": "1998-11-15",
+              "age": 27,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2024-10-07",
+              "signedFrom": "Hafia FC",
+              "contract": "2026-06-30",
+              "marketValue": 125000
+            },
+            {
+              "id": "1177983",
+              "name": "Musa Hamzata",
+              "position": "Centre-Back",
+              "dateOfBirth": "2003-04-05",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 192,
+              "foot": "right",
+              "joinedOn": "2025-08-22",
+              "signedFrom": "Accra Lions FC",
+              "contract": "2028-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "734716",
+              "name": "Henry Ansu",
+              "position": "Centre-Back",
+              "dateOfBirth": "1998-12-17",
+              "age": 27,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 184,
+              "foot": "",
+              "joinedOn": "2023-10-08",
+              "signedFrom": "Berekum Chelsea FC",
+              "marketValue": 100000
+            },
+            {
+              "id": "396517",
+              "name": "Fuseini Zackaria",
+              "position": "Centre-Back",
+              "dateOfBirth": "1998-12-03",
+              "age": 28,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Berekum Chelsea FC",
+              "contract": "2028-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "1007754",
+              "name": "Patrick Asiedu",
+              "position": "Left-Back",
+              "dateOfBirth": "2002-12-20",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-07-26",
+              "signedFrom": "Berekum Chelsea FC",
+              "marketValue": 100000
+            },
+            {
+              "id": "938679",
+              "name": "Francis Acquah",
+              "position": "Left-Back",
+              "dateOfBirth": "2000-10-25",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Bechem United FC",
+              "contract": "2028-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "579265",
+              "name": "Inusah Adam",
+              "position": "Left-Back",
+              "dateOfBirth": "2000-08-20",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "left",
+              "joinedOn": "2025-07-17",
+              "signedFrom": "Unknown",
+              "contract": "2028-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "1185688",
+              "name": "Joseph Amoah",
+              "position": "Left-Back",
+              "dateOfBirth": "2004-05-19",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-04-07",
+              "signedFrom": "Legon Cities FC",
+              "contract": "2029-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "1453820",
+              "name": "Yakubu Dogo",
+              "position": "Left-Back",
+              "dateOfBirth": "2004-12-27",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "MidCity FC",
+              "contract": "2029-06-30"
+            },
+            {
+              "id": "952531",
+              "name": "Lord Amoah",
+              "position": "Right-Back",
+              "dateOfBirth": "2003-05-14",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 179,
+              "foot": "",
+              "joinedOn": "2024-03-08",
+              "signedFrom": "Berekum Chelsea FC",
+              "contract": "2027-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "1043337",
+              "name": "Emmanuel Kotei",
+              "position": "Right-Back",
+              "dateOfBirth": "1997-04-11",
+              "age": 28,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "right",
+              "joinedOn": "2024-10-01",
+              "signedFrom": "Nsoatreman FC",
+              "marketValue": 50000,
+              "status": "Cruciate ligament injury - Return unknown"
+            },
+            {
+              "id": "1195327",
+              "name": "Shayibu Abubakari",
+              "position": "Right-Back",
+              "dateOfBirth": "2003-11-21",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-07-17",
+              "signedFrom": "Karela United FC",
+              "contract": "2028-06-30",
+              "marketValue": 25000
+            },
+            {
+              "id": "1184644",
+              "name": "Lord Hilary Adabo",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2004-03-13",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 173,
+              "foot": "",
+              "joinedOn": "2025-11-07",
+              "signedFrom": "FC Samartex",
+              "contract": "2028-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "733409",
+              "name": "Andrews Ntim",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2000-07-29",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2023-10-08",
+              "signedFrom": "Legon Cities FC",
+              "contract": "2026-06-30",
+              "marketValue": 75000,
+              "status": "unknown injury - Return unknown"
+            },
+            {
+              "id": "1139866",
+              "name": "Prince Badu",
+              "position": "Midfielder",
+              "dateOfBirth": "2000-06-16",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Nations Football Club",
+              "contract": "2028-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "579653",
+              "name": "Justice Blay",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1992-05-03",
+              "age": 34,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "",
+              "joinedOn": "2022-01-02",
+              "signedFrom": "Medeama SC",
+              "marketValue": 50000
+            },
+            {
+              "id": "1248634",
+              "name": "Hubert Gyau",
+              "position": "Central Midfield",
+              "dateOfBirth": "2005-05-05",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Berekum Chelsea FC",
+              "contract": "2029-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "1071421",
+              "name": "Emmanuel Antwi",
+              "position": "Central Midfield",
+              "dateOfBirth": "2000-08-01",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2024-09-07",
+              "signedFrom": "Accra Great Olympics",
+              "contract": "2027-07-07",
+              "marketValue": 75000
+            },
+            {
+              "id": "837002",
+              "name": "Seth Kwadwo",
+              "position": "Central Midfield",
+              "dateOfBirth": "2002-03-06",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 170,
+              "foot": "right",
+              "joinedOn": "2025-02-07",
+              "signedFrom": "Bechem United FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "854480",
+              "name": "Walid Fuseini",
+              "position": "Central Midfield",
+              "dateOfBirth": "1999-11-15",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-08-26",
+              "signedFrom": "Nsoatreman FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "1460761",
+              "name": "Philip Amoh",
+              "position": "Right Midfield",
+              "dateOfBirth": "2002-07-26",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "754155",
+              "name": "Yahaya Baba",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2002-02-18",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 169,
+              "foot": "left",
+              "joinedOn": "2023-08-31",
+              "signedFrom": "King Faisal FC",
+              "contract": "2026-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "580329",
+              "name": "Elvis Baffour",
+              "position": "Left Winger",
+              "dateOfBirth": "1999-07-02",
+              "age": 27,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2024-07-15",
+              "signedFrom": "Without Club",
+              "marketValue": 75000
+            },
+            {
+              "id": "1176483",
+              "name": "Morifing Donzo",
+              "position": "Left Winger",
+              "dateOfBirth": "1998-01-01",
+              "age": 28,
+              "nationality": [
+                "Guinea"
+              ],
+              "height": 182,
+              "foot": "left",
+              "joinedOn": "2025-07-17",
+              "signedFrom": "Hafia FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "910509",
+              "name": "Saaka Dauda",
+              "position": "Left Winger",
+              "dateOfBirth": "2000-03-17",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-07-26",
+              "signedFrom": "Bofoakwa Tano FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "359375",
+              "name": "Johnson Owusu",
+              "position": "Left Winger",
+              "dateOfBirth": "1998-05-02",
+              "age": 28,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Without Club",
+              "marketValue": 25000
+            },
+            {
+              "id": "1178292",
+              "name": "Peter Amidu Acquah",
+              "position": "Right Winger",
+              "dateOfBirth": "2006-04-09",
+              "age": 19,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2023-02-09",
+              "signedFrom": "Unknown",
+              "marketValue": 125000
+            },
+            {
+              "id": "1238469",
+              "name": "Albert Amoah",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2002-03-01",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2026-12-01",
+              "signedFrom": "Al-Ahly SC",
+              "contract": "2026-06-30",
+              "marketValue": 125000
+            },
+            {
+              "id": "718057",
+              "name": "Kwame Opoku",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1999-08-05",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-12-23",
+              "signedFrom": "Olympique Khouribga",
+              "marketValue": 100000
+            },
+            {
+              "id": "579530",
+              "name": "Isaac Mintah",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1998-10-29",
+              "age": 27,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 178,
+              "foot": "",
+              "joinedOn": "2025-01-17",
+              "signedFrom": "Without Club",
+              "marketValue": 50000
+            },
+            {
+              "id": "1348093",
+              "name": "Jordan Amissah",
+              "position": "Striker",
+              "dateOfBirth": "2006-01-03",
+              "age": 20,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "3601",
+            "name": "Hearts of Oak"
+          },
+          "resolved": {
+            "id": "3601",
+            "name": "Hearts of Oak",
+            "country": "Ghana"
+          },
+          "playersCount": 32,
+          "players": [
+            {
+              "id": "837368",
+              "name": "Benjamin Asare",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1992-07-13",
+              "age": 33,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 188,
+              "foot": "right",
+              "joinedOn": "2024-07-24",
+              "signedFrom": "Accra Great Olympics",
+              "contract": "2026-06-30",
+              "marketValue": 100000,
+              "status": "Team captain"
+            },
+            {
+              "id": "734794",
+              "name": "Solomon Agbasi",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2000-10-13",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-08-30",
+              "signedFrom": "Without Club",
+              "marketValue": 25000
+            },
+            {
+              "id": "1245619",
+              "name": "Sharif Shuaib",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2001-01-17",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            },
+            {
+              "id": "1469625",
+              "name": "Baba Adamu",
+              "position": "Defender",
+              "dateOfBirth": "2004-01-22",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "1347659",
+              "name": "Albert Amanfo Kwasi",
+              "position": "Defender",
+              "dateOfBirth": "2002-08-23",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": ""
+            },
+            {
+              "id": "982154",
+              "name": "Kelvin Osei Asibey",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-12-18",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 178,
+              "foot": "right",
+              "joinedOn": "2023-07-19",
+              "signedFrom": "Eleven Wonders FC",
+              "marketValue": 125000
+            },
+            {
+              "id": "952516",
+              "name": "Ali Mohammed",
+              "position": "Centre-Back",
+              "dateOfBirth": "2002-07-02",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 181,
+              "foot": "right",
+              "joinedOn": "2025-07-24",
+              "signedFrom": "Vision FC",
+              "marketValue": 100000
+            },
+            {
+              "id": "952273",
+              "name": "David Oppong Afrane",
+              "position": "Centre-Back",
+              "dateOfBirth": "2002-03-12",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 184,
+              "foot": "",
+              "joinedOn": "2023-09-22",
+              "signedFrom": "King Faisal FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "1313897",
+              "name": "Emmanuel Amankwah",
+              "position": "Left-Back",
+              "dateOfBirth": "2003-05-29",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 75000
+            },
+            {
+              "id": "1313894",
+              "name": "Ransford Mensah",
+              "position": "Left-Back",
+              "dateOfBirth": "2000-08-22",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 75000
+            },
+            {
+              "id": "579062",
+              "name": "Dennis Korsah",
+              "position": "Left-Back",
+              "dateOfBirth": "1996-02-25",
+              "age": 30,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 173,
+              "foot": "",
+              "joinedOn": "2022-01-02",
+              "signedFrom": "Ebusua Dwarfs FC",
+              "marketValue": 25000
+            },
+            {
+              "id": "579529",
+              "name": "Yahaya Adraman",
+              "position": "Right-Back",
+              "dateOfBirth": "1995-11-01",
+              "age": 31,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "right",
+              "joinedOn": "2024-08-18",
+              "signedFrom": "Bibiani Gold Stars FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "1216445",
+              "name": "Isaac Frimpong",
+              "position": "Right-Back",
+              "dateOfBirth": "2006-06-01",
+              "age": 20,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-01-01",
+              "signedFrom": "Hearts of Oak II",
+              "marketValue": 25000
+            },
+            {
+              "id": "1313895",
+              "name": "Theophilus Collison",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2001-06-14",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 75000
+            },
+            {
+              "id": "582042",
+              "name": "Abdul Karim",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2000-01-03",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-08-18",
+              "signedFrom": "Nations Football Club",
+              "contract": "2027-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "1369314",
+              "name": "Kwesi Asmah",
+              "position": "Midfielder",
+              "dateOfBirth": "2002-11-17",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-22",
+              "signedFrom": "Unknown",
+              "marketValue": 50000
+            },
+            {
+              "id": "1473264",
+              "name": "Gordon Cudjoe",
+              "position": "Midfielder",
+              "dateOfBirth": "2003-11-06",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "1166241",
+              "name": "Raphael Amponsah",
+              "position": "Central Midfield",
+              "dateOfBirth": "2002-04-07",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2023-09-08",
+              "signedFrom": "Asekem FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "1238086",
+              "name": "Stephen Appiah Asare",
+              "position": "Right Midfield",
+              "dateOfBirth": "1996-09-06",
+              "age": 29,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-08-21",
+              "signedFrom": "Legon Cities FC",
+              "contract": "2026-06-30",
+              "marketValue": 25000
+            },
+            {
+              "id": "1313896",
+              "name": "Mohammed Hussein",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2004-03-30",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 125000
+            },
+            {
+              "id": "1311771",
+              "name": "George Paaku",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2006-01-26",
+              "age": 20,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2025-05-08",
+              "signedFrom": "Accra Lions FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "1183925",
+              "name": "Martin Karikari",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2003-11-30",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "548646",
+              "name": "Ramzy Yussif",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2000-06-07",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 174,
+              "foot": "right",
+              "joinedOn": "2024-08-18",
+              "signedFrom": "New Edubiase United",
+              "marketValue": 50000
+            },
+            {
+              "id": "1071073",
+              "name": "Rocky Dwamena",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2003-04-17",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-08-13",
+              "signedFrom": "Dreams FC",
+              "contract": "2027-06-30",
+              "marketValue": 25000
+            },
+            {
+              "id": "952270",
+              "name": "Mawuli Wayo",
+              "position": "Left Winger",
+              "dateOfBirth": "2003-02-15",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 176,
+              "foot": "",
+              "joinedOn": "2024-08-18",
+              "signedFrom": "Bibiani Gold Stars FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "754789",
+              "name": "Enock Asubonteng",
+              "position": "Left Winger",
+              "dateOfBirth": "2000-10-27",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 176,
+              "foot": "",
+              "joinedOn": "2021-08-16",
+              "signedFrom": "West African Football Academy",
+              "marketValue": 50000
+            },
+            {
+              "id": "975925",
+              "name": "Yaw Amankwa Baafi",
+              "position": "Right Winger",
+              "dateOfBirth": "2003-08-21",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 170,
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 75000
+            },
+            {
+              "id": "1193096",
+              "name": "Hamza Issah",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2002-04-26",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2023-01-08",
+              "signedFrom": "Hearts of Oak II",
+              "marketValue": 125000
+            },
+            {
+              "id": "952205",
+              "name": "Asamoah Boateng Afriyie",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1997-09-16",
+              "age": 28,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-12-07",
+              "signedFrom": "Nations Football Club",
+              "marketValue": 50000
+            },
+            {
+              "id": "1313666",
+              "name": "Frank Abora Duku",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-12-14",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-07-13",
+              "signedFrom": "Vision FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "865977",
+              "name": "Prince Kwabena Owusu",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1998-05-01",
+              "age": 28,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "right",
+              "joinedOn": "2025-07-19",
+              "signedFrom": "Al-Hedayah",
+              "contract": "2027-06-30",
+              "marketValue": 25000
+            },
+            {
+              "id": "1371726",
+              "name": "Abdul-Aziz Adam",
+              "position": "Striker",
+              "dateOfBirth": "2004-08-08",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "71866",
+            "name": "Bibiani Gold Stars FC"
+          },
+          "resolved": {
+            "id": "71866",
+            "name": "Bibiani Gold Stars FC",
+            "country": "Ghana"
+          },
+          "playersCount": 36,
+          "players": [
+            {
+              "id": "910506",
+              "name": "Emmanuel Kobi",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2002-01-09",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-10-07",
+              "signedFrom": "Bofoakwa Tano FC",
+              "marketValue": 100000
+            },
+            {
+              "id": "734684",
+              "name": "Kwadwo Bonsu",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2000-02-05",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-04-07",
+              "signedFrom": "Accra Lions FC",
+              "contract": "2028-06-30",
+              "marketValue": 25000
+            },
+            {
+              "id": "900345",
+              "name": "Ernest Kussi",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1996-06-01",
+              "age": 30,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 177,
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            },
+            {
+              "id": "1246864",
+              "name": "Gideon Anaba",
+              "position": "Centre-Back",
+              "dateOfBirth": "2004-10-13",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 189,
+              "foot": "right",
+              "joinedOn": "2024-01-01",
+              "signedFrom": "Bibiani Gold Stars FC II",
+              "marketValue": 100000
+            },
+            {
+              "id": "285179",
+              "name": "Vincent Atinga",
+              "position": "Centre-Back",
+              "dateOfBirth": "1993-10-30",
+              "age": 32,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 191,
+              "foot": "right",
+              "joinedOn": "2023-12-20",
+              "signedFrom": "Without Club",
+              "marketValue": 100000
+            },
+            {
+              "id": "1184909",
+              "name": "Kelvin Oppong",
+              "position": "Centre-Back",
+              "dateOfBirth": "2001-12-11",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-08-24",
+              "signedFrom": "Bofoakwa Tano FC",
+              "marketValue": 75000
+            },
+            {
+              "id": "1184910",
+              "name": "Emmanuel Ankrah",
+              "position": "Centre-Back",
+              "dateOfBirth": "2004-10-19",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Nsoatreman FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "910530",
+              "name": "Yakubu Haqq",
+              "position": "Centre-Back",
+              "dateOfBirth": "1994-09-10",
+              "age": 31,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000,
+              "status": "Team captain"
+            },
+            {
+              "id": "1322351",
+              "name": "Edward Agyemang",
+              "position": "Left-Back",
+              "dateOfBirth": "2004-09-01",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Vision FC",
+              "contract": "2028-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "1336368",
+              "name": "Samuel Acheampong",
+              "position": "Left-Back",
+              "dateOfBirth": "2005-12-14",
+              "age": 20,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "1184908",
+              "name": "Bright Boakye Kyereh",
+              "position": "Right-Back",
+              "dateOfBirth": "2001-07-14",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-08-24",
+              "signedFrom": "Bofoakwa Tano FC",
+              "contract": "2027-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "1353702",
+              "name": "Kotey Richard Amon",
+              "position": "Midfielder",
+              "dateOfBirth": "1999-08-16",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 75000
+            },
+            {
+              "id": "1318660",
+              "name": "Foster Agyei",
+              "position": "Midfielder",
+              "dateOfBirth": "2002-11-06",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "1071072",
+              "name": "Philip Ofori",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2002-05-26",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-05-07",
+              "signedFrom": "Nsoatreman FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "1328307",
+              "name": "Isaac Adjei Adjetey",
+              "position": "Midfielder",
+              "dateOfBirth": "2007-03-16",
+              "age": 19,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2024-01-09",
+              "signedFrom": "Bibiani Gold Stars FC II",
+              "marketValue": 25000
+            },
+            {
+              "id": "1336367",
+              "name": "Justice Arthur",
+              "position": "Midfielder",
+              "dateOfBirth": "2002-12-14",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            },
+            {
+              "id": "1525007",
+              "name": "Emmanuel Kojo Addy",
+              "position": "Midfielder",
+              "dateOfBirth": "2002-06-06",
+              "age": 23,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": ""
+            },
+            {
+              "id": "975864",
+              "name": "Emmanuel Kontor",
+              "position": "Central Midfield",
+              "dateOfBirth": "2004-06-12",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Nations Football Club",
+              "contract": "2028-06-30",
+              "marketValue": 100000
+            },
+            {
+              "id": "1318620",
+              "name": "Emmanuel Fosu Kyei",
+              "position": "Central Midfield",
+              "dateOfBirth": "2004-04-04",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Skyy Football Club",
+              "contract": "2028-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "583171",
+              "name": "Francis Twene",
+              "position": "Central Midfield",
+              "dateOfBirth": "2001-10-01",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 165,
+              "foot": "",
+              "joinedOn": "2025-11-07",
+              "signedFrom": "Bechem United FC",
+              "contract": "2028-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "941122",
+              "name": "Dafie Humin Mohammed",
+              "position": "Central Midfield",
+              "dateOfBirth": "2001-09-13",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 178,
+              "foot": "",
+              "joinedOn": "2024-03-08",
+              "signedFrom": "Karela United FC",
+              "contract": "2026-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "508158",
+              "name": "Maccarthy Appiah",
+              "position": "Central Midfield",
+              "dateOfBirth": "1996-04-08",
+              "age": 29,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 179,
+              "foot": "both",
+              "joinedOn": "2023-01-31",
+              "signedFrom": "Ashanti Gold SC",
+              "marketValue": 50000
+            },
+            {
+              "id": "939391",
+              "name": "Rafiu Ibrahim",
+              "position": "Central Midfield",
+              "dateOfBirth": "2004-07-16",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            },
+            {
+              "id": "1186850",
+              "name": "Barimah Baah",
+              "position": "Left Winger",
+              "dateOfBirth": "2004-03-04",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Nations Football Club",
+              "contract": "2026-06-30",
+              "marketValue": 75000
+            },
+            {
+              "id": "1322345",
+              "name": "Emmanuel Agyei",
+              "position": "Right Winger",
+              "dateOfBirth": "2000-12-07",
+              "age": 25,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Basake Holy Stars FC",
+              "contract": "2028-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "659199",
+              "name": "Emmanuel Boateng Agyenim",
+              "position": "Right Winger",
+              "dateOfBirth": "1999-05-30",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Pamba Jiji Football Club",
+              "marketValue": 25000
+            },
+            {
+              "id": "624569",
+              "name": "Samuel Attah Kumi",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1999-12-05",
+              "age": 26,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2024-03-08",
+              "signedFrom": "Karela United FC",
+              "contract": "2026-06-30",
+              "marketValue": 125000
+            },
+            {
+              "id": "580300",
+              "name": "Sampson Eduku",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1995-12-25",
+              "age": 30,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2025-09-07",
+              "signedFrom": "Asante Kotoko SC",
+              "marketValue": 50000
+            },
+            {
+              "id": "900334",
+              "name": "Ronald Frimpong",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1992-02-04",
+              "age": 34,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2023-08-21",
+              "signedFrom": "Real Tamale United",
+              "marketValue": 50000
+            },
+            {
+              "id": "1469755",
+              "name": "Razack Sanou",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-04-12",
+              "age": 21,
+              "nationality": [
+                "Burkina Faso"
+              ],
+              "foot": "",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Salitas Football School",
+              "marketValue": 50000
+            },
+            {
+              "id": "1182702",
+              "name": "Bernard Kesse",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-03-17",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 182,
+              "foot": "left",
+              "joinedOn": "2025-12-07",
+              "signedFrom": "Accra Lions FC",
+              "contract": "2028-06-30",
+              "marketValue": 50000
+            },
+            {
+              "id": "1326528",
+              "name": "Michael Nkoah",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-09-27",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 50000
+            },
+            {
+              "id": "1411692",
+              "name": "Godfred John Arthur",
+              "position": "Striker",
+              "dateOfBirth": "2005-01-25",
+              "age": 21,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Bibiani Gold Stars FC II",
+              "marketValue": 25000
+            },
+            {
+              "id": "734816",
+              "name": "Prince Opoku Agyemang",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1992-06-06",
+              "age": 33,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 180,
+              "foot": "left",
+              "joinedOn": "2025-08-23",
+              "signedFrom": "Without Club",
+              "marketValue": 25000
+            },
+            {
+              "id": "1318661",
+              "name": "Abdul Farouk Amoaful",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2004-04-01",
+              "age": 22,
+              "nationality": [
+                "Ghana"
+              ],
+              "foot": "",
+              "signedFrom": "",
+              "marketValue": 25000
+            },
+            {
+              "id": "1032813",
+              "name": "Augustine Boakye",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2001-11-10",
+              "age": 24,
+              "nationality": [
+                "Ghana"
+              ],
+              "height": 178,
+              "foot": "both",
+              "joinedOn": "2026-12-01",
+              "signedFrom": "Without Club"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "Uruguay",
+      "competitions": [
+        {
+          "id": "URU1",
+          "name": "Liga AUF Apertura",
+          "seasonId": "2025",
+          "clubsCount": 16
+        },
+        {
+          "id": "URSC",
+          "name": "Supercopa Uruguaya",
+          "error": "500 Internal Server Error"
+        },
+        {
+          "id": "URU2",
+          "name": "Segunda División - Fase Regular",
+          "seasonId": "2025",
+          "clubsCount": 14
+        },
+        {
+          "id": "UR2T",
+          "name": "Segunda División - Torneo Competencia",
+          "seasonId": "2025",
+          "clubsCount": 14
+        },
+        {
+          "id": "URU3",
+          "name": "Segunda División Play-off",
+          "seasonId": "2025",
+          "clubsCount": 2
+        }
+      ],
+      "teams": [
+        {
+          "source": {
+            "id": "861",
+            "name": "CA Peñarol"
+          },
+          "resolved": {
+            "id": "861",
+            "name": "CA Peñarol",
+            "country": "Uruguay"
+          },
+          "playersCount": 28,
+          "players": [
+            {
+              "id": "273203",
+              "name": "Washington Aguerre",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1993-04-23",
+              "age": 33,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Independiente Medellín",
+              "contract": "2027-12-31",
+              "marketValue": 550000
+            },
+            {
+              "id": "159772",
+              "name": "Sebastián Britos",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1988-02-01",
+              "age": 38,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 191,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Universitario de Deportes",
+              "contract": "2026-12-31",
+              "marketValue": 50000
+            },
+            {
+              "id": "1116154",
+              "name": "Nahuel Herrera",
+              "position": "Centre-Back",
+              "dateOfBirth": "2004-01-12",
+              "age": 21,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-01-01",
+              "signedFrom": "CA Peñarol U19",
+              "contract": "2027-12-31",
+              "marketValue": 4500000,
+              "status": "Shoulder injury - Return unknown"
+            },
+            {
+              "id": "365947",
+              "name": "Emanuel Gularte",
+              "position": "Centre-Back",
+              "dateOfBirth": "1997-09-30",
+              "age": 28,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 189,
+              "foot": "right",
+              "joinedOn": "2025-08-07",
+              "signedFrom": "Puebla FC",
+              "contract": "2026-06-30",
+              "marketValue": 2500000
+            },
+            {
+              "id": "303140",
+              "name": "Mauricio Lemos",
+              "position": "Centre-Back",
+              "dateOfBirth": "1995-12-28",
+              "age": 30,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2026-10-02",
+              "signedFrom": "Clube de Regatas Vasco da Gama",
+              "contract": "2026-12-31",
+              "marketValue": 1500000
+            },
+            {
+              "id": "750733",
+              "name": "Lucas Ferreira",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-06-16",
+              "age": 25,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 189,
+              "foot": "right",
+              "joinedOn": "2026-11-01",
+              "signedFrom": "Defensa y Justicia",
+              "contract": "2026-12-31",
+              "marketValue": 1500000
+            },
+            {
+              "id": "976020",
+              "name": "Matías González",
+              "position": "Centre-Back",
+              "dateOfBirth": "2002-11-29",
+              "age": 23,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 182,
+              "foot": "right",
+              "signedFrom": "",
+              "marketValue": 600000
+            },
+            {
+              "id": "928644",
+              "name": "Andrés Madruga",
+              "position": "Centre-Back",
+              "dateOfBirth": "2004-06-02",
+              "age": 22,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 191,
+              "foot": "right",
+              "signedFrom": "",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "230552",
+              "name": "Diego Laxalt",
+              "position": "Left-Back",
+              "dateOfBirth": "1993-07-02",
+              "age": 33,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 178,
+              "foot": "left",
+              "joinedOn": "2026-01-16",
+              "signedFrom": "Without Club",
+              "contract": "2026-12-31",
+              "marketValue": 1200000
+            },
+            {
+              "id": "179757",
+              "name": "Maximiliano Olivera",
+              "position": "Left-Back",
+              "dateOfBirth": "1992-05-03",
+              "age": 34,
+              "nationality": [
+                "Uruguay",
+                "Spain"
+              ],
+              "height": 182,
+              "foot": "left",
+              "joinedOn": "2023-07-17",
+              "signedFrom": "FC Juárez",
+              "contract": "2026-06-30",
+              "marketValue": 250000,
+              "status": "Team captain; Muscle tear - Return unknown"
+            },
+            {
+              "id": "250144",
+              "name": "Lucas Hernández",
+              "position": "Left-Back",
+              "dateOfBirth": "1992-05-08",
+              "age": 33,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 175,
+              "foot": "left",
+              "joinedOn": "2023-01-20",
+              "signedFrom": "Clube Atlético Mineiro",
+              "contract": "2026-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "338169",
+              "name": "Franco Escobar",
+              "position": "Right-Back",
+              "dateOfBirth": "1995-02-21",
+              "age": 31,
+              "nationality": [
+                "Argentina",
+                "United States"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Houston Dynamo FC",
+              "contract": "2026-12-31",
+              "marketValue": 800000
+            },
+            {
+              "id": "1445320",
+              "name": "Kevin Rodríguez",
+              "position": "Right-Back",
+              "dateOfBirth": "2005-10-29",
+              "age": 20,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "CA Peñarol B",
+              "marketValue": 150000
+            },
+            {
+              "id": "362364",
+              "name": "Eric Remedi",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1995-04-06",
+              "age": 30,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 170,
+              "foot": "right",
+              "joinedOn": "2025-08-02",
+              "signedFrom": ": Ablöse free transfer",
+              "contract": "2026-12-31",
+              "marketValue": 1000000
+            },
+            {
+              "id": "251773",
+              "name": "Jesús Trindade",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1993-10-07",
+              "age": 32,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 178,
+              "foot": "right",
+              "joinedOn": "2025-08-07",
+              "signedFrom": "Barcelona SC Guayaquil",
+              "contract": "2027-06-30",
+              "marketValue": 650000
+            },
+            {
+              "id": "400677",
+              "name": "Nicolás Fernández",
+              "position": "Central Midfield",
+              "dateOfBirth": "1998-02-03",
+              "age": 28,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2026-02-22",
+              "signedFrom": "CD Godoy Cruz Antonio Tomba",
+              "contract": "2028-12-31",
+              "marketValue": 2200000
+            },
+            {
+              "id": "541253",
+              "name": "Eduardo Darias",
+              "position": "Central Midfield",
+              "dateOfBirth": "1998-02-28",
+              "age": 28,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 172,
+              "foot": "right",
+              "joinedOn": "2025-01-01",
+              "signedFrom": "Club Deportivo Maldonado",
+              "contract": "2027-12-31",
+              "marketValue": 1200000,
+              "status": "muscular problems - Return unknown"
+            },
+            {
+              "id": "997820",
+              "name": "Stiven Muhlethaler",
+              "position": "Right Midfield",
+              "dateOfBirth": "2006-01-31",
+              "age": 20,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 168,
+              "foot": "right",
+              "joinedOn": "2025-01-06",
+              "signedFrom": "CA Peñarol B",
+              "contract": "2027-12-31",
+              "marketValue": 375000
+            },
+            {
+              "id": "375610",
+              "name": "Leonardo Fernández",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "1998-08-11",
+              "age": 27,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 166,
+              "foot": "left",
+              "joinedOn": "2025-05-01",
+              "signedFrom": "Deportivo Toluca",
+              "contract": "2027-12-31",
+              "marketValue": 7500000,
+              "status": "Cruciate ligament tear - Return unknown"
+            },
+            {
+              "id": "1149380",
+              "name": "Leandro Umpiérrez",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2004-03-20",
+              "age": 22,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 173,
+              "foot": "right",
+              "joinedOn": "2025-07-02",
+              "signedFrom": "CA Peñarol B",
+              "contract": "2027-12-31",
+              "marketValue": 650000
+            },
+            {
+              "id": "928621",
+              "name": "Franco González",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2004-06-22",
+              "age": 21,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 165,
+              "foot": "right",
+              "joinedOn": "2023-08-17",
+              "signedFrom": "Danubio FC",
+              "marketValue": 250000
+            },
+            {
+              "id": "503342",
+              "name": "Gastón Togni",
+              "position": "Left Winger",
+              "dateOfBirth": "1997-09-20",
+              "age": 28,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 181,
+              "foot": "left",
+              "joinedOn": "2026-09-01",
+              "signedFrom": "Defensa y Justicia",
+              "contract": "2026-12-31",
+              "marketValue": 3200000
+            },
+            {
+              "id": "885301",
+              "name": "Luis Angulo",
+              "position": "Left Winger",
+              "dateOfBirth": "2004-03-23",
+              "age": 22,
+              "nationality": [
+                "Colombia"
+              ],
+              "height": 174,
+              "foot": "right",
+              "joinedOn": "2026-05-02",
+              "signedFrom": "CA Talleres",
+              "contract": "2026-12-31",
+              "marketValue": 2500000,
+              "status": "Muscle injury - Return unknown"
+            },
+            {
+              "id": "1418931",
+              "name": "Brandon Álvarez",
+              "position": "Left Winger",
+              "dateOfBirth": "2007-10-14",
+              "age": 18,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 188,
+              "foot": "right",
+              "joinedOn": "2026-02-21",
+              "signedFrom": "CA Peñarol U19"
+            },
+            {
+              "id": "147131",
+              "name": "Javier Cabrera",
+              "position": "Right Winger",
+              "dateOfBirth": "1992-03-18",
+              "age": 34,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 168,
+              "foot": "right",
+              "joinedOn": "2024-01-01",
+              "signedFrom": ": Ablöse free transfer",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "611426",
+              "name": "Matías Arezo",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2002-11-21",
+              "age": 23,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 177,
+              "foot": "right",
+              "joinedOn": "2025-07-14",
+              "signedFrom": "Grêmio Foot-Ball Porto Alegrense",
+              "contract": "2026-12-31",
+              "marketValue": 6000000
+            },
+            {
+              "id": "577260",
+              "name": "Facundo Batista",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1999-01-16",
+              "age": 27,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2026-05-01",
+              "signedFrom": "Atlético Nacional",
+              "contract": "2027-12-31",
+              "marketValue": 900000
+            },
+            {
+              "id": "76608",
+              "name": "Abel Hernández",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1990-08-08",
+              "age": 35,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 185,
+              "foot": "left",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Liverpool FC Montevideo",
+              "contract": "2027-12-31",
+              "marketValue": 150000
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "866",
+            "name": "Club Nacional"
+          },
+          "resolved": {
+            "id": "866",
+            "name": "Club Nacional",
+            "country": "Uruguay"
+          },
+          "playersCount": 26,
+          "players": [
+            {
+              "id": "657760",
+              "name": "Ignacio Suárez",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2002-05-02",
+              "age": 24,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2019-01-07",
+              "signedFrom": "Club Nacional U19",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "76715",
+              "name": "Luis Mejía",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1991-03-16",
+              "age": 35,
+              "nationality": [
+                "Panama",
+                "Uruguay"
+              ],
+              "height": 191,
+              "foot": "left",
+              "joinedOn": "2024-01-13",
+              "signedFrom": "Unión Española",
+              "contract": "2026-12-31",
+              "marketValue": 250000
+            },
+            {
+              "id": "456535",
+              "name": "Agustín Rogel",
+              "position": "Centre-Back",
+              "dateOfBirth": "1997-10-17",
+              "age": 28,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 191,
+              "foot": "right",
+              "joinedOn": "2026-04-02",
+              "signedFrom": "Hertha BSC",
+              "contract": "2027-12-31",
+              "marketValue": 500000
+            },
+            {
+              "id": "997825",
+              "name": "Paolo Calione",
+              "position": "Centre-Back",
+              "dateOfBirth": "2006-05-22",
+              "age": 19,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 191,
+              "foot": "right",
+              "joinedOn": "2025-01-01",
+              "signedFrom": "Club Nacional U19",
+              "contract": "2027-12-31",
+              "marketValue": 500000
+            },
+            {
+              "id": "102427",
+              "name": "Sebastián Coates",
+              "position": "Centre-Back",
+              "dateOfBirth": "1990-07-10",
+              "age": 35,
+              "nationality": [
+                "Uruguay",
+                "Spain"
+              ],
+              "height": 196,
+              "foot": "right",
+              "joinedOn": "2024-06-07",
+              "signedFrom": "Sporting CP",
+              "contract": "2026-12-31",
+              "marketValue": 300000,
+              "status": "Team captain"
+            },
+            {
+              "id": "1310240",
+              "name": "Tomás Viera",
+              "position": "Centre-Back",
+              "dateOfBirth": "2006-03-18",
+              "age": 20,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 182,
+              "foot": "left",
+              "joinedOn": "2025-01-08",
+              "signedFrom": "Club Nacional B",
+              "contract": "2028-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "382473",
+              "name": "Camilo Cándido",
+              "position": "Left-Back",
+              "dateOfBirth": "1995-02-06",
+              "age": 30,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 174,
+              "foot": "left",
+              "joinedOn": "2026-06-02",
+              "signedFrom": "CD Cruz Azul",
+              "contract": "2026-12-31",
+              "marketValue": 700000
+            },
+            {
+              "id": "1379675",
+              "name": "Federico Bais",
+              "position": "Left-Back",
+              "dateOfBirth": "2008-01-29",
+              "age": 18,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 175,
+              "foot": "left",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Club Nacional U19",
+              "contract": "2028-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "410456",
+              "name": "Juan Pintado",
+              "position": "Right-Back",
+              "dateOfBirth": "1997-07-28",
+              "age": 28,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 172,
+              "foot": "right",
+              "joinedOn": "2026-02-01",
+              "signedFrom": "Club de Gimnasia y Esgrima La Plata",
+              "contract": "2026-12-31",
+              "marketValue": 1500000
+            },
+            {
+              "id": "577406",
+              "name": "Emiliano Ancheta",
+              "position": "Right-Back",
+              "dateOfBirth": "1999-09-06",
+              "age": 26,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 179,
+              "foot": "right",
+              "joinedOn": "2025-01-13",
+              "signedFrom": "Danubio FC",
+              "contract": "2027-12-31",
+              "marketValue": 1000000
+            },
+            {
+              "id": "196187",
+              "name": "Nicolás Rodríguez",
+              "position": "Right-Back",
+              "dateOfBirth": "1991-07-22",
+              "age": 34,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2024-08-08",
+              "signedFrom": "Defensor Sporting Club",
+              "contract": "2026-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "697408",
+              "name": "Mauricio Vera",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "1998-08-05",
+              "age": 27,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 180,
+              "foot": "left",
+              "joinedOn": "2026-02-19",
+              "signedFrom": "Deportes Concepción",
+              "contract": "2026-12-31",
+              "marketValue": 600000
+            },
+            {
+              "id": "577259",
+              "name": "Luciano Boggio",
+              "position": "Central Midfield",
+              "dateOfBirth": "1999-10-03",
+              "age": 27,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2025-03-02",
+              "signedFrom": "CA Lanús",
+              "contract": "2027-12-31",
+              "marketValue": 2000000
+            },
+            {
+              "id": "891569",
+              "name": "Baltasar Barcia",
+              "position": "Central Midfield",
+              "dateOfBirth": "2001-02-19",
+              "age": 25,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "CA Independiente",
+              "contract": "2028-12-31",
+              "marketValue": 700000
+            },
+            {
+              "id": "1339507",
+              "name": "Agustín Dos Santos",
+              "position": "Central Midfield",
+              "dateOfBirth": "2008-09-02",
+              "age": 18,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 167,
+              "foot": "right",
+              "joinedOn": "2025-01-09",
+              "signedFrom": "Club Nacional U19",
+              "contract": "2027-12-31",
+              "marketValue": 450000
+            },
+            {
+              "id": "338641",
+              "name": "Lucas Rodríguez",
+              "position": "Central Midfield",
+              "dateOfBirth": "1993-08-05",
+              "age": 32,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 170,
+              "foot": "right",
+              "joinedOn": "2025-07-14",
+              "signedFrom": "Racing Club de Montevideo",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "72653",
+              "name": "Nicolás Lodeiro",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "1989-03-21",
+              "age": 37,
+              "nationality": [
+                "Uruguay",
+                "United States"
+              ],
+              "height": 173,
+              "foot": "left",
+              "joinedOn": "2025-11-07",
+              "signedFrom": "Houston Dynamo FC",
+              "contract": "2026-06-30",
+              "marketValue": 100000,
+              "status": "Red card suspension – Liga AUF Apertura"
+            },
+            {
+              "id": "988662",
+              "name": "Juan Cruz de los Santos",
+              "position": "Left Winger",
+              "dateOfBirth": "2003-02-22",
+              "age": 23,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 174,
+              "foot": "left",
+              "joinedOn": "2025-07-28",
+              "signedFrom": "CA River Plate Montevideo",
+              "contract": "2027-12-31",
+              "marketValue": 1200000
+            },
+            {
+              "id": "1228248",
+              "name": "Bruno Arady",
+              "position": "Left Winger",
+              "dateOfBirth": "2007-01-07",
+              "age": 18,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 170,
+              "foot": "right",
+              "joinedOn": "2025-01-01",
+              "signedFrom": "Club Nacional B",
+              "contract": "2028-07-31",
+              "marketValue": 400000
+            },
+            {
+              "id": "1379671",
+              "name": "Rodrigo Martínez",
+              "position": "Left Winger",
+              "dateOfBirth": "2008-03-22",
+              "age": 18,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Club Nacional U19",
+              "contract": "2028-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "898379",
+              "name": "Exequiel Mereles",
+              "position": "Left Winger",
+              "dateOfBirth": "2005-09-16",
+              "age": 20,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 170,
+              "foot": "right",
+              "signedFrom": "",
+              "contract": "2028-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "624096",
+              "name": "Tomás Verón Lupi",
+              "position": "Right Winger",
+              "dateOfBirth": "2000-03-09",
+              "age": 25,
+              "nationality": [
+                "Argentina",
+                "Italy"
+              ],
+              "height": 173,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Grasshopper Club Zurich",
+              "contract": "2026-12-31",
+              "marketValue": 400000
+            },
+            {
+              "id": "396894",
+              "name": "Maxi Gómez",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1996-08-14",
+              "age": 29,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Defensor Sporting Club",
+              "contract": "2026-12-31",
+              "marketValue": 2000000
+            },
+            {
+              "id": "365827",
+              "name": "Maximiliano Silvera",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1997-05-09",
+              "age": 28,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2026-02-01",
+              "signedFrom": "CA Peñarol",
+              "contract": "2028-12-31",
+              "marketValue": 2000000
+            },
+            {
+              "id": "185593",
+              "name": "Nicolás López",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1993-01-10",
+              "age": 32,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 178,
+              "foot": "left",
+              "joinedOn": "2025-01-07",
+              "signedFrom": "Club León FC",
+              "contract": "2026-12-31",
+              "marketValue": 1400000
+            },
+            {
+              "id": "403014",
+              "name": "Gonzalo Carneiro",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1995-12-09",
+              "age": 30,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 195,
+              "foot": "left",
+              "joinedOn": "2023-07-17",
+              "signedFrom": "FC Sion",
+              "contract": "2026-12-31",
+              "marketValue": 500000
+            }
+          ]
+        },
+        {
+          "source": {
+            "id": "10663",
+            "name": "Liverpool FC Montevideo"
+          },
+          "resolved": {
+            "id": "10663",
+            "name": "Liverpool FC Montevideo",
+            "country": "Uruguay"
+          },
+          "playersCount": 26,
+          "players": [
+            {
+              "id": "852961",
+              "name": "Mathías Bernatene",
+              "position": "Goalkeeper",
+              "dateOfBirth": "2000-07-24",
+              "age": 25,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 187,
+              "foot": "right",
+              "joinedOn": "2026-02-01",
+              "signedFrom": "Magallanes",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "91755",
+              "name": "Martín Campaña",
+              "position": "Goalkeeper",
+              "dateOfBirth": "1989-05-29",
+              "age": 36,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 186,
+              "foot": "right",
+              "joinedOn": "2026-08-01",
+              "signedFrom": "CA Peñarol",
+              "contract": "2026-12-31",
+              "marketValue": 100000
+            },
+            {
+              "id": "619234",
+              "name": "Enzo Castillo",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-12-23",
+              "age": 25,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 171,
+              "foot": "left",
+              "joinedOn": "2024-02-08",
+              "signedFrom": "Cerro Largo FC",
+              "contract": "2027-12-31",
+              "marketValue": 600000
+            },
+            {
+              "id": "1118699",
+              "name": "Santiago Strasorier",
+              "position": "Centre-Back",
+              "dateOfBirth": "2000-07-06",
+              "age": 25,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 185,
+              "foot": "right",
+              "joinedOn": "2026-01-16",
+              "signedFrom": "CA Colegiales",
+              "contract": "2026-12-31",
+              "marketValue": 350000
+            },
+            {
+              "id": "863398",
+              "name": "Santiago Laquidaín",
+              "position": "Centre-Back",
+              "dateOfBirth": "2001-07-28",
+              "age": 24,
+              "nationality": [
+                "Argentina",
+                "Italy"
+              ],
+              "height": 184,
+              "foot": "left",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "CA Aldosivi",
+              "contract": "2026-12-31",
+              "marketValue": 350000
+            },
+            {
+              "id": "855489",
+              "name": "Diego Romero",
+              "position": "Left-Back",
+              "dateOfBirth": "2000-02-03",
+              "age": 26,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 181,
+              "foot": "left",
+              "joinedOn": "2026-03-01",
+              "signedFrom": "Club Deportivo Maldonado",
+              "contract": "2026-12-31",
+              "marketValue": 750000
+            },
+            {
+              "id": "584427",
+              "name": "Kevin Lewis",
+              "position": "Left-Back",
+              "dateOfBirth": "1999-08-01",
+              "age": 27,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 173,
+              "foot": "left",
+              "joinedOn": "2026-01-15",
+              "signedFrom": "OFI Crete",
+              "contract": "2026-12-31",
+              "marketValue": 450000
+            },
+            {
+              "id": "573203",
+              "name": "Agustín Cayetano",
+              "position": "Left-Back",
+              "dateOfBirth": "1999-09-08",
+              "age": 26,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 180,
+              "foot": "left",
+              "joinedOn": "2022-10-01",
+              "signedFrom": "IA Sud América ",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "1038224",
+              "name": "Kevin Amaro",
+              "position": "Right-Back",
+              "dateOfBirth": "2004-03-03",
+              "age": 22,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 177,
+              "foot": "right",
+              "joinedOn": "2024-01-02",
+              "signedFrom": "Liverpool FC Montevideo B",
+              "contract": "2028-10-29",
+              "marketValue": 3500000
+            },
+            {
+              "id": "531834",
+              "name": "Facundo Perdomo",
+              "position": "Right-Back",
+              "dateOfBirth": "1999-08-21",
+              "age": 26,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 174,
+              "foot": "right",
+              "joinedOn": "2024-11-01",
+              "signedFrom": "IA Sud América ",
+              "contract": "2027-12-31",
+              "marketValue": 1000000
+            },
+            {
+              "id": "537792",
+              "name": "Jean Rosso",
+              "position": "Right-Back",
+              "dateOfBirth": "1997-07-04",
+              "age": 29,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 179,
+              "foot": "right",
+              "joinedOn": "2024-01-29",
+              "signedFrom": "CA Sarmiento (Junin)",
+              "marketValue": 300000,
+              "status": "Cruciate ligament tear - Return unknown"
+            },
+            {
+              "id": "972470",
+              "name": "Santiago Milano",
+              "position": "Defensive Midfield",
+              "dateOfBirth": "2003-12-02",
+              "age": 23,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 183,
+              "foot": "right",
+              "joinedOn": "2025-01-17",
+              "signedFrom": "Montevideo City Torque",
+              "contract": "2027-12-31",
+              "marketValue": 150000
+            },
+            {
+              "id": "744282",
+              "name": "Nicolás Garayalde",
+              "position": "Central Midfield",
+              "dateOfBirth": "1999-07-21",
+              "age": 26,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2026-03-02",
+              "signedFrom": "CA Vélez Sarsfield",
+              "contract": "2026-12-31",
+              "marketValue": 550000
+            },
+            {
+              "id": "325590",
+              "name": "Martín Rabuñal",
+              "position": "Central Midfield",
+              "dateOfBirth": "1994-04-22",
+              "age": 32,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2025-06-01",
+              "signedFrom": "CA Cerro",
+              "contract": "2026-12-31",
+              "marketValue": 300000,
+              "status": "Team captain"
+            },
+            {
+              "id": "1065221",
+              "name": "Ezequiel Olivera",
+              "position": "Central Midfield",
+              "dateOfBirth": "2003-12-20",
+              "age": 22,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 178,
+              "foot": "right",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Cerro Largo FC",
+              "contract": "2027-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "856252",
+              "name": "Matías Mir",
+              "position": "Right Midfield",
+              "dateOfBirth": "2003-05-26",
+              "age": 22,
+              "nationality": [
+                "Uruguay",
+                "Spain"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2025-08-27",
+              "signedFrom": "Cerro Largo FC",
+              "contract": "2028-12-31",
+              "marketValue": 500000
+            },
+            {
+              "id": "1072712",
+              "name": "Lucas Acosta",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2002-01-26",
+              "age": 24,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 176,
+              "foot": "right",
+              "joinedOn": "2024-01-07",
+              "signedFrom": "Montevideo City Torque",
+              "contract": "2027-06-30",
+              "marketValue": 500000
+            },
+            {
+              "id": "1371112",
+              "name": "Gonzalo de Mello",
+              "position": "Attacking Midfield",
+              "dateOfBirth": "2005-07-04",
+              "age": 21,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 168,
+              "foot": "left",
+              "joinedOn": "2026-01-01",
+              "signedFrom": "Liverpool FC Montevideo B",
+              "contract": "2027-12-31"
+            },
+            {
+              "id": "411433",
+              "name": "Federico Martínez",
+              "position": "Left Winger",
+              "dateOfBirth": "1996-02-28",
+              "age": 30,
+              "nationality": [
+                "Uruguay",
+                "Spain"
+              ],
+              "height": 175,
+              "foot": "right",
+              "joinedOn": "2026-11-01",
+              "signedFrom": "Atlético Clube Goianiense",
+              "contract": "2026-12-31",
+              "marketValue": 700000
+            },
+            {
+              "id": "1133078",
+              "name": "Ramiro Degregorio",
+              "position": "Right Winger",
+              "dateOfBirth": "2003-06-02",
+              "age": 23,
+              "nationality": [
+                "Argentina"
+              ],
+              "height": 170,
+              "foot": "right",
+              "joinedOn": "2026-01-20",
+              "signedFrom": "Racing Club",
+              "contract": "2026-12-31",
+              "marketValue": 300000
+            },
+            {
+              "id": "177562",
+              "name": "Diego Zabala",
+              "position": "Right Winger",
+              "dateOfBirth": "1991-09-19",
+              "age": 34,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 171,
+              "foot": "right",
+              "joinedOn": "2026-01-29",
+              "signedFrom": "Without Club",
+              "contract": "2026-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "1171688",
+              "name": "Alfonso de Luca",
+              "position": "Right Winger",
+              "dateOfBirth": "2005-03-10",
+              "age": 20,
+              "nationality": [
+                "Uruguay"
+              ],
+              "height": 172,
+              "foot": "right",
+              "joinedOn": "2024-02-08",
+              "signedFrom": "Cerro Largo FC",
+              "marketValue": 50000
+            },
+            {
+              "id": "1103696",
+              "name": "Renzo Machado",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2005-09-21",
+              "age": 20,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 182,
+              "foot": "right",
+              "joinedOn": "2023-01-01",
+              "signedFrom": "Liverpool FC Montevideo U19",
+              "contract": "2028-10-25",
+              "marketValue": 1200000
+            },
+            {
+              "id": "259911",
+              "name": "Facundo Barceló",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1993-03-31",
+              "age": 33,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 180,
+              "foot": "right",
+              "joinedOn": "2026-10-01",
+              "signedFrom": "Clube de Regatas Brasil (AL)",
+              "contract": "2026-12-31",
+              "marketValue": 250000
+            },
+            {
+              "id": "197333",
+              "name": "Rubén Bentancourt",
+              "position": "Centre-Forward",
+              "dateOfBirth": "1993-02-03",
+              "age": 33,
+              "nationality": [
+                "Uruguay",
+                "Italy"
+              ],
+              "height": 184,
+              "foot": "right",
+              "joinedOn": "2026-01-24",
+              "signedFrom": "AA Argentinos Juniors",
+              "contract": "2026-12-31",
+              "marketValue": 200000
+            },
+            {
+              "id": "1469430",
+              "name": "Felipe Barrenechea",
+              "position": "Centre-Forward",
+              "dateOfBirth": "2007-06-23",
+              "age": 18,
+              "nationality": [
+                "Lithuania",
+                "Uruguay"
+              ],
+              "height": 177,
+              "foot": "right",
+              "joinedOn": "2026-02-01",
+              "signedFrom": "CA Peñarol U19",
+              "contract": "2031-12-31"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "South Korea",
+      "competitions": [],
+      "teams": []
+    }
+  ]
+}

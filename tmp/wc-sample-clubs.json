@@ -1,0 +1,4662 @@
+{
+  "createdAt": "2026-05-07T09:27:05.774Z",
+  "apiBase": "https://transfermarkt-api.fly.dev",
+  "seasonId": "2025",
+  "countries": [
+    {
+      "country": "Argentina",
+      "clubs": [
+        {
+          "id": "1030",
+          "name": "AA Argentinos Juniors",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16179",
+          "name": "AA Argentinos Juniors II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14602",
+          "name": "AA Estudiantes (Río Cuarto)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "75142",
+          "name": "AA Estudiantes de Río Cuarto II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8413",
+          "name": "AC San Martín (Mendoza)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10233",
+          "name": "AMSD Atlético de Rafaela",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "4673",
+          "name": "Arsenal FC",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "77898",
+          "name": "Atlético de Rafaela II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "135792",
+          "name": "Atlético Escobar FC",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12487",
+          "name": "CA 9 de Julio (Rafaela)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12677",
+          "name": "CA Acassuso",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "38545",
+          "name": "CA Agropecuario",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12301",
+          "name": "CA Aldosivi",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "72763",
+          "name": "CA Aldosivi II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12100",
+          "name": "CA All Boys",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12563",
+          "name": "CA Alvarado",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17486",
+          "name": "CA Argentino (Merlo)",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "22603",
+          "name": "CA Argentino de Quilmes",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8057",
+          "name": "CA Atlanta",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "830",
+          "name": "CA Banfield",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14830",
+          "name": "CA Banfield II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25184",
+          "name": "CA Barracas Central",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "73883",
+          "name": "CA Barracas Central II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "117574",
+          "name": "CA Bartolomé Mitre (Posadas)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "61444",
+          "name": "CA Belgrano II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "189",
+          "name": "CA Boca Juniors",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14831",
+          "name": "CA Boca Juniors II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13549",
+          "name": "CA Boca Unidos",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14681",
+          "name": "CA Brown (Adrogué)",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "31284",
+          "name": "CA Central Córdoba (SdE)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "54494",
+          "name": "CA Central Córdoba (SdE) II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14670",
+          "name": "CA Central Norte",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2154",
+          "name": "CA Chacarita Juniors",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12681",
+          "name": "CA Chaco For Ever",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13339",
+          "name": "CA Colegiales",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1070",
+          "name": "CA Colón",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "79503",
+          "name": "CA Costa Brava",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "6062",
+          "name": "CA Defensores de Belgrano",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "107445",
+          "name": "CA Defensores de Vilelas",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "24749",
+          "name": "CA Defensores Unidos (Zarate)",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14718",
+          "name": "CA Douglas Haig",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "18534",
+          "name": "CA El Linqueño",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14312",
+          "name": "CA Estudiantes",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19632",
+          "name": "CA Excursionistas",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14686",
+          "name": "CA Ferrocarril Midland",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14316",
+          "name": "CA Germinal",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "58188",
+          "name": "CA Güemes",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2063",
+          "name": "CA Huracán",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15954",
+          "name": "CA Huracán II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17591",
+          "name": "CA Huracán Las Heras",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1234",
+          "name": "CA Independiente",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "29680",
+          "name": "CA Independiente (Chivilcoy)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15372",
+          "name": "CA Independiente II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "22501",
+          "name": "CA Ituzaingó",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "18911",
+          "name": "CA Juventud Unida Universitario",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "28619",
+          "name": "CA Kimberley",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "333",
+          "name": "CA Lanús",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14835",
+          "name": "CA Lanús II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "5208",
+          "name": "CA Los Andes",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30038",
+          "name": "CA Mitre",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1286",
+          "name": "CA Newell's Old Boys",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14836",
+          "name": "CA Newell's Old Boys II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10534",
+          "name": "CA Nueva Chicago",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19806",
+          "name": "CA Patronato",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10403",
+          "name": "CA Racing (Córdoba)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "209",
+          "name": "CA River Plate",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14837",
+          "name": "CA River Plate II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1418",
+          "name": "CA Rosario Central",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14838",
+          "name": "CA Rosario Central II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1775",
+          "name": "CA San Lorenzo de Almagro",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15879",
+          "name": "CA San Lorenzo de Almagro II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10511",
+          "name": "CA San Martín (San Juan)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15955",
+          "name": "CA San Martín (San Juan) II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19634",
+          "name": "CA San Miguel",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13651",
+          "name": "CA San Telmo",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12454",
+          "name": "CA Sarmiento (Junin)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "65466",
+          "name": "CA Sarmiento (JunÍn) II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30079",
+          "name": "CA Sarmiento (La Banda)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30838",
+          "name": "CA Sarmiento (Resistencia)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3938",
+          "name": "CA Talleres",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14519",
+          "name": "CA Talleres (Remedios de Escalada)",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "55574",
+          "name": "CA Talleres II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14542",
+          "name": "CA Temperley",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15953",
+          "name": "CA Tigre II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "128105",
+          "name": "CA Tucumán Central",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7097",
+          "name": "CA Unión (Santa Fe)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25347",
+          "name": "CA Unión (Santa Fe) II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1029",
+          "name": "CA Vélez Sarsfield",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14842",
+          "name": "CA Vélez Sarsfield II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19517",
+          "name": "CA Villa San Carlos",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25348",
+          "name": "CAS Defensores de Belgrano (Villa Ramallo)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "52852",
+          "name": "CASD Camioneros",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9638",
+          "name": "CB Ramón Santamarina",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "97822",
+          "name": "CD Argentino (Monte Maíz)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12574",
+          "name": "CD Godoy Cruz Antonio Tomba",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19445",
+          "name": "CD Godoy Cruz Antonio Tomba II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "45560",
+          "name": "CD UAI Urquiza",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10129",
+          "name": "Centro Juventud Antoniana",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "78072",
+          "name": "Círculo Deportivo",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14977",
+          "name": "Club Almagro",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12672",
+          "name": "Club Almirante Brown",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2417",
+          "name": "Club Atlético Belgrano",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15944",
+          "name": "Club Atlético Colón II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10885",
+          "name": "Club Atlético Gimnasia y Esgrima (Jujuy)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "928",
+          "name": "Club Atlético Platense",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25373",
+          "name": "Club Atlético Platense II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12709",
+          "name": "Club Atlético San Martín (Tucumán)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11831",
+          "name": "Club Atlético Tigre",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14554",
+          "name": "Club Atlético Tucumán",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "90392",
+          "name": "Club Atlético Tucumán II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19870",
+          "name": "Club Cipolletti",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "91422",
+          "name": "Club Ciudad de Bolivar",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15377",
+          "name": "Club Comunicaciones",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1106",
+          "name": "Club de Gimnasia y Esgrima La Plata",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16981",
+          "name": "Club de Gimnasia y Esgrima La Plata II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14688",
+          "name": "Club de Gimnasia y Tiro",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13264",
+          "name": "Club Deportivo Armenio",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19523",
+          "name": "Club Deportivo Maipú",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12458",
+          "name": "Club Deportivo Morón",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19775",
+          "name": "Club Deportivo Riestra",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "61810",
+          "name": "Club Deportivo Riestra II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "83668",
+          "name": "Club Deportivo Rincón",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "288",
+          "name": "Club Estudiantes de La Plata",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15887",
+          "name": "Club Estudiantes de La Plata II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "4557",
+          "name": "Club Ferro Carril Oeste",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15494",
+          "name": "Club Ferro Carril Oeste II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14561",
+          "name": "Club Gimnasia y Esgrima (Conc. del Uruguay)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7468",
+          "name": "Club Olimpo",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14683",
+          "name": "Club Social y Atlético Guillermo Brown",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "23173",
+          "name": "Club Sol de América (Formosa)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "63109",
+          "name": "Club Sol de Mayo",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15378",
+          "name": "Club Sportivo Italiano",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1771",
+          "name": "Club Tristán Suárez",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8356",
+          "name": "Club Villa Dálmine",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12741",
+          "name": "Club Villa Mitre",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14318",
+          "name": "CS Deportivo Madryn",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19529",
+          "name": "CS Deportivo Merlo",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14675",
+          "name": "CS Dock Sud",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "58993",
+          "name": "CS General San Martín (Formosa)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12179",
+          "name": "CS Independiente Rivadavia",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "77899",
+          "name": "CS Independiente Rivadavia II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30084",
+          "name": "CSB Atenas (Río Cuarto)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "19636",
+          "name": "CSC Deportivo Laferrere",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "123665",
+          "name": "CSCD Gimnasia y Esgrima (Chivilcoy)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25358",
+          "name": "CSD Defensa y Justicia II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13341",
+          "name": "CSD Flandria",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "98564",
+          "name": "CSD Liniers",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "28142",
+          "name": "CSD San Martín (Burzaco)",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2402",
+          "name": "Defensa y Justicia",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "92982",
+          "name": "FADEP (Mendoza)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14687",
+          "name": "Gimnasia y Esgrima de Mendoza",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "77914",
+          "name": "Gimnasia y Esgrima de Mendoza II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1829",
+          "name": "Instituto ACC",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "28181",
+          "name": "Instituto ACC II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1826",
+          "name": "Quilmes AC",
+          "sourceCompetitions": [
+            {
+              "id": "ARG2",
+              "name": "Primera Nacional",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16815",
+          "name": "Quilmes Atlético Club II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1444",
+          "name": "Racing Club",
+          "sourceCompetitions": [
+            {
+              "id": "ARG1",
+              "name": "Torneo Apertura",
+              "seasonId": "2025"
+            },
+            {
+              "id": "A1P1",
+              "name": "Playoff Torneo Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14857",
+          "name": "Racing Club II",
+          "sourceCompetitions": [
+            {
+              "id": "CLPI",
+              "name": "Copa LPF Proyección Apertura",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "75858",
+          "name": "Real Pilar FC",
+          "sourceCompetitions": [
+            {
+              "id": "URL3",
+              "name": "Primera B Metropolitana",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14597",
+          "name": "Sportivo AC (Las Parejas)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "15414",
+          "name": "Sportivo Belgrano (San Francisco)",
+          "sourceCompetitions": [
+            {
+              "id": "ARG3",
+              "name": "Torneo Federal A",
+              "seasonId": "2025"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "clubs": [
+        {
+          "id": "108884",
+          "name": "AAS Sarcelles U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12278",
+          "name": "AC Le Havre U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "58000",
+          "name": "AC Seyssinet Pariset",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "57999",
+          "name": "AF Virois",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "126863",
+          "name": "AFC Creil U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "290",
+          "name": "AJ Auxerre",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10820",
+          "name": "AJ Auxerre B",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7817",
+          "name": "AJ Auxerre U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1416",
+          "name": "Amiens SC",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16671",
+          "name": "Amiens SC B",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12767",
+          "name": "Amiens SC U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "21676",
+          "name": "Andrézieux-Bouthéon FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1420",
+          "name": "Angers SCO",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16672",
+          "name": "Angers SCO B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3915",
+          "name": "Angoulême Charente FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3135",
+          "name": "AS Beauvais Oise",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "895",
+          "name": "AS Cannes",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "38655",
+          "name": "AS Furiani-Agliani",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "53254",
+          "name": "AS La Châtaigneraie",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "162",
+          "name": "AS Monaco",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9669",
+          "name": "AS Monaco U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1159",
+          "name": "AS Nancy-Lorraine",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51447",
+          "name": "AS Panazol",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "618",
+          "name": "AS Saint-Étienne",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8515",
+          "name": "AS Saint-Étienne B",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12745",
+          "name": "AS Saint-Étienne U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26593",
+          "name": "AS Saint-Ouen-L'Aumône",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17130",
+          "name": "AS Saint-Priest",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "88055",
+          "name": "AS Saint-Priest U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26873",
+          "name": "AS Trouville-Deauville-Villers",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "20035",
+          "name": "AS Vitré",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "43540",
+          "name": "ASC Biesheim",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17131",
+          "name": "ASM Belfort",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "80654",
+          "name": "ASPTT Dijon",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "94279",
+          "name": "ASPTT Dijon U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8728",
+          "name": "Aviron Bayonnais",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51401",
+          "name": "Besançon Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "21679",
+          "name": "Blagnac FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25114",
+          "name": "Blois Football 41",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "91662",
+          "name": "Bourges Foot 18",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "27490",
+          "name": "C'Chartres Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "100688",
+          "name": "C'Chartres Football U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "38705",
+          "name": "CA Pontarlier",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8950",
+          "name": "Canet Roussillon FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "79544",
+          "name": "Carnoux FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "108730",
+          "name": "Cavigal Nice Football U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3524",
+          "name": "Clermont Foot 63",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12747",
+          "name": "Clermont Foot 63 U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13529",
+          "name": "CMS Oissel",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "79720",
+          "name": "Cosne UCS Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "29844",
+          "name": "CS Brétigny Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2969",
+          "name": "Dijon FCO",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16664",
+          "name": "Dijon FCO B",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "46324",
+          "name": "Dinan Léhon FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "855",
+          "name": "EA Guingamp",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12748",
+          "name": "EA Guingamp B",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30200",
+          "name": "ÉFC Fréjus Saint-Raphaël",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "69084",
+          "name": "Entente Feignies Aulnoye FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26916",
+          "name": "ES Cannet Rocheville",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30356",
+          "name": "ES Fosséenne",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "37023",
+          "name": "ES Thaon",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "67066",
+          "name": "ESA Linas-Montlhéry",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1095",
+          "name": "ESTAC Troyes",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10846",
+          "name": "ESTAC Troyes B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12750",
+          "name": "ESTAC Troyes U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "43569",
+          "name": "FC Albères Argelès",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30204",
+          "name": "FC Annecy",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30239",
+          "name": "FC Balagne",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "6919",
+          "name": "FC Bassin d'Arcachon",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "61431",
+          "name": "FC Borgo",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "53251",
+          "name": "FC Bourgoin-Jallieu",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "35293",
+          "name": "FC Challans",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "41353",
+          "name": "FC Chalonnais",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "46579",
+          "name": "FC Chamalières",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "35012",
+          "name": "FC Chambly Oise",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26856",
+          "name": "FC Chauray",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1170",
+          "name": "FC Dieppe",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "40",
+          "name": "FC Girondins Bordeaux",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "33242",
+          "name": "FC Lannion",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51404",
+          "name": "FC Limonest",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1158",
+          "name": "FC Lorient",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16662",
+          "name": "FC Lorient B",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "347",
+          "name": "FC Metz",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8179",
+          "name": "FC Metz B",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10849",
+          "name": "FC Metz U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "89791",
+          "name": "FC Montfermeil U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "81776",
+          "name": "FC Montlouis",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1774",
+          "name": "FC Mulhouse",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "995",
+          "name": "FC Nantes",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10850",
+          "name": "FC Nantes B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1564",
+          "name": "FC Rouen 1899",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "64053",
+          "name": "FC Rousset SVO",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "750",
+          "name": "FC Sochaux-Montbéliard",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10825",
+          "name": "FC Sochaux-Montbéliard B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10826",
+          "name": "FC Sochaux-Montbéliard U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "415",
+          "name": "FC Toulouse",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13466",
+          "name": "FC Versailles 78",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "98411",
+          "name": "FC Versailles 78 B",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "18633",
+          "name": "FC Villefranche-Beaujolais",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26594",
+          "name": "FCM Aubervilliers",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7995",
+          "name": "FCO Dijon U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2972",
+          "name": "Football Bourg-en-Bresse Péronnas 01",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "46326",
+          "name": "Football Club 93 Bobigny",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "97400",
+          "name": "Football Club 93 Bobigny U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17442",
+          "name": "Football Club Fleury 91",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8235",
+          "name": "FR Haguenau",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51549",
+          "name": "Gallia Club Lucciana FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "58267",
+          "name": "GFA Rumilly Vallières",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3558",
+          "name": "GFC Ajaccio",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "49984",
+          "name": "GFC Ajaccio U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30443",
+          "name": "Grand Ouest Association Lyonnaise FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1290",
+          "name": "Grenoble Foot 38",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3912",
+          "name": "GSI Pontivy",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51402",
+          "name": "Hauts Lyonnais",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "25639",
+          "name": "Hyères 83 FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "38547",
+          "name": "Iris Club de Croix",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2580",
+          "name": "Istres Football Club",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11374",
+          "name": "Jeanne d'Arc de Drancy",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30229",
+          "name": "Jura Dolois Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9881",
+          "name": "Jura Sud Foot",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1175",
+          "name": "LB Châteauroux",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12761",
+          "name": "LB Châteauroux B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "738",
+          "name": "Le Havre AC",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "67607",
+          "name": "Le Havre Caucriauville",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1164",
+          "name": "Le Mans FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26863",
+          "name": "Le Puy Foot 43 Auvergne",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17665",
+          "name": "Les Genêts d'Anglet",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "78185",
+          "name": "Les Sables Vendée Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1082",
+          "name": "LOSC Lille",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12765",
+          "name": "LOSC Lille B",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7875",
+          "name": "LOSC Lille U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17768",
+          "name": "Lyon - La Duchère",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "23360",
+          "name": "Mâcon 71",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "969",
+          "name": "Montpellier HSC",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "6572",
+          "name": "Montpellier HSC B",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10852",
+          "name": "Montpellier HSC U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11153",
+          "name": "Moulins-Yzeure Foot 03",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1160",
+          "name": "Nîmes Olympique",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "78804",
+          "name": "OC Cesson-Sévigné",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "417",
+          "name": "OGC Nice",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12763",
+          "name": "OGC Nizza U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "121141",
+          "name": "Olympique Charleville Prix Ardenne Mét.",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2618",
+          "name": "Olympique d'Alès en Cévennes",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8524",
+          "name": "Olympique de Marseille B",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1041",
+          "name": "Olympique Lyon",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12764",
+          "name": "Olympique Lyon B",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7813",
+          "name": "Olympique Lyon U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "244",
+          "name": "Olympique Marseille",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8058",
+          "name": "Olympique Marseille U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "120695",
+          "name": "Olympique Rovenain U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12276",
+          "name": "Olympique Saint-Quentin",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26870",
+          "name": "Olympique Saumur",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "79801",
+          "name": "Onet-le-Château Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "81452",
+          "name": "Paotred Dispount Ergué-Gabéric",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "62382",
+          "name": "Paris 13 Atletico",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10004",
+          "name": "Paris FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "20290",
+          "name": "Paris FC U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "583",
+          "name": "Paris Saint-Germain",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "6326",
+          "name": "Paris Saint-Germain U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3166",
+          "name": "Pau FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "56695",
+          "name": "Pau FC B",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7124",
+          "name": "Quevilly - Rouen Métropole",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "94753",
+          "name": "Quevilly - Rouen Métropole U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2967",
+          "name": "Racing Besançon",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3318",
+          "name": "Racing Club de France",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "23391",
+          "name": "Racing Club de France U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7968",
+          "name": "Racing Strasbourg B",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11199",
+          "name": "Racing Strasbourg U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "36693",
+          "name": "RC Grasse",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "826",
+          "name": "RC Lens",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "667",
+          "name": "RC Strasbourg Alsace",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30370",
+          "name": "RCO Agde",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1154",
+          "name": "Red Star FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "81451",
+          "name": "Riviera FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11273",
+          "name": "Rodez AF",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "81449",
+          "name": "SA Gazinet Cestas",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "23509",
+          "name": "Saint-Colomban Locminé",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30245",
+          "name": "Saint-Pryvé Saint-Hilaire FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "21674",
+          "name": "Sainte-Geneviève Sports",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "59279",
+          "name": "Saran FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10838",
+          "name": "SAS Epinal",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "42609",
+          "name": "SC Aubagne Air Bel",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "110577",
+          "name": "SC Aubagne Air Bel U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "108582",
+          "name": "SC Balma U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "595",
+          "name": "SC Bastia",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9652",
+          "name": "SC Bastia B",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10858",
+          "name": "SC Bastia U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "17090",
+          "name": "SC Schiltigheim U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "79450",
+          "name": "SFC Neuilly-sur-Marne",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1162",
+          "name": "SM Caen",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12770",
+          "name": "SM Caen B",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12771",
+          "name": "SM Caen U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10774",
+          "name": "SO Châtellerault",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "5086",
+          "name": "SO Romorantin",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "494",
+          "name": "Sporting Club de Toulon",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "5407",
+          "name": "SR Colmar",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "80591",
+          "name": "St-Pierre de Milizac",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "871",
+          "name": "Stade Beaucairois 30",
+          "sourceCompetitions": [
+            {
+              "id": "C3IF",
+              "name": "Championnat National 3 - Groupe H",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "16674",
+          "name": "Stade Brest 29 B",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3911",
+          "name": "Stade Brestois 29",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1777",
+          "name": "Stade Briochin",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12774",
+          "name": "Stade de Reims U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19B",
+              "name": "Championnat National U19 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "24218",
+          "name": "Stade Laval B",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1080",
+          "name": "Stade Lavallois",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30293",
+          "name": "Stade Poitevin FC",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1421",
+          "name": "Stade Reims",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11204",
+          "name": "Stade Reims B",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "273",
+          "name": "Stade Rennais FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR1",
+              "name": "Ligue 1",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "8154",
+          "name": "Stade Rennais FC B",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30421",
+          "name": "SU Dives-Cabourg",
+          "sourceCompetitions": [
+            {
+              "id": "C3PL",
+              "name": "Championnat National 3 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30891",
+          "name": "Tarbes Pyrénées Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "14171",
+          "name": "Thonon Évian Grand Genève FC",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9371",
+          "name": "Toulouse FC B",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9372",
+          "name": "Toulouse FC U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "76190",
+          "name": "Union Foot de Touraine",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "11367",
+          "name": "US Alençon 61",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26871",
+          "name": "US Avranches",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7042",
+          "name": "US Boulogne",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "41298",
+          "name": "US Castanéenne",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "20518",
+          "name": "US Chantilly",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "31360",
+          "name": "US Chauvigny",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "26197",
+          "name": "US Colomiers",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "86213",
+          "name": "US Colomiers U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19D",
+              "name": "Championnat National U19 - Groupe D",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "21688",
+          "name": "US Concarneau",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2067",
+          "name": "US Créteil-Lusitanos",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30892",
+          "name": "US Feurs",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51454",
+          "name": "US Fougères",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "41128",
+          "name": "US Granville",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "5659",
+          "name": "US Ivry Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "103163",
+          "name": "US Le Pays du Valois",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "40391",
+          "name": "US Lège Cap-Ferret",
+          "sourceCompetitions": [
+            {
+              "id": "C3CM",
+              "name": "Championnat National 3 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2978",
+          "name": "US Lusitanos Saint-Maur",
+          "sourceCompetitions": [
+            {
+              "id": "CN2C",
+              "name": "Championnat National 2 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "10868",
+          "name": "US Orléans",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "50669",
+          "name": "US Orléans B",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "50670",
+          "name": "US Orléans U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "82755",
+          "name": "US Pays de Cassel",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "30612",
+          "name": "US Saint-Malo",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "80573",
+          "name": "US Saint-Philbert-de-Grand-Lieu",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "31350",
+          "name": "US Sainte-Anne de Vertou",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "94385",
+          "name": "US Thionville Lusitanos",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "23309",
+          "name": "US Torcy",
+          "sourceCompetitions": [
+            {
+              "id": "C3NO",
+              "name": "Championnat National 3 - Groupe F",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "51445",
+          "name": "US Vimy",
+          "sourceCompetitions": [
+            {
+              "id": "C3BR",
+              "name": "Championnat National 3 - Groupe E",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9202",
+          "name": "USL Dunkerque",
+          "sourceCompetitions": [
+            {
+              "id": "FR2",
+              "name": "Ligue 2",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "87305",
+          "name": "USL Dunkerque U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1423",
+          "name": "Valenciennes FC",
+          "sourceCompetitions": [
+            {
+              "id": "FR3",
+              "name": "Championnat National",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "12744",
+          "name": "Valenciennes FC U19",
+          "sourceCompetitions": [
+            {
+              "id": "F19A",
+              "name": "National U19 Championship - Group A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "1377",
+          "name": "Vannes OC",
+          "sourceCompetitions": [
+            {
+              "id": "C3VL",
+              "name": "Championnat National 3 - Groupe C",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "7722",
+          "name": "Vendée Fontenay Foot",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "3541",
+          "name": "Vendée Foot Club La Roche-sur-Yon",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "13523",
+          "name": "Vendée Les Herbiers Football",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "9902",
+          "name": "Vendée Poiré Football",
+          "sourceCompetitions": [
+            {
+              "id": "C3NA",
+              "name": "Championnat National 3 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "40900",
+          "name": "Vierzon Football Club",
+          "sourceCompetitions": [
+            {
+              "id": "C3HF",
+              "name": "Championnat National 3 - Groupe G",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "21288",
+          "name": "Voltigeurs de Châteaubriant",
+          "sourceCompetitions": [
+            {
+              "id": "CN2A",
+              "name": "Championnat National 2 - Groupe A",
+              "seasonId": "2025"
+            }
+          ]
+        },
+        {
+          "id": "2257",
+          "name": "Wasquehal Football",
+          "sourceCompetitions": [
+            {
+              "id": "CN2B",
+              "name": "Championnat National 2 - Groupe B",
+              "seasonId": "2025"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

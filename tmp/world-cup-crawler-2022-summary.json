@@ -1,0 +1,11 @@
+{
+  "countries": 32,
+  "competitionsTotal": 201,
+  "teamsTotal": 87,
+  "playersTotal": 2453,
+  "countriesWithZeroCompetitions": [
+    "Australia",
+    "Cameroon",
+    "South Korea"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "spoticode",
+  "name": "havadari",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -29,7 +29,10 @@
     "check-format": "prettier --check .",
     "check-lint": "eslint src --ext ts --ext tsx --cache",
     "prepare": "husky",
-    "import:transfermarkt": "ts-node --project tsconfig.json scripts/import-transfermarkt.ts"
+    "import:transfermarkt": "ts-node --project tsconfig.json scripts/import-transfermarkt.ts",
+    "transfermarkt:world-cup-clubs": "ts-node --project tsconfig.json scripts/transfermarkt-world-cup-clubs.ts",
+    "transfermarkt:world-cup-sync": "ts-node --project tsconfig.json scripts/transfermarkt-world-cup-sync.ts",
+    "transfermarkt:world-cup-crawler": "ts-node --project tsconfig.json scripts/transfermarkt-world-cup-crawler.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.17.1",

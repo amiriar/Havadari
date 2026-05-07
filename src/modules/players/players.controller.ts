@@ -27,8 +27,14 @@ export class PlayersController {
 
   @IsPublic()
   @Post('import/manual')
-  importManual(@Body() dto: ManualImportPlayersDto) {
-    return this.playersService.importManual(dto);
+  importManual(
+    @Body() dto: ManualImportPlayersDto,
+    @Query('generateCards') generateCards?: string,
+  ) {
+    const shouldGenerateCards = generateCards
+      ? generateCards.toLowerCase() !== 'false'
+      : true;
+    return this.playersService.importManual(dto, shouldGenerateCards);
   }
 
   @IsPublic()

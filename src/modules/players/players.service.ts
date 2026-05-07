@@ -131,7 +131,7 @@ export class PlayersService {
     };
   }
 
-  async importManual(dto: ManualImportPlayersDto) {
+  async importManual(dto: ManualImportPlayersDto, generateCards = true) {
     const season = dto.season ?? 2026;
     const importedPlayers = await this.upsertPlayers(
       PlayerProviderEnum.MANUAL,
@@ -158,8 +158,9 @@ export class PlayersService {
         rawPayload: row as any,
       })),
     );
-    const generatedCards =
-      await this.cardGenerationService.generateFromPlayers(season);
+    const generatedCards = generateCards
+      ? await this.cardGenerationService.generateFromPlayers(season)
+      : null;
 
     const run = this.runRepo.create({
       season,
