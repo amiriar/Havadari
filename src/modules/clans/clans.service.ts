@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { ClanRoleEnum } from './constants/clan.enums';
 import { CreateClanDto } from './dto/create-clan.dto';
 import { JoinClanDto } from './dto/join-clan.dto';
@@ -230,6 +230,96 @@ export class ClansService {
         order: { createdAt: 'DESC' },
       },
     );
+  }
+
+  async adminListClans(
+    page = 1,
+    limit = 20,
+    q?: string,
+    url?: string,
+  ) {
+    return paginate(
+      this.clanRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: q?.trim() ? { name: ILike(`%${q.trim()}%`) } : {},
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminGetClan(clanId: string) {
+    const clan = await this.clanRepo.findOne({ where: { id: clanId } });
+    if (!clan) throw new NotFoundException('Clan not found.');
+    const membersCount = await this.memberRepo.count({
+      where: { clan: { id: clan.id } },
+    });
+    return { ...clan, membersCount };
+  }
+
+  async adminMembers(clanId: string, page = 1, limit = 20, url?: string) {
+    await this.adminGetClan(clanId);
+    return paginate(
+      this.memberRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: { clan: { id: clanId } },
+        relations: { user: true },
+        order: { createdAt: 'ASC' },
+      },
+    );
+  }
+
+  async adminMessages(clanId: string, page = 1, limit = 50, url?: string) {
+    await this.adminGetClan(clanId);
+    return paginate(
+      this.messageRepo,
+      { page, limit: Math.min(limit, 200), route: url },
+      {
+        where: { clan: { id: clanId } },
+        relations: { sender: true },
+        order: { createdAt: 'DESC' },
+      },
+    );
+  }
+
+  async adminSetClanActive(clanId: string, isActive: boolean) {
+    const clan = await this.clanRepo.findOne({ where: { id: clanId } });
+    if (!clan) throw new NotFoundException('Clan not found.');
+    clan.isActive = isActive;
+    await this.clanRepo.save(clan);
+    return { clanId: clan.id, isActive: clan.isActive };
+  }
+
+  async adminRemoveMember(clanId: string, memberUserId: string) {
+    const member = await this.memberRepo.findOne({
+      where: { clan: { id: clanId }, user: { id: memberUserId } },
+      relations: { clan: true },
+    });
+    if (!member) throw new NotFoundException('Clan member not found.');
+    const wasOwner = member.role === ClanRoleEnum.OWNER;
+    await this.memberRepo.delete(member.id);
+    if (wasOwner) {
+      const members = await this.memberRepo.find({
+        where: { clan: { id: clanId } },
+        order: { createdAt: 'ASC' },
+      });
+      if (members.length) {
+        members[0].role = ClanRoleEnum.OWNER;
+        await this.memberRepo.save(members[0]);
+      } else {
+        member.clan.isActive = false;
+        await this.clanRepo.save(member.clan);
+      }
+    }
+    return { removed: true, clanId, memberUserId };
+  }
+
+  async adminDeleteMessage(messageId: string) {
+    const msg = await this.messageRepo.findOne({ where: { id: messageId } });
+    if (!msg) throw new NotFoundException('Clan message not found.');
+    await this.messageRepo.delete(msg.id);
+    return { deleted: true, messageId };
   }
 
   private generateInviteCode() {
