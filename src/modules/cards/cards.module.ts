@@ -14,7 +14,7 @@ import { UserCardsController } from './user-cards.controller';
 import { UserSquadController } from './user-squad.controller';
 import { CardAvatarService } from './services/card-avatar.service';
 import { CardGenerationService } from './services/card-generation.service';
-import { GapgptImageService } from './services/gapgpt-image.service';
+import { GeminiImageService } from './services/gemini-image.service';
 import { PlayerRatingService } from './services/player-rating.service';
 import { UserCardService } from './services/user-card.service';
 
@@ -40,7 +40,7 @@ import { UserCardService } from './services/user-card.service';
   providers: [
     CardGenerationService,
     PlayerRatingService,
-    GapgptImageService,
+    GeminiImageService,
     CardAvatarService,
     UserCardService,
   ],

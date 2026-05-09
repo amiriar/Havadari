@@ -9,7 +9,7 @@ import {
 } from '../constants/card.enums';
 import { AvatarGenerationRun } from '../entities/avatar-generation-run.entity';
 import { Card } from '../entities/card.entity';
-import { GapgptImageService } from './gapgpt-image.service';
+import { GeminiImageService } from './gemini-image.service';
 
 @Injectable()
 export class CardAvatarService {
@@ -20,13 +20,13 @@ export class CardAvatarService {
     private readonly cardRepo: Repository<Card>,
     @InjectRepository(AvatarGenerationRun)
     private readonly runRepo: Repository<AvatarGenerationRun>,
-    private readonly gapgptImageService: GapgptImageService,
+    private readonly geminiImageService: GeminiImageService,
   ) {}
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
-  async pollQueue() {
-    await this.processQueue(20);
-  }
+  // @Cron(CronExpression.EVERY_5_MINUTES)
+  // async pollQueue() {
+  //   await this.processQueue(20);
+  // }
 
   async queue(limit = 100) {
     const cards = await this.cardRepo.find({
@@ -106,9 +106,11 @@ export class CardAvatarService {
     const provider = (
       process.env.CARD_IMAGE_PROVIDER || 'placeholder'
     ).toLowerCase();
-    if (provider === 'gapgpt') {
-      return this.gapgptImageService.generateImage(prompt);
+    
+    if (provider === 'gemini' || provider === 'nano-banana') {
+      return this.geminiImageService.generateImage(prompt);
     }
+    
     return this.buildPlaceholderAvatarUrl(card);
   }
 
