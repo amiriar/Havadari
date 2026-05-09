@@ -37,6 +37,17 @@ export class AdminCardsController {
     return this.cardsService.adminList(query, url);
   }
 
+  @Get('export/checklist')
+  @NoCache()
+  @ApiOperation({
+    summary:
+      'Admin: export cards to Excel checklist files (100 cards per file)',
+  })
+  @AuthorizeByPermissions([READ_USER])
+  exportChecklist() {
+    return this.cardsService.exportChecklistExcels(100);
+  }
+
   @Get(':id')
   @NoCache()
   @ApiOperation({ summary: 'Admin: get card by id' })
@@ -66,4 +77,3 @@ export class AdminCardsController {
     return this.cardsService.adminDelete(id);
   }
 }
-

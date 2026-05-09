@@ -17,6 +17,17 @@ export class AdminUpdateCardDto {
   @IsString()
   nationality?: string;
 
+  @ApiPropertyOptional({ nullable: true })
+  @IsOptional()
+  @IsString()
+  teamName?: string | null;
+
+  @ApiPropertyOptional({ minimum: 0, nullable: true })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  marketValue?: number | null;
+
   @ApiPropertyOptional({ enum: PlayerPositionEnum })
   @IsOptional()
   @IsEnum(PlayerPositionEnum)
@@ -91,4 +102,3 @@ export class AdminUpdateCardDto {
   @IsString()
   ratingVersion?: string;
 }
-

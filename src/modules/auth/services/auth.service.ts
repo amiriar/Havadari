@@ -254,17 +254,22 @@ export class AuthService {
     };
   }
 
-  async resendOtp(phoneNumber: string) {
+  async resendOtp(phoneNumber: string): Promise<OtpSentResponse> {
     const user = await this.repository.findOne({
       where: { phoneNumber },
       select: ['id'],
     });
 
+    const isFirst = !user;
     if (!user) {
       await this.userService.create({ phoneNumber });
     }
 
-    return await this.otpService.generateAndSend(phoneNumber);
+    const otpResponse = await this.otpService.generateAndSend(phoneNumber);
+    return {
+      ...otpResponse,
+      isFirst,
+    };
   }
 
   /**

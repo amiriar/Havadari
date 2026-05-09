@@ -3,4 +3,5 @@ export class OtpSentResponse {
   phoneNumber?: string;
   secondsToExpire: number;
   otp?: string;
+  isFirst?: boolean;
 }

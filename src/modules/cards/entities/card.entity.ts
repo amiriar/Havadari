@@ -24,6 +24,12 @@ export class Card extends ApplicationBaseEntity {
   @Column({ type: 'varchar', length: 64 })
   nationality: string;
 
+  @Column({ type: 'varchar', length: 96, nullable: true })
+  teamName: string | null;
+
+  @Column({ type: 'bigint', nullable: true })
+  marketValue: number | null;
+
   @Column({ type: 'enum', enum: PlayerPositionEnum })
   position: PlayerPositionEnum;
 

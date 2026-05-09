@@ -2,8 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as XLSX from 'xlsx';
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
+import { BASE_UPLOAD_PATH } from '@common/utils/constants.utils';
 import { Card } from '../entities/card.entity';
 import {
   AvatarStatusEnum,
@@ -57,11 +61,14 @@ export class CardGenerationService {
       });
 
       if (!existing) {
+        const marketValue = this.readPlayerMarketValue(player);
         const entity = this.cardRepo.create({
           sourceProvider: player.provider,
           sourceProviderPlayerId: player.providerPlayerId,
           playerName: player.fullName || 'Unknown',
           nationality: player.nationality || 'Unknown',
+          teamName: player.teamName || null,
+          marketValue,
           position: player.position || PlayerPositionEnum.MID,
           overallRating: ratings.overall,
           speed: ratings.speed,
@@ -84,6 +91,8 @@ export class CardGenerationService {
       } else {
         existing.playerName = player.fullName || 'Unknown';
         existing.nationality = player.nationality || existing.nationality;
+        existing.teamName = player.teamName || null;
+        existing.marketValue = this.readPlayerMarketValue(player);
         existing.position = player.position || existing.position;
         existing.overallRating = ratings.overall;
         existing.speed = ratings.speed;
@@ -117,6 +126,99 @@ export class CardGenerationService {
     );
   }
 
+  async exportChecklistExcels(chunkSize = 100) {
+    const normalizedChunkSize = Math.max(1, Math.min(100, chunkSize));
+    const total = await this.cardRepo.count();
+    const uploadsDir = path.join(BASE_UPLOAD_PATH, 'excels', 'cards-checklist');
+    fs.mkdirSync(uploadsDir, { recursive: true });
+
+    const createdFiles: Array<{
+      filePath: string;
+      fileName: string;
+      from: number;
+      to: number;
+      count: number;
+    }> = [];
+
+    if (!total) {
+      return {
+        totalCards: 0,
+        chunkSize: normalizedChunkSize,
+        totalFiles: 0,
+        files: createdFiles,
+      };
+    }
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+
+    for (let offset = 0; offset < total; offset += normalizedChunkSize) {
+      const cards = await this.cardRepo.find({
+        select: {
+          id: true,
+          playerName: true,
+          nationality: true,
+          teamName: true,
+          position: true,
+          rarity: true,
+        },
+        order: { createdAt: 'ASC' },
+        skip: offset,
+        take: normalizedChunkSize,
+      });
+
+      const rows = cards.map((card) => ({
+        id: card.id,
+        playername: card.playerName,
+        nationallity: card.nationality,
+        position: card.position,
+        rarity: card.rarity,
+        prompt: this.buildAvatarPrompt(
+          card.playerName,
+          card.nationality,
+          card.teamName ?? 'Unknown Team',
+          String(card.position),
+        ),
+        checklist: '',
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(rows, {
+        header: [
+          'id',
+          'playername',
+          'nationallity',
+          'position',
+          'rarity',
+          'prompt',
+          'checklist',
+        ],
+      });
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'cards');
+
+      const start = offset + 1;
+      const end = offset + cards.length;
+      const fileIndex = Math.floor(offset / normalizedChunkSize) + 1;
+      const fileName = `cards-checklist-${timestamp}-part-${String(fileIndex).padStart(2, '0')}.xlsx`;
+      const filePath = path.join(uploadsDir, fileName);
+      XLSX.writeFile(wb, filePath);
+
+      createdFiles.push({
+        filePath,
+        fileName,
+        from: start,
+        to: end,
+        count: cards.length,
+      });
+    }
+
+    return {
+      totalCards: total,
+      chunkSize: normalizedChunkSize,
+      totalFiles: createdFiles.length,
+      files: createdFiles,
+    };
+  }
+
   async adminList(query: AdminCardQueryDto, url?: string) {
     const qb = this.cardRepo.createQueryBuilder('card');
     if (query.q?.trim()) {
@@ -146,6 +248,8 @@ export class CardGenerationService {
       sourceProviderPlayerId: dto.sourceProviderPlayerId ?? null,
       playerName: dto.playerName,
       nationality: dto.nationality,
+      teamName: dto.teamName ?? null,
+      marketValue: dto.marketValue ?? null,
       position: dto.position,
       overallRating: dto.overallRating,
       speed: dto.speed,
@@ -173,5 +277,40 @@ export class CardGenerationService {
     const card = await this.adminGetById(id);
     await this.cardRepo.softRemove(card);
     return { deleted: true, cardId: id };
+  }
+
+  private readPlayerMarketValue(player: Player): number | null {
+    const raw = (player.rawPayload || {}) as Record<string, unknown>;
+    const direct = raw.marketValue;
+    if (typeof direct === 'number' && Number.isFinite(direct)) return Math.round(direct);
+    if (typeof direct === 'string' && direct.trim() && Number.isFinite(Number(direct))) {
+      return Math.round(Number(direct));
+    }
+    const nestedPlayer = raw.player as Record<string, unknown> | undefined;
+    const nested = nestedPlayer?.marketValue;
+    if (typeof nested === 'number' && Number.isFinite(nested)) return Math.round(nested);
+    if (typeof nested === 'string' && nested.trim() && Number.isFinite(Number(nested))) {
+      return Math.round(Number(nested));
+    }
+    return null;
+  }
+
+  private buildAvatarPrompt(
+    playerName: string,
+    nationality: string,
+    teamName: string,
+    position: string,
+  ): string {
+    return (
+      `Cartoon flat-vector chest-up bust portrait of ${playerName}, ${nationality} professional football player, ${position}, wearing a football jersey inspired by ${teamName} colors. ` +
+      `Show the player as a clean cutout only, with no background elements.\n\n` +
+      `Make the illustration more cartoony and stylized, with slightly exaggerated facial features, simplified shapes, a playful sports-avatar look, bold expression, and a more illustrated character feel rather than a semi-realistic one.\n\n` +
+      `Use a transparent background if possible. If transparency is not supported, use a plain white background as the fallback. No other background color or background design.\n\n` +
+      `No card, no frame, no border, no stats, no text, no badge, no logo, no sponsor, no circular shape, no oval shape, no glow blob, no colored silhouette behind the player, ` +
+      `no aura behind the head or shoulders, no backdrop, and no halo background.\n\n` +
+      `The player should be cropped from the chest and above, centered, front-facing, symmetrical pose. Use a polished cartoon sports avatar illustration style with smooth gradients, ` +
+      `thick clean outlines, simplified anatomy, sticker/avatar aesthetic, rounded shapes, vibrant but clean coloring, and high detail.\n\n` +
+      `2D vector art, not realistic. Final image must be square 1:1 aspect ratio, with the character centered. Background should be transparent if available, with solid white as fallback.`
+    );
   }
 }
