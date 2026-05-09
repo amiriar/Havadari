@@ -260,8 +260,9 @@ export class AuthService {
       select: ['id'],
     });
 
-    const isFirst = !user;
+    let isFirst = false;
     if (!user) {
+      isFirst = true;
       await this.userService.create({ phoneNumber });
     }
 
