@@ -204,11 +204,16 @@ export class AuthService {
       });
     }
 
+    const isFirst = user.lastLoginDate !== null;
     await this.repository.update({ id: user.id }, { isPhoneVerified: true });
     await this.userCardService.ensureStarterPack(user.id);
 
     //sign token
-    return await this.jwtService.signToken(user.id);
+    const loginResponse = await this.jwtService.signToken(user.id);
+    return {
+      ...loginResponse,
+      isFirst,
+    };
   }
 
   /**
@@ -260,17 +265,11 @@ export class AuthService {
       select: ['id'],
     });
 
-    let isFirst = false;
     if (!user) {
-      isFirst = true;
       await this.userService.create({ phoneNumber });
     }
 
-    const otpResponse = await this.otpService.generateAndSend(phoneNumber);
-    return {
-      ...otpResponse,
-      isFirst,
-    };
+    return await this.otpService.generateAndSend(phoneNumber);
   }
 
   /**
