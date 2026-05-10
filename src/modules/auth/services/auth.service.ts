@@ -33,6 +33,7 @@ import { RoleService } from './role.service';
 import { AuthControllerCode } from '../constants/controller-codes';
 import { HashingUtil } from '../utills/hasing-util';
 import { UserCardService } from '@app/cards/services/user-card.service';
+import { getDeveloperPhoneConfig } from '../constants/developer-phones';
 @Injectable()
 export class AuthService {
   constructor(
@@ -266,7 +267,11 @@ export class AuthService {
     });
 
     if (!user) {
-      await this.userService.create({ phoneNumber });
+      const createdUser = await this.userService.create({ phoneNumber });
+      const devPhoneConfig = getDeveloperPhoneConfig(phoneNumber);
+      if (devPhoneConfig?.role) {
+        await this.rolesService.grantToUserByName(createdUser.id, devPhoneConfig.role);
+      }
     }
 
     return await this.otpService.generateAndSend(phoneNumber);

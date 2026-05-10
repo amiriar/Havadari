@@ -11,6 +11,10 @@ import { createHmac, randomInt } from 'crypto';
 import { OtpSentResponse } from '../models/otp-send-response';
 import { REDIS_PROVIDER } from '@common/constants/injection-tokens';
 import { AuthControllerCode } from '../constants/controller-codes';
+import {
+  DEVELOPER_PHONE_OTP,
+  getDeveloperPhoneConfig,
+} from '../constants/developer-phones';
 
 type OtpStoreClient = {
   set: (key: string, value: string, options?: { EX?: number }) => Promise<any>;
@@ -88,6 +92,10 @@ export class OtpService {
   }
 
   private async send(otp: string, recipient: string): Promise<string> {
+    if (getDeveloperPhoneConfig(recipient)) {
+      return 'dev-otp-skipped-123456';
+    }
+
     try {
       return await this.smsService.sendOtp(recipient, otp);
     } catch {
@@ -145,7 +153,9 @@ export class OtpService {
       });
     }
 
-    const otp: string = this.generate();
+    const otp: string = getDeveloperPhoneConfig(recipient)
+      ? DEVELOPER_PHONE_OTP
+      : this.generate();
     await this.save(otp, recipient);
     const sendResult: string = await this.send(otp, recipient);
 
