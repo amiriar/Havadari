@@ -14,6 +14,7 @@ import {
   PredictionBetStatusEnum,
   PredictionMatchStatusEnum,
 } from './constants/prediction.enums';
+import { AdminImportWorldcupMatchesDto } from './dto/admin-import-worldcup-matches.dto';
 import { AdminSetPredictionResultDto } from './dto/admin-set-prediction-result.dto';
 import { AdminUpsertPredictionMatchDto } from './dto/admin-upsert-prediction-match.dto';
 import { AdminUpsertPredictionOptionDto } from './dto/admin-upsert-prediction-option.dto';
@@ -189,6 +190,82 @@ export class PredictionService {
     row.lockAt = lockAt;
     row.status = dto.status ?? row.status ?? PredictionMatchStatusEnum.DRAFT;
     return this.matchRepo.save(row);
+  }
+
+  async adminImportWorldcupMatches(dto: AdminImportWorldcupMatchesDto) {
+    const year = dto.year ?? 2026;
+    const markOpen = dto.open ?? true;
+    const url = `https://raw.githubusercontent.com/openfootball/worldcup.json/master/${year}/worldcup.json`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new BadRequestException(
+        `Failed to fetch world cup source (${response.status}).`,
+      );
+    }
+    const payload = (await response.json()) as {
+      name?: string;
+      matches?: Array<{
+        round?: string;
+        date?: string;
+        time?: string;
+        team1?: string;
+        team2?: string;
+        group?: string;
+      }>;
+    };
+
+    const sourceMatches = Array.isArray(payload.matches) ? payload.matches : [];
+    if (!sourceMatches.length) {
+      throw new BadRequestException('No matches found in world cup source.');
+    }
+
+    let inserted = 0;
+    let updated = 0;
+
+    for (let idx = 0; idx < sourceMatches.length; idx += 1) {
+      const m = sourceMatches[idx];
+      const homeTeam = (m.team1 || '').trim();
+      const awayTeam = (m.team2 || '').trim();
+      const date = (m.date || '').trim();
+      if (!homeTeam || !awayTeam || !date) continue;
+
+      const startsAt = this.parseOpenfootballDateTime(date, m.time);
+      const externalMatchId = `openfootball:${year}:${date}:${homeTeam}:vs:${awayTeam}`;
+
+      const existing = await this.matchRepo.findOne({
+        where: { externalMatchId },
+      });
+
+      const row = existing || this.matchRepo.create();
+      row.externalMatchId = externalMatchId;
+      row.homeTeam = homeTeam;
+      row.awayTeam = awayTeam;
+      row.startsAt = startsAt;
+      row.lockAt = new Date(
+        startsAt.getTime() - LOCK_MINUTES_BEFORE_START * 60 * 1000,
+      );
+      row.status =
+        row.status === PredictionMatchStatusEnum.SETTLED
+          ? PredictionMatchStatusEnum.SETTLED
+          : markOpen
+            ? PredictionMatchStatusEnum.OPEN
+            : row.status || PredictionMatchStatusEnum.DRAFT;
+
+      const saved = await this.matchRepo.save(row);
+      if (existing) updated += 1;
+      else inserted += 1;
+
+      await this.ensureDefaultOptions(saved.id);
+    }
+
+    return {
+      source: payload.name || `World Cup ${year}`,
+      season: year,
+      totalFetched: sourceMatches.length,
+      inserted,
+      updated,
+    };
   }
 
   async adminUpsertOption(dto: AdminUpsertPredictionOptionDto) {
@@ -373,6 +450,48 @@ export class PredictionService {
     await this.matchRepo.save(toLock);
   }
 
+  private parseOpenfootballDateTime(date: string, time?: string): Date {
+    const normalizedDate = /^\d{4}-\d{2}-\d{2}$/.test(date)
+      ? date
+      : new Date(date).toISOString().slice(0, 10);
+    const timeRaw = (time || '').trim();
+    const hhmmMatch = timeRaw.match(/^(\d{1,2}):(\d{2})/);
+    const offsetMatch = timeRaw.match(/UTC([+-]\d{1,2})/i);
+
+    const hh = hhmmMatch ? hhmmMatch[1].padStart(2, '0') : '12';
+    const mm = hhmmMatch ? hhmmMatch[2] : '00';
+    const offset = offsetMatch
+      ? `${offsetMatch[1].startsWith('-') ? '-' : '+'}${offsetMatch[1]
+          .replace(/[+-]/g, '')
+          .padStart(2, '0')}`
+      : '+00';
+
+    return new Date(`${normalizedDate}T${hh}:${mm}:00${offset}:00`);
+  }
+
+  private async ensureDefaultOptions(matchId: string) {
+    const defaults = [
+      { optionKey: 'HOME_WIN', title: 'Home Win' },
+      { optionKey: 'DRAW', title: 'Draw' },
+      { optionKey: 'AWAY_WIN', title: 'Away Win' },
+    ];
+
+    for (const item of defaults) {
+      const exists = await this.optionRepo.findOne({
+        where: { match: { id: matchId }, optionKey: item.optionKey },
+      });
+      if (exists) continue;
+      await this.optionRepo.save(
+        this.optionRepo.create({
+          match: { id: matchId } as PredictionMatch,
+          optionKey: item.optionKey,
+          title: item.title,
+          isActive: true,
+        }),
+      );
+    }
+  }
+
   private async mustMatch(matchId: string) {
     const match = await this.matchRepo.findOne({ where: { id: matchId } });
     if (!match) throw new NotFoundException('Prediction match not found.');
@@ -386,4 +505,3 @@ export class PredictionService {
     return found;
   }
 }
-

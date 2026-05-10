@@ -14,6 +14,8 @@ import { MissionsModule } from '@app/missions/missions.module';
 import { AchievementsModule } from '@app/achievements/achievements.module';
 import { SocialModule } from '@app/social/social.module';
 import { BattleModule } from '@app/battle/battle.module';
+import { PredictionModule } from '@app/prediction/prediction.module';
+import { RealtimeModule } from '@app/realtime/realtime.module';
 import { ElasticSearchModule } from '@common/modules/elastic-search/elastic-search.module';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
@@ -63,6 +65,8 @@ export async function setUpSwagger(app: INestApplication) {
       SocialModule,
       ClansModule,
       BattleModule,
+      PredictionModule,
+      RealtimeModule,
     ],
   });
 

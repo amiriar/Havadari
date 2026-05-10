@@ -196,7 +196,6 @@ export class ClansService {
     if (!member)
       throw new ForbiddenException('You are not a member of this clan.');
 
-    // TODO: move clan chat delivery to Socket.io realtime broadcast.
     const msg = await this.messageRepo.save(
       this.messageRepo.create({
         clan: member.clan,
@@ -204,7 +203,24 @@ export class ClansService {
         message: dto.message.trim(),
       }),
     );
-    return { sent: true, messageId: msg.id, createdAt: msg.createdAt };
+    return {
+      sent: true,
+      messageId: msg.id,
+      clanId: member.clan.id,
+      senderUserId: me.id,
+      senderUsername: me.userName,
+      message: msg.message,
+      createdAt: msg.createdAt,
+    };
+  }
+
+  async assertMember(userId: string, clanId: string) {
+    const member = await this.memberRepo.findOne({
+      where: { user: { id: userId }, clan: { id: clanId } },
+    });
+    if (!member)
+      throw new ForbiddenException('You are not a member of this clan.');
+    return true;
   }
 
   async messages(

@@ -5,6 +5,7 @@ import { Url } from '@common/decorators/url.decorator';
 import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PredictionMatchStatusEnum } from './constants/prediction.enums';
+import { AdminImportWorldcupMatchesDto } from './dto/admin-import-worldcup-matches.dto';
 import { AdminSetPredictionResultDto } from './dto/admin-set-prediction-result.dto';
 import { AdminUpsertPredictionMatchDto } from './dto/admin-upsert-prediction-match.dto';
 import { AdminUpsertPredictionOptionDto } from './dto/admin-upsert-prediction-option.dto';
@@ -39,6 +40,13 @@ export class AdminPredictionController {
   @AuthorizeByPermissions([UPDATE_USER])
   upsertMatch(@Body() dto: AdminUpsertPredictionMatchDto) {
     return this.predictionService.adminUpsertMatch(dto);
+  }
+
+  @Post('matches/import/worldcup')
+  @ApiOperation({ summary: 'Admin: import world cup matches from openfootball' })
+  @AuthorizeByPermissions([UPDATE_USER])
+  importWorldcup(@Body() dto: AdminImportWorldcupMatchesDto) {
+    return this.predictionService.adminImportWorldcupMatches(dto);
   }
 
   @Patch('matches/:matchId/status')
@@ -92,4 +100,3 @@ export class AdminPredictionController {
     );
   }
 }
-

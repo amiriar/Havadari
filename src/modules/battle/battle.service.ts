@@ -4,6 +4,7 @@ import { Card } from '@app/cards/entities/card.entity';
 import { UserChestInventory } from '@app/chests/entities/user-chest-inventory.entity';
 import { ChestTypeEnum } from '@app/chests/constants/chest.types';
 import { ProgressionService } from '@app/progression/progression.service';
+import { RealtimeEventsService } from '@app/realtime/realtime-events.service';
 import {
   BadRequestException,
   Injectable,
@@ -47,6 +48,7 @@ import {
   TournamentMatchStatusEnum,
 } from './constants/tournament-match.enums';
 import { ResolveTournamentMatchDto } from './dto/resolve-tournament-match.dto';
+import { RealtimeServerEvents } from '@app/realtime/constants/realtime-events.constants';
 
 type PendingMatch = {
   userId: string;
@@ -86,6 +88,7 @@ export class BattleService {
     private readonly chestInventoryRepo: Repository<UserChestInventory>,
     private readonly dataSource: DataSource,
     private readonly progressionService: ProgressionService,
+    private readonly realtimeEventsService: RealtimeEventsService,
   ) {}
 
   @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_MIDNIGHT)
@@ -387,6 +390,30 @@ export class BattleService {
         rewards: null,
       }),
     );
+    this.realtimeEventsService.emitToBattle(
+      battle.id,
+      RealtimeServerEvents.BATTLE_CREATED,
+      {
+        battleId: battle.id,
+        mode: battle.mode,
+        opponentType: battle.opponentType,
+        status: battle.status,
+      },
+    );
+    this.realtimeEventsService.emitToUser(player1.id, RealtimeServerEvents.BATTLE_CREATED, {
+      battleId: battle.id,
+      mode: battle.mode,
+      opponentType: battle.opponentType,
+      status: battle.status,
+    });
+    if (player2?.id) {
+      this.realtimeEventsService.emitToUser(player2.id, RealtimeServerEvents.BATTLE_CREATED, {
+        battleId: battle.id,
+        mode: battle.mode,
+        opponentType: battle.opponentType,
+        status: battle.status,
+      });
+    }
 
     return {
       battleId: battle.id,
@@ -445,6 +472,22 @@ export class BattleService {
         player2Stat,
         winner,
       }),
+    );
+    this.realtimeEventsService.emitToBattle(
+      battle.id,
+      RealtimeServerEvents.BATTLE_ROUND_PLAYED,
+      {
+        battleId: battle.id,
+        roundNumber,
+        category,
+        player1Stat,
+        player2Stat,
+        roundWinner: winner,
+        scoreboard: {
+          player1RoundWins: battle.player1RoundWins,
+          player2RoundWins: battle.player2RoundWins,
+        },
+      },
     );
 
     return {
@@ -546,6 +589,31 @@ export class BattleService {
           scoreB: battle.player2RoundWins,
         });
       }
+    }
+    this.realtimeEventsService.emitToBattle(
+      battle.id,
+      RealtimeServerEvents.BATTLE_ENDED,
+      {
+        battleId: battle.id,
+        winner: battle.winner,
+        rewards: battle.rewards,
+      },
+    );
+    this.realtimeEventsService.emitToUser(p1.id, RealtimeServerEvents.BATTLE_ENDED, {
+      battleId: battle.id,
+      winner: battle.winner,
+      rewards: battle.rewards,
+    });
+    if (battle.player2?.id) {
+      this.realtimeEventsService.emitToUser(
+        battle.player2.id,
+        RealtimeServerEvents.BATTLE_ENDED,
+        {
+          battleId: battle.id,
+          winner: battle.winner,
+          rewards: battle.rewards,
+        },
+      );
     }
 
     return {
@@ -656,6 +724,16 @@ export class BattleService {
         status: TournamentParticipantStatusEnum.REGISTERED,
         groupPoints: 0,
       }),
+    );
+    this.realtimeEventsService.emitToTournament(
+      tournament.id,
+      RealtimeServerEvents.TOURNAMENT_PARTICIPANT_JOINED,
+      {
+        tournamentId: tournament.id,
+        userId: user.id,
+        participantId: participant.id,
+        entryType,
+      },
     );
     return {
       joined: true,
@@ -804,6 +882,18 @@ export class BattleService {
     } else {
       await this.tryAdvanceKnockout(match.tournament.id, match.stage);
     }
+    this.realtimeEventsService.emitToTournament(
+      match.tournament.id,
+      RealtimeServerEvents.TOURNAMENT_MATCH_RESOLVED,
+      {
+        tournamentId: match.tournament.id,
+        matchId: match.id,
+        stage: match.stage,
+        winnerParticipantId: match.winner?.id,
+        scoreA: match.scoreA,
+        scoreB: match.scoreB,
+      },
+    );
 
     return { resolved: true, matchId: match.id, winnerParticipantId: match.winner?.id };
   }
@@ -886,6 +976,17 @@ export class BattleService {
         winner: null,
         rewards: null,
       }),
+    );
+    this.realtimeEventsService.emitToTournament(
+      fixture.tournament.id,
+      RealtimeServerEvents.TOURNAMENT_MATCH_STARTED,
+      {
+        tournamentId: fixture.tournament.id,
+        matchId: fixture.id,
+        battleId: battle.id,
+        player1Id: player1.id,
+        player2Id: player2.id,
+      },
     );
 
     return {

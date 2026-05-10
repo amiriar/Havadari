@@ -3,6 +3,7 @@ import { Card } from '@app/cards/entities/card.entity';
 import { UserCard } from '@app/cards/entities/user-card.entity';
 import { UserChestInventory } from '@app/chests/entities/user-chest-inventory.entity';
 import { ProgressionModule } from '@app/progression/progression.module';
+import { RealtimeModule } from '@app/realtime/realtime.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BattleController } from './battle.controller';
@@ -32,6 +33,7 @@ import { ChampionsMatch } from './entities/champions-match.entity';
       UserChestInventory,
     ]),
     ProgressionModule,
+    RealtimeModule,
   ],
   controllers: [BattleController, AdminBattleController],
   providers: [BattleService],
