@@ -89,10 +89,16 @@ export class CardGenerationService {
         await this.cardRepo.save(entity);
         inserted += 1;
       } else {
+        const nextTeamName = player.teamName || null;
+        const nextMarketValue = this.readPlayerMarketValue(player);
         existing.playerName = player.fullName || 'Unknown';
         existing.nationality = player.nationality || existing.nationality;
-        existing.teamName = player.teamName || null;
-        existing.marketValue = this.readPlayerMarketValue(player);
+        if (nextTeamName !== null) {
+          existing.teamName = nextTeamName;
+        }
+        if (nextMarketValue !== null) {
+          existing.marketValue = nextMarketValue;
+        }
         existing.position = player.position || existing.position;
         existing.overallRating = ratings.overall;
         existing.speed = ratings.speed;
@@ -302,7 +308,7 @@ export class CardGenerationService {
     position: string,
   ): string {
     return (
-      `Cartoon flat-vector chest-up bust portrait of ${playerName}, ${nationality} professional football player, ${position}, wearing a football jersey inspired by ${teamName} colors. ` +
+      `Cartoon flat-vector chest-up bust portrait of ${playerName}, ${nationality} professional football player, ${position}, wearing a football jersey inspired by ${teamName} Team colors. ` +
       `Show the player as a clean cutout only, with no background elements.\n\n` +
       `Make the illustration more cartoony and stylized, with slightly exaggerated facial features, simplified shapes, a playful sports-avatar look, bold expression, and a more illustrated character feel rather than a semi-realistic one.\n\n` +
       `Use a transparent background if possible. If transparency is not supported, use a plain white background as the fallback. No other background color or background design.\n\n` +

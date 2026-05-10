@@ -204,7 +204,7 @@ export class AuthService {
       });
     }
 
-    const isFirst = user.lastLoginDate !== null;
+    const isFirst = !user.isPhoneVerified;
     await this.repository.update({ id: user.id }, { isPhoneVerified: true });
     await this.userCardService.ensureStarterPack(user.id);
 
