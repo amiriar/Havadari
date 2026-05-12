@@ -7,15 +7,17 @@ import { CACHED_ROLES, ONE_HOUR_IN_MS } from '@common/utils/constants.utils';
 import { exceptionFactory } from '@common/utils/exception-factory';
 import { setUpSwagger } from '@common/utils/setup-swagger';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Cache } from 'cache-manager';
+import { join } from 'path';
 import dataSource from './config/data-source';
 
 async function bootstrap() {
-  const app: INestApplication =
-    await NestFactory.create<INestApplication>(AppModule);
+  const app =
+    await NestFactory.create<NestExpressApplication>(AppModule);
 
   //const appv2 = await NestFactory.create(Appv2Module);
 
@@ -35,6 +37,9 @@ async function bootstrap() {
   );
 
   app.enableCors();
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
+    prefix: '/uploads',
+  });
 
   await dataSource.initialize();
 
