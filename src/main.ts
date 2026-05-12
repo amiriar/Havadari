@@ -13,7 +13,6 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Cache } from 'cache-manager';
 import { join } from 'path';
-import dataSource from './config/data-source';
 
 async function bootstrap() {
   const app =
@@ -40,8 +39,6 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads',
   });
-
-  await dataSource.initialize();
 
   const configService: ConfigService = app.get(ConfigService);
 
