@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Permission } from './permission.entity';
 import { Role } from './role.entity';
+import { UserLanguage } from '@common/enums/user-language.enum';
 
 @Entity()
 @Index(['fullName'])
@@ -86,6 +87,13 @@ export class User extends ApplicationBaseEntity implements IFileOwner {
 
   @Column({ type: 'date', nullable: true })
   lastLoginDate: string | null;
+
+  @Column({
+    type: 'enum',
+    enum: UserLanguage,
+    default: UserLanguage.ENGLISH,
+  })
+  language: UserLanguage;
 
   permissionsSet: string[];
 }

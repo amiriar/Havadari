@@ -37,6 +37,7 @@ import { User } from '../entities/user.entity';
 import { RoleService } from './role.service';
 import { UserSearchService } from './user-search.service';
 import { File } from '@app/file/entities/file.entity';
+import { UserLanguage } from '@common/enums/user-language.enum';
 
 @Injectable()
 export class UserService extends BaseService {
@@ -392,6 +393,38 @@ export class UserService extends BaseService {
       fgc: user.fgc,
       gems: user.gems,
       delta: { fgcDelta, gemsDelta },
+    };
+  }
+
+  async updateLanguage(userId: string, language: UserLanguage) {
+    const user = await this.findOneMinimal(userId);
+    await this.repository.update(user.id, { language });
+
+    return {
+      userId: user.id,
+      language,
+    };
+  }
+
+  async getProfileSummary(userId: string) {
+    const user = await this.repository.findOne({
+      where: { id: userId },
+      select: ['id', 'userName', 'avatar', 'trophies', 'fgc'],
+    });
+
+    if (!user)
+      throw new NotFoundException({
+        code: `${UserControllerCode}01`,
+        statusCode: HttpStatus.NOT_FOUND,
+        message: notFoundTemplate({ entity: 'User' }),
+      });
+
+    return {
+      id: user.id,
+      username: user.userName,
+      avatar: user.avatar,
+      trophies: user.trophies,
+      fgc: user.fgc,
     };
   }
 

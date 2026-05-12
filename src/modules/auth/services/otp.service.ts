@@ -67,6 +67,10 @@ export class OtpService {
     return this.configService.get<string>('NODE_ENV') !== 'production';
   }
 
+  private isDevelopment(): boolean {
+    return this.configService.get<string>('NODE_ENV') === 'development';
+  }
+
   private async checkRateLimit(recipient: string): Promise<void> {
     const sendWindowKey = this.getSendWindowKey(recipient);
     const counter = await this.redisClient.incr(sendWindowKey);
@@ -144,13 +148,15 @@ export class OtpService {
   }
 
   public async generateAndSend(recipient: string): Promise<OtpSentResponse> {
-    await this.checkRateLimit(recipient);
-    if (await this.isSent(recipient)) {
-      throw new BadRequestException({
-        code: `${AuthControllerCode}13`,
-        statusCode: HttpStatus.TOO_MANY_REQUESTS,
-        message: 'too many request',
-      });
+    if (!this.isDevelopment()) {
+      await this.checkRateLimit(recipient);
+      if (await this.isSent(recipient)) {
+        throw new BadRequestException({
+          code: `${AuthControllerCode}13`,
+          statusCode: HttpStatus.TOO_MANY_REQUESTS,
+          message: 'too many request',
+        });
+      }
     }
 
     const otp: string = getDeveloperPhoneConfig(recipient)

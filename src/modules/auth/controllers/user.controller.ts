@@ -43,6 +43,7 @@ import { updateProfileDto } from '../dto/update-profile.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserPaginatedResopnse } from '../dto/user-paginated-response.dto';
 import { VerifyUserDto } from '../dto/verify-user.dto';
+import { UpdateLanguageDto } from '../dto/update-language.dto';
 import { Permission } from '../entities/permission.entity';
 import {
   User as CurrentUser,
@@ -101,6 +102,12 @@ export class UserController {
     return await this.userService.findOne(user?.id);
   }
 
+  @NoCache()
+  @Get('profile/summary')
+  async getProfileSummary(@User() user: CurrentUser) {
+    return await this.userService.getProfileSummary(user?.id);
+  }
+
   @UseInterceptors(StripUserSecretsInterCeptor)
   @AuthorizeByPermissions([READ_USER])
   @Get(':id')
@@ -139,6 +146,14 @@ export class UserController {
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
     return this.userService.update(user?.id, body, files);
+  }
+
+  @Put('profile/language')
+  async updateLanguage(
+    @User() user: CurrentUser,
+    @Body() body: UpdateLanguageDto,
+  ) {
+    return this.userService.updateLanguage(user?.id, body.language);
   }
 
   @Put(':id')
