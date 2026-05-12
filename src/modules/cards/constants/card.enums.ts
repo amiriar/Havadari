@@ -7,8 +7,11 @@ export enum CardRarityEnum {
   COMMON = 'COMMON',
   RARE = 'RARE',
   EPIC = 'EPIC',
+  // Keep LEGENDARY storage value for DB compatibility.
+  LEGENDRY = 'LEGENDARY',
   LEGENDARY = 'LEGENDARY',
   MYTHIC = 'MYTHIC',
+  IDOL = 'IDOL',
 }
 
 export enum CardEditionEnum {

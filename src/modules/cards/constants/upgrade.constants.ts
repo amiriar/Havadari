@@ -15,6 +15,7 @@ export const UPGRADE_RARITY_MULTIPLIER: Record<CardRarityEnum, number> = {
   [CardRarityEnum.EPIC]: 2,
   [CardRarityEnum.LEGENDARY]: 3,
   [CardRarityEnum.MYTHIC]: 5,
+  [CardRarityEnum.IDOL]: 8,
 };
 
 export const UPGRADE_DUPLICATE_REQUIREMENTS: Record<number, number> = {

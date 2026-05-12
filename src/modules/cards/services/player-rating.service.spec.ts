@@ -1,11 +1,13 @@
 import { Player } from '@app/players/entities/player.entity';
 import { PlayerStatSnapshot } from '@app/players/entities/player-stat-snapshot.entity';
+import { PlayerPositionEnum } from '@app/players/constants/player.enums';
+import { CardRarityEnum } from '../constants/card.enums';
 import { PlayerRatingService } from './player-rating.service';
 
 describe('PlayerRatingService', () => {
   const service = new PlayerRatingService();
 
-  const makePlayer = (position: Player['position']): Player =>
+  const makePlayer = (position: PlayerPositionEnum): Player =>
     ({
       position,
     }) as Player;
@@ -24,7 +26,7 @@ describe('PlayerRatingService', () => {
     }) as PlayerStatSnapshot;
 
   it('calculates deterministic bounded ratings', () => {
-    const player = makePlayer('FW');
+    const player = makePlayer(PlayerPositionEnum.FW);
     const ratingsA = service.calculate(player, makeStats());
     const ratingsB = service.calculate(player, makeStats());
 
@@ -33,19 +35,27 @@ describe('PlayerRatingService', () => {
     expect(ratingsA.overall).toBeLessThanOrEqual(99);
   });
 
-  it('maps rarity from overall thresholds', () => {
-    expect(service.rarity(79)).toBe('COMMON');
-    expect(service.rarity(80)).toBe('RARE');
-    expect(service.rarity(88)).toBe('EPIC');
-    expect(service.rarity(94)).toBe('LEGENDARY');
-    expect(service.rarity(98)).toBe('MYTHIC');
+  it('maps rarity from market value thresholds', () => {
+    expect(service.rarityFromMarketValue(100_000)).toBe(CardRarityEnum.COMMON);
+    expect(service.rarityFromMarketValue(700_000)).toBe(CardRarityEnum.RARE);
+    expect(service.rarityFromMarketValue(7_000_000)).toBe(CardRarityEnum.EPIC);
+    expect(service.rarityFromMarketValue(30_000_000)).toBe(
+      CardRarityEnum.LEGENDARY,
+    );
+    expect(service.rarityFromMarketValue(120_000_000)).toBe(
+      CardRarityEnum.MYTHIC,
+    );
+    expect(service.rarityFromMarketValue(30_000_000, true)).toBe(
+      CardRarityEnum.IDOL,
+    );
   });
 
   it('maps base value by rarity', () => {
-    expect(service.baseValue('COMMON')).toBe(100);
-    expect(service.baseValue('RARE')).toBe(500);
-    expect(service.baseValue('EPIC')).toBe(2000);
-    expect(service.baseValue('LEGENDARY')).toBe(8000);
-    expect(service.baseValue('MYTHIC')).toBe(30000);
+    expect(service.baseValue(CardRarityEnum.COMMON)).toBe(100);
+    expect(service.baseValue(CardRarityEnum.RARE)).toBe(500);
+    expect(service.baseValue(CardRarityEnum.EPIC)).toBe(2000);
+    expect(service.baseValue(CardRarityEnum.LEGENDARY)).toBe(8000);
+    expect(service.baseValue(CardRarityEnum.MYTHIC)).toBe(30000);
+    expect(service.baseValue(CardRarityEnum.IDOL)).toBe(100000);
   });
 });

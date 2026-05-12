@@ -47,10 +47,19 @@ export class CardGenerationService {
       if (!hasStats) {
         ratings.overall = this.ratingService.deterministicFallbackOverall(player);
       }
-      const rarity = this.ratingService.rarity(ratings.overall);
+      const marketValue = this.readPlayerMarketValue(player);
+      const rarity = this.ratingService.rarityFromMarketValue(
+        marketValue,
+        this.isRetiredLegend(player, ratings.overall),
+      );
+      const tunedRatings = this.ratingService.tuneRatingsByMarketValue(
+        ratings,
+        marketValue,
+        rarity,
+      );
       const baseValue = this.ratingService.adjustedBaseValue(
         rarity,
-        ratings.overall,
+        tunedRatings.overall,
       );
       const weeklyPerformanceScore =
         this.ratingService.weeklyPerformanceScore(stats);
@@ -63,7 +72,6 @@ export class CardGenerationService {
       });
 
       if (!existing) {
-        const marketValue = this.readPlayerMarketValue(player);
         const entity = this.cardRepo.create({
           sourceProvider: player.provider,
           sourceProviderPlayerId: player.providerPlayerId,
@@ -72,12 +80,12 @@ export class CardGenerationService {
           teamName: player.teamName || null,
           marketValue,
           position: player.position || PlayerPositionEnum.MID,
-          overallRating: ratings.overall,
-          speed: ratings.speed,
-          power: ratings.power,
-          skill: ratings.skill,
-          attack: ratings.attack,
-          defend: ratings.defend,
+          overallRating: tunedRatings.overall,
+          speed: tunedRatings.speed,
+          power: tunedRatings.power,
+          skill: tunedRatings.skill,
+          attack: tunedRatings.attack,
+          defend: tunedRatings.defend,
           rarity,
           edition: CardEditionEnum.BASE,
           baseValue,
@@ -92,7 +100,7 @@ export class CardGenerationService {
         inserted += 1;
       } else {
         const nextTeamName = player.teamName || null;
-        const nextMarketValue = this.readPlayerMarketValue(player);
+        const nextMarketValue = marketValue;
         existing.playerName = player.fullName || 'Unknown';
         existing.nationality = player.nationality || existing.nationality;
         if (nextTeamName !== null) {
@@ -102,12 +110,12 @@ export class CardGenerationService {
           existing.marketValue = nextMarketValue;
         }
         existing.position = player.position || existing.position;
-        existing.overallRating = ratings.overall;
-        existing.speed = ratings.speed;
-        existing.power = ratings.power;
-        existing.skill = ratings.skill;
-        existing.attack = ratings.attack;
-        existing.defend = ratings.defend;
+        existing.overallRating = tunedRatings.overall;
+        existing.speed = tunedRatings.speed;
+        existing.power = tunedRatings.power;
+        existing.skill = tunedRatings.skill;
+        existing.attack = tunedRatings.attack;
+        existing.defend = tunedRatings.defend;
         existing.rarity = rarity;
         existing.baseValue = baseValue;
         existing.weeklyPerformanceScore = weeklyPerformanceScore;
@@ -385,6 +393,16 @@ export class CardGenerationService {
       return Math.round(Number(nested));
     }
     return null;
+  }
+
+  private isRetiredLegend(player: Player, overall: number): boolean {
+    const payload = (player.rawPayload || {}) as Record<string, unknown>;
+    const status = String(payload.status || payload.playerStatus || '').toLowerCase();
+    const explicitlyRetired =
+      payload.retired === true ||
+      payload.active === false ||
+      status.includes('retired');
+    return explicitlyRetired && overall >= 90;
   }
 
   private buildAvatarPrompt(

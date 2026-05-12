@@ -14,12 +14,31 @@ export interface CardRatings {
 
 @Injectable()
 export class PlayerRatingService {
+  private readonly BASE_VALUE_ANCHORS: Record<CardRarityEnum, number> = {
+    [CardRarityEnum.COMMON]: 100,
+    [CardRarityEnum.RARE]: 500,
+    [CardRarityEnum.EPIC]: 2000,
+    [CardRarityEnum.LEGENDARY]: 8000,
+    [CardRarityEnum.MYTHIC]: 30000,
+    [CardRarityEnum.IDOL]: 100000,
+  };
+
+  // Calibrated from current cards table distribution:
+  // p50=1m, p75=5m, p90=20m, p99~80m
+  private readonly MARKET_VALUE_THRESHOLDS = {
+    rareMin: 500_000,
+    epicMin: 5_000_000,
+    legendryMin: 20_000_000,
+    mythicMin: 80_000_000,
+  };
+
   private readonly RARITY_FLOORS: Record<CardRarityEnum, number> = {
     [CardRarityEnum.COMMON]: 55,
     [CardRarityEnum.RARE]: 70,
     [CardRarityEnum.EPIC]: 80,
     [CardRarityEnum.LEGENDARY]: 90,
     [CardRarityEnum.MYTHIC]: 96,
+    [CardRarityEnum.IDOL]: 97,
   };
 
   private readonly RARITY_CEILINGS: Record<CardRarityEnum, number> = {
@@ -28,6 +47,7 @@ export class PlayerRatingService {
     [CardRarityEnum.EPIC]: 93,
     [CardRarityEnum.LEGENDARY]: 98,
     [CardRarityEnum.MYTHIC]: 99,
+    [CardRarityEnum.IDOL]: 99,
   };
 
   calculate(player: Player, stats: PlayerStatSnapshot | null): CardRatings {
@@ -89,27 +109,78 @@ export class PlayerRatingService {
     };
   }
 
-  rarity(overall: number): CardRarityEnum {
-    if (overall >= 96) return CardRarityEnum.MYTHIC;
-    if (overall >= 90) return CardRarityEnum.LEGENDARY;
-    if (overall >= 80) return CardRarityEnum.EPIC;
-    if (overall >= 70) return CardRarityEnum.RARE;
+  rarityFromMarketValue(
+    marketValue: number | null,
+    isRetiredLegend = false,
+  ): CardRarityEnum {
+    const value = marketValue ?? 0;
+    if (isRetiredLegend && value >= this.MARKET_VALUE_THRESHOLDS.legendryMin) {
+      return CardRarityEnum.IDOL;
+    }
+    if (value >= this.MARKET_VALUE_THRESHOLDS.mythicMin)
+      return CardRarityEnum.MYTHIC;
+    if (value >= this.MARKET_VALUE_THRESHOLDS.legendryMin)
+      return CardRarityEnum.LEGENDARY;
+    if (value >= this.MARKET_VALUE_THRESHOLDS.epicMin) return CardRarityEnum.EPIC;
+    if (value >= this.MARKET_VALUE_THRESHOLDS.rareMin) return CardRarityEnum.RARE;
     return CardRarityEnum.COMMON;
   }
 
   baseValue(rarity: CardRarityEnum): number {
-    switch (rarity) {
-      case CardRarityEnum.COMMON:
-        return 100;
-      case CardRarityEnum.RARE:
-        return 500;
-      case CardRarityEnum.EPIC:
-        return 2000;
-      case CardRarityEnum.LEGENDARY:
-        return 8000;
-      case CardRarityEnum.MYTHIC:
-        return 30000;
+    return this.BASE_VALUE_ANCHORS[rarity];
+  }
+
+  deriveBaseValue(overall: number, marketValue: number | null): number {
+    if (typeof marketValue === 'number' && marketValue > 0) {
+      // Compress real-world market values into in-game economy scale.
+      const scaled = Math.round(Math.sqrt(marketValue) * 6);
+      return Math.max(100, scaled);
     }
+
+    // Fallback: derive from overall using previous anchor logic.
+    const fallbackRarity =
+      overall >= 96
+        ? CardRarityEnum.MYTHIC
+        : overall >= 90
+          ? CardRarityEnum.LEGENDARY
+          : overall >= 80
+            ? CardRarityEnum.EPIC
+            : overall >= 70
+              ? CardRarityEnum.RARE
+              : CardRarityEnum.COMMON;
+    return this.adjustedBaseValue(fallbackRarity, overall);
+  }
+
+  tuneRatingsByMarketValue(
+    ratings: CardRatings,
+    marketValue: number | null,
+    rarity: CardRarityEnum,
+  ): CardRatings {
+    const floor = this.RARITY_FLOORS[rarity];
+    const ceiling = this.RARITY_CEILINGS[rarity];
+    const value = marketValue ?? 0;
+    const rarityBase = this.rarityMarketFloor(rarity);
+    const nextRarityBase = this.rarityMarketCeiling(rarity);
+    const t =
+      nextRarityBase <= rarityBase
+        ? 1
+        : Math.max(
+            0,
+            Math.min(1, (value - rarityBase) / (nextRarityBase - rarityBase)),
+          );
+    const targetOverall = this.clamp(
+      Math.round(floor + t * Math.max(1, ceiling - floor)),
+    );
+    const delta = targetOverall - ratings.overall;
+
+    return {
+      speed: this.clamp(ratings.speed + delta),
+      power: this.clamp(ratings.power + delta),
+      skill: this.clamp(ratings.skill + delta),
+      attack: this.clamp(ratings.attack + delta),
+      defend: this.clamp(ratings.defend + delta),
+      overall: targetOverall,
+    };
   }
 
   weeklyPerformanceScore(stats: PlayerStatSnapshot | null): number {
@@ -178,6 +249,40 @@ export class PlayerRatingService {
     const t = Math.max(0, Math.min(1, (overall - floor) / Math.max(1, ceiling - floor)));
     const multiplier = 0.8 + t * 0.4;
     return Math.max(1, Math.round(rawBase * multiplier));
+  }
+
+  private rarityMarketFloor(rarity: CardRarityEnum): number {
+    switch (rarity) {
+      case CardRarityEnum.COMMON:
+        return 0;
+      case CardRarityEnum.RARE:
+        return this.MARKET_VALUE_THRESHOLDS.rareMin;
+      case CardRarityEnum.EPIC:
+        return this.MARKET_VALUE_THRESHOLDS.epicMin;
+      case CardRarityEnum.LEGENDARY:
+        return this.MARKET_VALUE_THRESHOLDS.legendryMin;
+      case CardRarityEnum.MYTHIC:
+        return this.MARKET_VALUE_THRESHOLDS.mythicMin;
+      case CardRarityEnum.IDOL:
+        return this.MARKET_VALUE_THRESHOLDS.legendryMin;
+    }
+  }
+
+  private rarityMarketCeiling(rarity: CardRarityEnum): number {
+    switch (rarity) {
+      case CardRarityEnum.COMMON:
+        return this.MARKET_VALUE_THRESHOLDS.rareMin;
+      case CardRarityEnum.RARE:
+        return this.MARKET_VALUE_THRESHOLDS.epicMin;
+      case CardRarityEnum.EPIC:
+        return this.MARKET_VALUE_THRESHOLDS.legendryMin;
+      case CardRarityEnum.LEGENDARY:
+        return this.MARKET_VALUE_THRESHOLDS.mythicMin;
+      case CardRarityEnum.MYTHIC:
+        return 200_000_000;
+      case CardRarityEnum.IDOL:
+        return 200_000_000;
+    }
   }
 
   private seedFromPlayer(player: Player): number {
