@@ -54,8 +54,9 @@ export async function seedChestDefinitions(dataSource: DataSource) {
       costGems: 250,
       cooldownSeconds: 0,
       drops: [
-        { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.85 },
-        { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.15 },
+        { type: 'card', rarity: CardRarityEnum.LEGENDARY, probability: 0.8 },
+        { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.18 },
+        { type: 'card', rarity: CardRarityEnum.IDOL, probability: 0.02 },
       ],
     },
     {
@@ -64,7 +65,10 @@ export async function seedChestDefinitions(dataSource: DataSource) {
       costFgc: 0,
       costGems: 600,
       cooldownSeconds: 0,
-      drops: [{ type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 1 }],
+      drops: [
+        { type: 'card', rarity: CardRarityEnum.MYTHIC, probability: 0.9 },
+        { type: 'card', rarity: CardRarityEnum.IDOL, probability: 0.1 },
+      ],
     },
     {
       type: ChestTypeEnum.SPONSOR_CHEST,

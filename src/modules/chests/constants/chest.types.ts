@@ -4,6 +4,7 @@ export enum CardRarityEnum {
   EPIC = 'EPIC',
   LEGENDARY = 'LEGENDARY',
   MYTHIC = 'MYTHIC',
+  IDOL = 'IDOL',
 }
 
 export enum ChestTypeEnum {
