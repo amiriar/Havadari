@@ -22,6 +22,9 @@ import { CardGenerationService } from './services/card-generation.service';
 import { AdminCardQueryDto } from './dto/admin-card-query.dto';
 import { AdminCreateCardDto } from './dto/admin-create-card.dto';
 import { AdminUpdateCardDto } from './dto/admin-update-card.dto';
+import { AdminReviewCardsQueryDto } from './dto/admin-review-cards-query.dto';
+import { AdminFlagCardImageDto } from './dto/admin-flag-card-image.dto';
+import { User } from '@common/decorators/user.decorator';
 
 @ApiTags('Admin')
 @ApiBearerAuth()
@@ -48,6 +51,17 @@ export class AdminCardsController {
     return this.cardsService.exportChecklistExcels(100);
   }
 
+  @Get('review/high-value')
+  @NoCache()
+  @ApiOperation({
+    summary:
+      'Admin: list high-value cards for image/name verification and mismatch review',
+  })
+  @AuthorizeByPermissions([READ_USER])
+  highValueReview(@Query() query: AdminReviewCardsQueryDto, @Url() url?: string) {
+    return this.cardsService.adminListHighValueForReview(query, url);
+  }
+
   @Get(':id')
   @NoCache()
   @ApiOperation({ summary: 'Admin: get card by id' })
@@ -68,6 +82,17 @@ export class AdminCardsController {
   @AuthorizeByPermissions([UPDATE_USER])
   update(@Param('id') id: string, @Body() dto: AdminUpdateCardDto) {
     return this.cardsService.adminUpdate(id, dto);
+  }
+
+  @Patch(':id/image-flag')
+  @ApiOperation({ summary: 'Admin: flag or unflag card image mismatch' })
+  @AuthorizeByPermissions([UPDATE_USER])
+  updateImageFlag(
+    @Param('id') id: string,
+    @Body() dto: AdminFlagCardImageDto,
+    @User() user: { id: string },
+  ) {
+    return this.cardsService.adminSetImageMismatchFlag(id, dto, user.id);
   }
 
   @Delete(':id')

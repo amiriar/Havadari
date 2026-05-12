@@ -18,6 +18,8 @@ import { PlayerRatingService } from './player-rating.service';
 import { AdminCardQueryDto } from '../dto/admin-card-query.dto';
 import { AdminCreateCardDto } from '../dto/admin-create-card.dto';
 import { AdminUpdateCardDto } from '../dto/admin-update-card.dto';
+import { AdminReviewCardsQueryDto } from '../dto/admin-review-cards-query.dto';
+import { AdminFlagCardImageDto } from '../dto/admin-flag-card-image.dto';
 
 @Injectable()
 export class CardGenerationService {
@@ -119,17 +121,43 @@ export class CardGenerationService {
   }
 
   async listCards(page = 1, limit = 100, url?: string) {
-    return paginate(
-      this.cardRepo,
-      {
-        page,
-        limit: Math.min(5000, limit),
-        route: url,
-      },
-      {
-        order: { overallRating: 'DESC' },
-      },
-    );
+    const qb = this.cardRepo
+      .createQueryBuilder('card')
+      .select([
+        'card.id',
+        'card.playerName',
+        'card.nationality',
+        'card.teamName',
+        'card.position',
+        'card.overallRating',
+        'card.speed',
+        'card.power',
+        'card.skill',
+        'card.attack',
+        'card.defend',
+        'card.rarity',
+        'card.avatarUrl',
+        'card.baseValue',
+      ])
+      .orderBy('card.overallRating', 'DESC');
+
+    return paginate(qb, {
+      page,
+      limit: Math.min(5000, limit),
+      route: url,
+    });
+  }
+
+  async getCardDetails(cardId: string) {
+    const card = await this.cardRepo.findOne({
+      where: { id: cardId },
+    });
+
+    if (!card) {
+      throw new NotFoundException('Card not found.');
+    }
+
+    return card;
   }
 
   async exportChecklistExcels(chunkSize = 100) {
@@ -283,6 +311,64 @@ export class CardGenerationService {
     const card = await this.adminGetById(id);
     await this.cardRepo.softRemove(card);
     return { deleted: true, cardId: id };
+  }
+
+  async adminListHighValueForReview(query: AdminReviewCardsQueryDto, url?: string) {
+    const minMarketValue = Math.max(1, query.minMarketValue ?? 50_000_000);
+    const qb = this.cardRepo
+      .createQueryBuilder('card')
+      .select([
+        'card.id',
+        'card.playerName',
+        'card.teamName',
+        'card.nationality',
+        'card.position',
+        'card.marketValue',
+        'card.baseValue',
+        'card.overallRating',
+        'card.avatarUrl',
+        'card.avatarStatus',
+        'card.imageMismatchFlag',
+        'card.imageMismatchNote',
+        'card.imageReviewedAt',
+        'card.imageReviewedByUserId',
+      ])
+      .where('COALESCE(card.marketValue, 0) >= :minMarketValue', {
+        minMarketValue,
+      })
+      .orderBy('card.marketValue', 'DESC')
+      .addOrderBy('card.overallRating', 'DESC');
+
+    if (query.flaggedOnly) {
+      qb.andWhere('card.imageMismatchFlag = true');
+    }
+
+    return paginate(qb, {
+      page: query.page ?? 1,
+      limit: Math.min(200, query.limit ?? 50),
+      route: url,
+    });
+  }
+
+  async adminSetImageMismatchFlag(
+    id: string,
+    dto: AdminFlagCardImageDto,
+    reviewerUserId: string,
+  ) {
+    const card = await this.adminGetById(id);
+    card.imageMismatchFlag = dto.flagged;
+    card.imageMismatchNote = dto.note?.trim() || null;
+    card.imageReviewedAt = new Date();
+    card.imageReviewedByUserId = reviewerUserId;
+    await this.cardRepo.save(card);
+
+    return {
+      cardId: card.id,
+      flagged: card.imageMismatchFlag,
+      note: card.imageMismatchNote,
+      reviewedAt: card.imageReviewedAt,
+      reviewedByUserId: card.imageReviewedByUserId,
+    };
   }
 
   private readPlayerMarketValue(player: Player): number | null {

@@ -38,6 +38,12 @@ export class CardsController {
   }
 
   @IsPublic()
+  @Get(':cardId/details')
+  details(@Param('cardId') cardId: string) {
+    return this.generationService.getCardDetails(cardId);
+  }
+
+  @IsPublic()
   @Post('avatars/queue')
   queue(@Query('limit') limit?: string) {
     const parsedLimit = limit ? Number(limit) : 100;

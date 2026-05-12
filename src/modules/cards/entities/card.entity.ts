@@ -77,6 +77,18 @@ export class Card extends ApplicationBaseEntity {
   @Column({ type: 'text', nullable: true })
   avatarError: string | null;
 
+  @Column({ type: 'boolean', default: false })
+  imageMismatchFlag: boolean;
+
+  @Column({ type: 'text', nullable: true })
+  imageMismatchNote: string | null;
+
+  @Column({ type: 'timestamptz', nullable: true })
+  imageReviewedAt: Date | null;
+
+  @Column({ type: 'varchar', length: 64, nullable: true })
+  imageReviewedByUserId: string | null;
+
   @Column({ type: 'int' })
   baseValue: number;
 
